@@ -11,6 +11,6 @@ public class camerascript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        transform.position = transform.position
     }
 }
