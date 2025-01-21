@@ -6,6 +6,8 @@ public class carscript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Vector3 Velocity = new Vector3(0,0,0);
+    private float interval = 0;
+    public Vector3 savedvector = new Vector3(0,0,0);
     void Start()
     {
         
@@ -16,22 +18,25 @@ public class carscript : MonoBehaviour
     {
         transform.position = transform.position + Velocity;
         if (Input.GetKey(KeyCode.W)) {
-            Debug.Log(Velocity);
-            Velocity = Velocity + new Vector3(0,0,(float)0.001);
-            
+            Velocity = Velocity + Vector3.Scale(transform.forward, new Vector3((float)0.001,(float)0.001,(float)0.001));
         }
         if(Input.GetKey(KeyCode.A)) {
-            Debug.Log(transform.rotation);
             transform.Rotate(0,-1,0);
         }
         if(Input.GetKey(KeyCode.D)) {
-            Debug.Log(transform.rotation);
             transform.Rotate(0,1,0);
         }
         if (Input.GetKey(KeyCode.S)) {
             Debug.Log(Velocity);
-            Velocity = Velocity + new Vector3(0,0,(float)-0.001);
+            Velocity = Velocity + Vector3.Scale(transform.forward, new Vector3((float)0.001,(float)0.001,(float)0.001));
         }
         Velocity = Vector3.Scale(Velocity, new Vector3(1,1,(float)0.999));
+        if (interval > 1) {
+            interval = 0;
+            savedvector = transform.position;
+        }
+        interval += Time.deltaTime;
+
+        Debug.Log(savedvector);
     }
 }
