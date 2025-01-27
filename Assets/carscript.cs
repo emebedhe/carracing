@@ -31,17 +31,17 @@ public class carscript : MonoBehaviour
             Velocity = Velocity + Vector3.Scale(transform.forward, new Vector3((float)-0.001,(float)-0.001,(float)-0.001));
         }
         if (Input.GetKey(KeyCode.W)) {Velocity = Vector3.Scale(Velocity, new Vector3((float)0.999,1,(float)0.999));}
-   //     else{ Velocity = Vector3.Scale(Velocity, new Vector3((float)0.992,1,(float)0.992));}
+        else{ Velocity = Vector3.Scale(Velocity, new Vector3((float)0.992,1,(float)0.992));}
         if (interval > 1) {
             interval = 0;
             savedvector = transform.position;
         }
         interval += Time.deltaTime;
 
-        if (Velocity.x < (float)0.0001) {
+        if (Velocity.x < (float)0.00001) {
             Velocity = Vector3.Scale(Velocity, new Vector3(0,1,1));
         }
-        if (Velocity.z < (float)0.0001) {
+        if (Velocity.z < (float)0.00001) {
             Velocity = Vector3.Scale(Velocity, new Vector3(1,1,0));
         }
        // Debug.Log(transform.forward);
