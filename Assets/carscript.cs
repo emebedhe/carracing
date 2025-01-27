@@ -28,15 +28,22 @@ public class carscript : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.S)) {
             Debug.Log(Velocity);
-            Velocity = Velocity + Vector3.Scale(transform.forward, new Vector3((float)0.001,(float)0.001,(float)0.001));
+            Velocity = Velocity + Vector3.Scale(transform.forward, new Vector3((float)-0.001,(float)-0.001,(float)-0.001));
         }
-        Velocity = Vector3.Scale(Velocity, new Vector3(1,1,(float)0.999));
+        if (Input.GetKey(KeyCode.W)) {Velocity = Vector3.Scale(Velocity, new Vector3((float)0.999,1,(float)0.999));}
+   //     else{ Velocity = Vector3.Scale(Velocity, new Vector3((float)0.992,1,(float)0.992));}
         if (interval > 1) {
             interval = 0;
             savedvector = transform.position;
         }
         interval += Time.deltaTime;
 
-        Debug.Log(savedvector);
+        if (Velocity.x < (float)0.0001) {
+            Velocity = Vector3.Scale(Velocity, new Vector3(0,1,1));
+        }
+        if (Velocity.z < (float)0.0001) {
+            Velocity = Vector3.Scale(Velocity, new Vector3(1,1,0));
+        }
+       // Debug.Log(transform.forward);
     }
 }

@@ -18,8 +18,10 @@ public class camerascript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //transform.position = player.transform.position + offset;
-        
+        transform.position = player.transform.position + new Vector3(0,10,0) + Vector3.Scale(player.transform.forward, new Vector3(-55,-55,-55));
+      
+        transform.rotation = player.transform.rotation;
+        //transform.Rotate(20,0,0);
     }
 
 }
