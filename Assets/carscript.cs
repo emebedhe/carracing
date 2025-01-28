@@ -36,7 +36,7 @@ public class carscript : MonoBehaviour
             transform.Rotate(0,1,0);
         }
         if (Input.GetKey(KeyCode.S)) {
-            Debug.Log(Velocity);
+          // Debug.Log(Velocity);
             Velocity = Velocity + Vector3.Scale(transform.forward, new Vector3((float)-0.001,(float)-0.001,(float)-0.001));
         }
 
@@ -49,13 +49,17 @@ public class carscript : MonoBehaviour
         }
         interval += Time.deltaTime;
         
-        // if (Velocity.x < (float)0.00001) {
-        //     Velocity = Vector3.Scale(Velocity, new Vector3(0,1,1));
-        // }
-        // if (Velocity.z < (float)0.00001) {
-        //     Velocity = Vector3.Scale(Velocity, new Vector3(1,1,0));
-        // }
-       // Debug.Log(transform.forward);
+        if (Velocity.x < (float)0.000001 && Velocity.x > (float)-0.000001 ) {
+            Velocity = Vector3.Scale(Velocity, new Vector3(0,1,1));
+        }
+        if (Velocity.z < (float)0.000001 && Velocity.z > (float)-0.000001) {
+            Velocity = Vector3.Scale(Velocity, new Vector3(1,1,0));
+        }
+        if (Velocity.y < (float)0.000001 && Velocity.y > (float)-0.000001) {
+            Velocity = Vector3.Scale(Velocity, new Vector3(1,0,1));
+        }
+        
+       //Debug.Log(transform.forward);
     }
 
     
