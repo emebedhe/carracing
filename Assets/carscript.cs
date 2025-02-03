@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 
 
@@ -7,6 +8,8 @@ public class carscript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Vector3 Velocity = new Vector3(0,0,0);
     public float torque;
+
+    public Text speedText;
 
     public float Speed = 0;
     public float gravity;
@@ -100,10 +103,12 @@ public class carscript : MonoBehaviour
         airborne = true;    
 
         PreviousPos = CurrentPos;
+
+        speedText.text = Mathf.Round(Speed*100).ToString();
         
 
 
-    //     float horizontal = Input.GetAxis("Horizontal");
+    //     floa t horizontal = Input.GetAxis("Horizontal");
     //     if (Input.GetKey(KeyCode.W)) {
     //         rb.AddForce(Vector3.Scale(transform.forward, new Vector3(1,0,1)) * m_Thrust);
     //     }
