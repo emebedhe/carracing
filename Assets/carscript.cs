@@ -6,21 +6,21 @@ public class carscript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Vector3 Velocity = new Vector3(0,0,0);
-    private float interval = 0;
-    public Vector3 savedvector = new Vector3(0,0,0);
     public float torque;
 
+    public float Speed = 0;
     public float gravity;
 
     private bool airborne;
-
-
     
     
     Rigidbody rb;     
 
     public float Thrust = 20f;
-    public float BrakeThrust = 40f;
+    public float BrakeThrust = 40f; 
+
+    public Vector3 CurrentPos = new Vector3(0,0,0);
+    public Vector3 PreviousPos = new Vector3(0,0,0);
     // void Start()
     // // {
     // //     rb = GetComponent<Rigidbody>();
@@ -60,13 +60,10 @@ public class carscript : MonoBehaviour
         if (airborne == false) {
             if (Input.GetKey(KeyCode.W)) {
             rb.AddForce(Vector3.Scale(transform.forward, new Vector3(1,0,1)) * Thrust);
-
-            Velocity += Vector3.Scale(transform.forward, new Vector3(1,0,1)) * Thrust;
         }
         if (Input.GetKey(KeyCode.S)) {
 
             rb.AddForce(-Vector3.Scale(transform.forward, new Vector3(1,0,1)) * BrakeThrust);
-            Velocity += Vector3.Scale(transform.forward, new Vector3(1,0,1)) * BrakeThrust;
         }
         
         if (Input.GetKey(KeyCode.A)) {
@@ -81,13 +78,31 @@ public class carscript : MonoBehaviour
             rb.AddForce(new Vector3(0,-20,0));
         }
 
+        if (Input.GetKey(KeyCode.R)) {
+            transform.position = new Vector3(1887,55,6407);
+            transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
+        }
+
 
         if (airborne == true) {
             rb.AddForce(new Vector3(0,gravity,0));
         }
         
+        CurrentPos = transform.position;
+
+        Velocity.x = Mathf.Abs(CurrentPos.x - PreviousPos.x);
+        Velocity.y = Mathf.Abs(CurrentPos.y - PreviousPos.y);
+        Velocity.z = Mathf.Abs(CurrentPos.z - PreviousPos.z);
+
+        Debug.Log(Speed);
+        Speed = Mathf.Sqrt(Mathf.Sqrt(Velocity.x*Velocity.x + Velocity.y*Velocity.y) + Velocity.z * Velocity.z);
+
         airborne = true;    
+
+        PreviousPos = CurrentPos;
         
+
+
     //     float horizontal = Input.GetAxis("Horizontal");
     //     if (Input.GetKey(KeyCode.W)) {
     //         rb.AddForce(Vector3.Scale(transform.forward, new Vector3(1,0,1)) * m_Thrust);
