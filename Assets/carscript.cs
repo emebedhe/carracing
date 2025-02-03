@@ -9,10 +9,18 @@ public class carscript : MonoBehaviour
     private float interval = 0;
     public Vector3 savedvector = new Vector3(0,0,0);
     public float torque;
+
+    public float gravity;
+
+    private bool airborne;
+
+
+    
     
     Rigidbody rb;     
 
-    public float m_Thrust = 20f;
+    public float Thrust = 20f;
+    public float BrakeThrust = 40f;
     // void Start()
     // // {
     // //     rb = GetComponent<Rigidbody>();
@@ -25,6 +33,16 @@ public class carscript : MonoBehaviour
             Debug.Log("hi");
 
         }
+       // Debug.Log("leo stop simping for elina");
+
+        airborne = false;
+
+        
+
+    }
+
+    void OnColliderStay(Collider other) {
+        
     }
 
 
@@ -39,12 +57,16 @@ public class carscript : MonoBehaviour
     //fixedupdate ig
     void FixedUpdate()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        if (Input.GetKey(KeyCode.W)) {
-            rb.AddForce(transform.forward * m_Thrust);
+        if (airborne == false) {
+            if (Input.GetKey(KeyCode.W)) {
+            rb.AddForce(Vector3.Scale(transform.forward, new Vector3(1,0,1)) * Thrust);
+
+            Velocity += Vector3.Scale(transform.forward, new Vector3(1,0,1)) * Thrust;
         }
         if (Input.GetKey(KeyCode.S)) {
-            rb.AddForce(-transform.forward * m_Thrust);
+
+            rb.AddForce(-Vector3.Scale(transform.forward, new Vector3(1,0,1)) * BrakeThrust);
+            Velocity += Vector3.Scale(transform.forward, new Vector3(1,0,1)) * BrakeThrust;
         }
         
         if (Input.GetKey(KeyCode.A)) {
@@ -54,17 +76,36 @@ public class carscript : MonoBehaviour
 
         if (Input.GetKey(KeyCode.D)) {
          //   rb.AddTorque(-transform.up* torque* horizontal);
-         rb.AddTorque(new Vector3(0,torque,0));
-
-            Debug.Log(transform.up*-torque*horizontal);
-            Debug.Log(transform.up * torque * horizontal);
+            rb.AddTorque(new Vector3(0,torque,0));
         }
+            rb.AddForce(new Vector3(0,-20,0));
+        }
+
+
+        if (airborne == true) {
+            rb.AddForce(new Vector3(0,gravity,0));
+        }
+        
+        airborne = true;    
+        
+    //     float horizontal = Input.GetAxis("Horizontal");
+    //     if (Input.GetKey(KeyCode.W)) {
+    //         rb.AddForce(Vector3.Scale(transform.forward, new Vector3(1,0,1)) * m_Thrust);
+    //     }
+    //     if (Input.GetKey(KeyCode.S)) {
+    //         rb.AddForce(-Vector3.Scale(transform.forward, new Vector3(1,0,1)) * m_Thrust);
+    //     }
+        
+    //     if (Input.GetKey(KeyCode.A)) {
+    //    //     rb.AddTorque(transform.up * torque * horizontal);
+    //         rb.AddTorque(new Vector3(0,-torque,0));
+    //     }
+
+    //     if (Input.GetKey(KeyCode.D)) {
+    //      //   rb.AddTorque(-transform.up* torque* horizontal);
+    //      rb.AddTorque(new Vector3(0,torque,0));
+    //     }
     }
-
-
-
-
-
 
     // Update is called once per frame
     // void FixedUpdate()
@@ -125,11 +166,11 @@ public class carscript : MonoBehaviour
     // }
 
     void Accelerate() {
-        rb.AddForce(transform.up * m_Thrust);
+        rb.AddForce(transform.up * Thrust);
     }
 
     void Brake() {
-        rb.AddForce(rb.transform.forward * m_Thrust * -1);
+        rb.AddForce(rb.transform.forward * Thrust * -1);
     }
 
     void Steer() {
