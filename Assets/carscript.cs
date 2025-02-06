@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+using System.Linq;
+using System;
+using System.Collections;
 
 
 public class carscript : MonoBehaviour
@@ -9,13 +11,19 @@ public class carscript : MonoBehaviour
     public Vector3 Velocity = new Vector3(0,0,0);
     public float torque;
 
+    private float time;
+
+    private bool finished = false;
     public Text speedText;
+    public Text cpText;
+    public Text timer;
 
     public float Speed = 0;
     public float gravity;
 
     private bool airborne;
     
+    private ArrayList cplist = new ArrayList();
     
     Rigidbody rb;     
 
@@ -44,8 +52,17 @@ public class carscript : MonoBehaviour
 
     }
 
-    void OnColliderStay(Collider other) {
-        
+    void OnTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "Checkpoint") {
+            if (cplist.Contains(1)) {}
+            else { cplist.Add(1);}
+        }
+
+        if (other.gameObject.tag == "Finishline") {
+            if (cplist.Count == 1) {
+                finished = true;
+            }
+        }
     }
 
 
@@ -97,7 +114,6 @@ public class carscript : MonoBehaviour
         Velocity.y = Mathf.Abs(CurrentPos.y - PreviousPos.y);
         Velocity.z = Mathf.Abs(CurrentPos.z - PreviousPos.z);
 
-        Debug.Log(Speed);
         Speed = Mathf.Sqrt(Mathf.Sqrt(Velocity.x*Velocity.x + Velocity.y*Velocity.y) + Velocity.z * Velocity.z);
 
         airborne = true;    
@@ -105,7 +121,26 @@ public class carscript : MonoBehaviour
         PreviousPos = CurrentPos;
 
         speedText.text = Mathf.Round(Speed*100).ToString();
+
+        if (cplist.Count == 1) {
+            cpText.text = "Checkpoint 1/1";
+        }
+        else if (cplist.Count == 0) {
+            cpText.text = "Checkpoint 0/1";
+        }
+        else {
+            cpText.text = "Checkpoint 0/1";
+        }
+
+
+        if (finished == true) {
+            
+        }
+        else if (finished == false) {
+            time = Time.time;
+        }
         
+        timer.text = Math.Round(time,2).ToString();
 
 
     //     floa t horizontal = Input.GetAxis("Horizontal");
