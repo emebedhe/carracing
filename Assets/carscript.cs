@@ -9,6 +9,9 @@ public class carscript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Vector3 Velocity = new Vector3(0,0,0);
+    public int gear = 1;
+
+    public float start = -2347823;
     public float torque;
 
     private float time;
@@ -73,30 +76,38 @@ public class carscript : MonoBehaviour
     {
         //Fetch the Rigidbody from the GameObject with this script attached
         rb = GetComponent<Rigidbody>();
+        timer.text = "0.0";
     }
     //fixedupdate ig
     void FixedUpdate()
     {
+        if (start == -2347823 && Input.anyKey) {
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) {
+            start = Time.time;
+            }
+        }
+
         if (airborne == false) {
-            if (Input.GetKey(KeyCode.W)) {
-            rb.AddForce(Vector3.Scale(transform.forward, new Vector3(1,0,1)) * Thrust);
-        }
-        if (Input.GetKey(KeyCode.S)) {
+            if ((Speed == 0) || (Mathf.Ceil(Speed * 100 / 80) <= gear && Speed*100 >= (gear-1) * 70)) {
+                if (Input.GetKey(KeyCode.W)) {
+                rb.AddForce(Vector3.Scale(transform.forward, new Vector3(1,0,1)) * Thrust);
+                }
+            }
+            if (Input.GetKey(KeyCode.S)) {
+                rb.AddForce(-Vector3.Scale(transform.forward, new Vector3(1,0,1)) * BrakeThrust);
+            }
 
-            rb.AddForce(-Vector3.Scale(transform.forward, new Vector3(1,0,1)) * BrakeThrust);
-        }
-        
-        if (Input.GetKey(KeyCode.A)) {
-       //     rb.AddTorque(transform.up * torque * horizontal);
-            rb.AddTorque(new Vector3(0,-torque,0));
-        }
+            if (Input.GetKey(KeyCode.A)) {
+        //     rb.AddTorque(transform.up * torque * horizontal);
+                rb.AddTorque(new Vector3(0,-torque,0));
+            }
 
-        if (Input.GetKey(KeyCode.D)) {
-         //   rb.AddTorque(-transform.up* torque* horizontal);
-            rb.AddTorque(new Vector3(0,torque,0));
-        }
-            rb.AddForce(new Vector3(0,-20,0));
-        }
+            if (Input.GetKey(KeyCode.D)) {
+            //   rb.AddTorque(-transform.up* torque* horizontal);
+                rb.AddTorque(new Vector3(0,torque,0));
+            }
+                rb.AddForce(new Vector3(0,-20,0));
+            }
 
         if (Input.GetKey(KeyCode.R)) {
             transform.position = new Vector3(1887,55,6407);
@@ -139,8 +150,9 @@ public class carscript : MonoBehaviour
         else if (finished == false) {
             time = Time.time;
         }
-        
-        timer.text = Math.Round(time,2).ToString();
+        if (start != -2347823) {
+        timer.text = Math.Round(time-start,2).ToString();
+        }
 
 
     //     floa t horizontal = Input.GetAxis("Horizontal");
@@ -160,6 +172,27 @@ public class carscript : MonoBehaviour
     //      //   rb.AddTorque(-transform.up* torque* horizontal);
     //      rb.AddTorque(new Vector3(0,torque,0));
     //     }
+    }
+
+    void Update() {
+        if ((Mathf.Ceil(Speed*100 + 10)/80) > gear) {
+            speedText.color = Color.green;
+        }
+        else { speedText.color = Color.red;}
+        if (Input.GetKeyDown(KeyCode.Q)) {
+      //      Debug.Log(Mathf.Ceil(Speed*100 + 10)/80); //the + 10 is a buffer so you don't have to go EXACTLY 80
+    //        if ((Mathf.Ceil(Speed*100 + 10)/80) > gear) {
+                if (gear != 5) { 
+                gear += 1;
+                }
+            }
+     //   }
+        if (Input.GetKeyDown(KeyCode.E)) {
+         
+            if (gear > 1) {
+            gear -= 1;
+            }
+        }
     }
 
     // Update is called once per frame
