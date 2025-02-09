@@ -8,21 +8,23 @@ using System.Collections;
 public class carscript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public Vector3 Velocity = new Vector3(0,0,0);
-    public int gear = 1;
+    private Vector3 Velocity = new Vector3(0,0,0);
+    private int gear = 1;
 
-    public float start = -2347823;
-    public float torque;
+    private float start = -2347823;
+    private float torque;
 
     private float time;
 
     private bool finished = false;
+    public Text gearCounter;
     public Text speedText;
     public Text cpText;
     public Text timer;
+    
 
-    public float Speed = 0;
-    public float gravity;
+    private float Speed = 0;
+    private float gravity;
 
     private bool airborne;
     
@@ -30,11 +32,11 @@ public class carscript : MonoBehaviour
     
     Rigidbody rb;     
 
-    public float Thrust = 20f;
-    public float BrakeThrust = 40f; 
+    private float Thrust = 20f;
+    private float BrakeThrust = 40f; 
 
-    public Vector3 CurrentPos = new Vector3(0,0,0);
-    public Vector3 PreviousPos = new Vector3(0,0,0);
+    private Vector3 CurrentPos = new Vector3(0,0,0);
+    private Vector3 PreviousPos = new Vector3(0,0,0);
     // void Start()
     // // {
     // //     rb = GetComponent<Rigidbody>();
@@ -86,11 +88,12 @@ public class carscript : MonoBehaviour
             start = Time.time;
             }
         }
-
+        gearCounter.color = Color.red;
         if (airborne == false) {
             if ((Speed == 0) || (Mathf.Ceil(Speed * 100 / 80) <= gear && Speed*100 >= (gear-1) * 70)) {
                 if (Input.GetKey(KeyCode.W)) {
                 rb.AddForce(Vector3.Scale(transform.forward, new Vector3(1,0,1)) * Thrust);
+                gearCounter.color = Color.green;
                 }
             }
             if (Input.GetKey(KeyCode.S)) {
@@ -153,6 +156,8 @@ public class carscript : MonoBehaviour
         if (start != -2347823) {
         timer.text = Math.Round(time-start,2).ToString();
         }
+
+        gearCounter.text = gear.ToString();
 
 
     //     floa t horizontal = Input.GetAxis("Horizontal");
