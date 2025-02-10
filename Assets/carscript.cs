@@ -29,6 +29,7 @@ public class carscript : MonoBehaviour
     private float BrakeThrust = 50f;
 
     private float start = -2347823;
+    private float cp1time = -2347823;
 
     public float Speed = 0;
 
@@ -36,6 +37,7 @@ public class carscript : MonoBehaviour
     public Text gearCounter;
     public Text speedText;
     public Text cpText;
+    public Text finalcptime;
 
 
 
@@ -69,6 +71,10 @@ public class carscript : MonoBehaviour
             if (cplist.Contains(1)) {}
             else { cplist.Add(1);}
             lastcheckpoint = other.gameObject;
+            if (cp1time == -2347823) {
+                cp1time = Time.time-start;
+                Debug.Log(cp1time);
+            }
         }
 
         if (other.gameObject.tag == "Finishline") {
@@ -92,8 +98,6 @@ public class carscript : MonoBehaviour
     //fixedupdate ig
     void FixedUpdate()
     {
-        
-        Debug.Log(lastcheckpoint);
         if (start == -2347823 && Input.anyKey) {
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) {
             start = Time.time;
@@ -124,8 +128,10 @@ public class carscript : MonoBehaviour
             }
 
         if (Input.GetKey(KeyCode.R)) {
-            transform.position = new Vector3(1887,55,6407);
-            transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
+            // transform.position = new Vector3(1887,55,6407);
+            // transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
+            transform.position = lastcheckpoint.transform.position + new Vector3(0,50,0);
+            transform.rotation = lastcheckpoint.transform.rotation;
         }
 
 
@@ -159,7 +165,8 @@ public class carscript : MonoBehaviour
 
 
         if (finished == true) {
-            
+            finalcptime.text = "Checkpoint 1: " + Math.Round(cp1time,2).ToString();
+            Debug.Log(cp1time);
         }
         else if (finished == false) {
             time = Time.time;
