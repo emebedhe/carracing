@@ -10,7 +10,6 @@ public class carscript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Vector3 Velocity = new Vector3(0,0,0);
     private float gear = 1f;
-    private float interval = 0;
     public Vector3 savedvector = new Vector3(0,0,0);
     private float torque = 1000f;
 
@@ -42,8 +41,9 @@ public class carscript : MonoBehaviour
 
     private Vector3 PreviousPos;
     private Vector3 CurrentPos;
+    public GameObject lastcheckpoint;
 
-    public gameObject lastcheckpoint = GameObject.Find(start_line);
+    
     // void Start()
     // // {
     // //     rb = GetComponent<Rigidbody>();
@@ -68,6 +68,7 @@ public class carscript : MonoBehaviour
         if (other.gameObject.tag == "Checkpoint") {
             if (cplist.Contains(1)) {}
             else { cplist.Add(1);}
+            lastcheckpoint = other.gameObject;
         }
 
         if (other.gameObject.tag == "Finishline") {
@@ -86,10 +87,13 @@ public class carscript : MonoBehaviour
         //Fetch the Rigidbody from the GameObject with this script attached
         rb = GetComponent<Rigidbody>();
         timer.text = "0.0";
+        lastcheckpoint = GameObject.Find("start_line");
     }
     //fixedupdate ig
     void FixedUpdate()
     {
+        
+        Debug.Log(lastcheckpoint);
         if (start == -2347823 && Input.anyKey) {
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) {
             start = Time.time;
