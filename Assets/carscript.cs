@@ -24,7 +24,7 @@ public class carscript : MonoBehaviour
     
 
     private float Speed = 0;
-    private float gravity;
+    public float gravity;
 
     private bool airborne;
     

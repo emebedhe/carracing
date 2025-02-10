@@ -2211,6 +2211,7 @@ MonoBehaviour:
   speedText: {fileID: 1507928362}
   cpText: {fileID: 738701144}
   timer: {fileID: 1307110744}
+  gravity: -20
   Thrust: 100
   BrakeThrust: 50
 --- !u!4 &2030025045 stripped
