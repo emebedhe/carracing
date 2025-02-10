@@ -175,7 +175,7 @@ public class carscript : MonoBehaviour
         timer.text = Math.Round(time-start,2).ToString();
         }
 
-        gearCounter.text = gear.ToString();
+        gearCounter.text = "Current Gear: "+gear.ToString();
 
 
     //     floa t horizontal = Input.GetAxis("Horizontal");
