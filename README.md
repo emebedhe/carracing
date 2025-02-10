@@ -1,3 +1,3 @@
-# From aether, tobes and leo: Carracing
+# From Aether, Tobes and Leo: Carracing
 
-Car Racing Game
+A boring, crappy, car racing game
