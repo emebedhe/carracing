@@ -151,7 +151,7 @@ public class carscript : MonoBehaviour
 
         PreviousPos = CurrentPos;
 
-        speedText.text = Mathf.Round(Speed*100).ToString();
+        speedText.text = "Speed: "+Mathf.Round(Speed*100).ToString();
 
         if (cplist.Count == 1) {
             cpText.text = "Checkpoint 1/1";
@@ -172,7 +172,7 @@ public class carscript : MonoBehaviour
             time = Time.time;
         }
         if (start != -2347823) {
-        timer.text = Math.Round(time-start,2).ToString();
+        timer.text = "Time Elapsed: "+Math.Round(time-start,2).ToString();
         }
 
         gearCounter.text = "Current Gear: "+gear.ToString();
