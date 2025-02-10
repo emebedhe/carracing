@@ -12,7 +12,7 @@ public class carscript : MonoBehaviour
     private int gear = 1;
 
     private float start = -2347823;
-    private float torque;
+    public float torque;
 
     private float time;
 
@@ -24,7 +24,7 @@ public class carscript : MonoBehaviour
     
 
     private float Speed = 0;
-    private float gravity;
+    public float gravity;
 
     private bool airborne;
     
@@ -32,8 +32,8 @@ public class carscript : MonoBehaviour
     
     Rigidbody rb;     
 
-    private float Thrust = 20f;
-    private float BrakeThrust = 40f; 
+    public float Thrust = 20f;
+    public float BrakeThrust = 40f; 
 
     private Vector3 CurrentPos = new Vector3(0,0,0);
     private Vector3 PreviousPos = new Vector3(0,0,0);

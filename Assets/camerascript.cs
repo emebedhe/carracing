@@ -9,6 +9,7 @@ public class camerascript : MonoBehaviour
     public Vector3 offset;
     public Vector3 rotationoffset;
 
+    public float lllll = -85f;
     
     
     void Start()
@@ -19,7 +20,7 @@ public class camerascript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.transform.position + new Vector3(0,30,0) + Vector3.Scale(player.transform.forward, new Vector3(-85,-85,-85)) + offset; //+ new Vector3(10,5,-5);
+        transform.position = player.transform.position + new Vector3(0,30,0) + Vector3.Scale(player.transform.forward, new Vector3(lllll,lllll,lllll)) + offset; //+ new Vector3(10,5,-5);
       
         transform.rotation = player.transform.rotation;
         // transform.rotation = Quaternion.Euler(0,0,0);

@@ -2204,20 +2204,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ebcd27ed2e214b0780a38beb5e8aead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Velocity: {x: 0, y: 0, z: 0}
-  gear: 1
-  start: -2347823
   torque: 1000
   gearCounter: {fileID: 2121353734}
   speedText: {fileID: 1507928362}
   cpText: {fileID: 738701144}
   timer: {fileID: 1307110744}
-  Speed: 0
-  gravity: -50
-  Thrust: 75
+  gravity: -20
+  Thrust: 100
   BrakeThrust: 50
-  CurrentPos: {x: 0, y: 0, z: 0}
-  PreviousPos: {x: 0, y: 0, z: 0}
 --- !u!4 &2030025045 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2e07c9083e8d14a4882d86abbdf15528, type: 3}
