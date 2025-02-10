@@ -290,8 +290,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 7, y: 5, z: 1}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &174571564
 GameObject:
   m_ObjectHideFlags: 0
@@ -618,6 +618,7 @@ MonoBehaviour:
   player: {fileID: 2030025045}
   offset: {x: 0, y: 5, z: 0}
   rotationoffset: {x: 0, y: 0, z: 0}
+  lllll: -85
 --- !u!1001 &350385220
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2641,11 +2642,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Velocity: {x: 0, y: 0, z: 0}
-  gear: 1
+  savedvector: {x: 0, y: 0, z: 0}
+  Speed: 0
+  timer: {fileID: 1307110744}
   gearCounter: {fileID: 2121353734}
   speedText: {fileID: 1507928362}
   cpText: {fileID: 738701144}
-  timer: {fileID: 1307110744}
+  PreviousPos: {x: 0, y: 0, z: 0}
+  CurrentPos: {x: 0, y: 0, z: 0}
 --- !u!4 &2030025045 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2e07c9083e8d14a4882d86abbdf15528, type: 3}
