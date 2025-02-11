@@ -37,7 +37,7 @@ public class carscript : MonoBehaviour
     Rigidbody rb;     
 
     private float Thrust = 100f;
-    private float BrakeThrust = -50f; 
+    private float BrakeThrust = 50f; 
 
     private Vector3 CurrentPos = new Vector3(0,0,0);
     private Vector3 PreviousPos = new Vector3(0,0,0);
@@ -125,9 +125,8 @@ public class carscript : MonoBehaviour
         if (Input.GetKey(KeyCode.R)) {
             // transform.position = new Vector3(1887,55,6407);
             // transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
-            transform.position = lastcheckpoint.transform.position + new Vector3(0,50,0);
-            transform.rotation = lastcheckpoint.transform.rotation;
-            gear=1;
+            transform.position = lastcheckpoint.transform.position + new Vector3(-15,0,-75);
+            transform.rotation = lastcheckpoint.transform.rotation * Quaternion.Euler(new Vector3(0,182,0));
         }
 
 
