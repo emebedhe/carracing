@@ -101,21 +101,21 @@ public class carscript : MonoBehaviour
         gearCounter.color = Color.red;
         if (airborne == false) {
             if ((Speed == 0) || (Mathf.Ceil(Speed * 100 / 80) <= gear && Speed*100 >= (gear-1) * 70)) {
-                if (Input.GetKey(KeyCode.W)) {
+                if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow)) {
                 rb.AddForce(Vector3.Scale(transform.forward, new Vector3(1,0,1)) * Thrust);
                 gearCounter.color = Color.green;
                 }
             }
-            if (Input.GetKey(KeyCode.S)) {
+            if (Input.GetKey(KeyCode.S)) || Input.GetKey(KeyCode.DownArrow) {
                 rb.AddForce(-Vector3.Scale(transform.forward, new Vector3(1,0,1)) * BrakeThrust);
             }
 
-            if (Input.GetKey(KeyCode.A)) {
+            if (Input.GetKey(KeyCode.A)) || Input.GetKey(KeyCode.LeftArrow) {
         //     rb.AddTorque(transform.up * torque * horizontal);
                 rb.AddTorque(new Vector3(0,-torque,0));
             }
 
-            if (Input.GetKey(KeyCode.D)) {
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
             //   rb.AddTorque(-transform.up* torque* horizontal);
                 rb.AddTorque(new Vector3(0,torque,0));
             }
