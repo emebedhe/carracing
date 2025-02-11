@@ -8,8 +8,13 @@ using System.Collections;
 public class carscript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public Button Q;
+    public Button E;
+    private bool qToUpshift;
+    private bool eToUpshift;
     private Vector3 Velocity = new Vector3(0,0,0);
     private int gear = 1;
+    private bool canstartdriving = false;
 
     private float start = -2347823;
     private float torque = 1000;
@@ -23,6 +28,8 @@ public class carscript : MonoBehaviour
     public Text timer;
     public Text finalcptime;
     public float cp1time;
+
+    private bool canStart = false;
 
     public GameObject lastcheckpoint;
     
@@ -89,10 +96,17 @@ public class carscript : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         timer.text = "0.0";
         lastcheckpoint = GameObject.Find("start_line");
+
+        Button qUpshift = Q.GetComponent<Button>();
+        Button eUpshift = E.GetComponent<Button>();
+        qUpshift.onClick.AddListener(TaskOnClick1);
+        eUpshift.onClick.AddListener(TaskOnClick2);
+
     }
     //fixedupdate ig
     void FixedUpdate()
     {
+        if (canstartdriving == true) {
         if (start == -2347823 && Input.anyKey) {
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)) {
             start = Time.time;
@@ -171,6 +185,7 @@ public class carscript : MonoBehaviour
         }
 
         gearCounter.text = "Current Gear: "+gear.ToString();
+        }
 
 
     //     floa t horizontal = Input.GetAxis("Horizontal");
@@ -192,6 +207,26 @@ public class carscript : MonoBehaviour
     //     }
     }
 
+    void TaskOnClick1(){
+        Q.onClick.RemoveListener(TaskOnClick1);
+        Q.gameObject.SetActive(false);
+        E.onClick.RemoveListener(TaskOnClick1);
+        E.gameObject.SetActive(false);
+        canstartdriving=true;
+        qToUpshift = true;
+        eToUpshift = false;
+    }
+
+    void TaskOnClick2(){
+        Q.onClick.RemoveListener(TaskOnClick1);
+        Q.gameObject.SetActive(false);
+        E.onClick.RemoveListener(TaskOnClick1);
+        E.gameObject.SetActive(false);
+        canstartdriving=true;
+        eToUpshift = true;
+        qToUpshift = false;
+    }
+
     void Update() {
         if ((Mathf.Ceil(Speed*100 + 10)/80) > gear) {
             speedText.color = Color.green;
@@ -200,16 +235,27 @@ public class carscript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E)) {
       //      Debug.Log(Mathf.Ceil(Speed*100 + 10)/80); //the + 10 is a buffer so you don't have to go EXACTLY 80
     //        if ((Mathf.Ceil(Speed*100 + 10)/80) > gear) {
+
+                if (eToUpshift == true) {
                 if (gear != 5) { 
                 gear += 1;
                 }
+                }
+                else { if (gear > 1) {gear -=1;}}
             }
      //   }
         if (Input.GetKeyDown(KeyCode.Q)) {
          
-            if (gear > 1) {
-            gear -= 1;
-            }
+                if (qToUpshift == true) {
+                if (gear != 5) { 
+                gear += 1;
+                }
+                }
+                else { if (gear > 1) {gear -=1;}}
+        }
+
+        if (Input.GetKeyDown(KeyCode.F)) {
+            rb.MoveRotation(Quaternion.Euler(new Vector3(0,rb.rotation.eulerAngles.y,0))); //flips car over
         }
     }
 
