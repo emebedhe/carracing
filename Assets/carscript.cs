@@ -8,16 +8,27 @@ using System.Collections;
 public class carscript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public Vector3 Velocity = new Vector3(0,0,0);
-    private float gear = 1f;
-    public Vector3 savedvector = new Vector3(0,0,0);
-    private float torque = 1000f;
+    private Vector3 Velocity = new Vector3(0,0,0);
+    private int gear = 1;
 
-    private float gravity = -20;
+    private float start = -2347823;
+    private float torque;
 
     private float time;
 
     private bool finished = false;
+    public Text gearCounter;
+    public Text speedText;
+    public Text cpText;
+    public Text timer;
+    public Text finalcptime;
+    public float cp1time;
+
+    public GameObject lastcheckpoint;
+    
+
+    private float Speed = 0;
+    private float gravity;
 
     private bool airborne;
     
@@ -25,27 +36,11 @@ public class carscript : MonoBehaviour
     
     Rigidbody rb;     
 
-    private float Thrust = 100f;
-    private float BrakeThrust = 50f;
+    private float Thrust = 20f;
+    private float BrakeThrust = 40f; 
 
-    private float start = -2347823;
-    private float cp1time = -2347823;
-
-    public float Speed = 0;
-
-    public Text timer;
-    public Text gearCounter;
-    public Text speedText;
-    public Text cpText;
-    public Text finalcptime;
-
-
-
-    private Vector3 PreviousPos;
-    private Vector3 CurrentPos;
-    public GameObject lastcheckpoint;
-
-    
+    private Vector3 CurrentPos = new Vector3(0,0,0);
+    private Vector3 PreviousPos = new Vector3(0,0,0);
     // void Start()
     // // {
     // //     rb = GetComponent<Rigidbody>();
