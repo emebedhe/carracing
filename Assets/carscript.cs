@@ -106,11 +106,11 @@ public class carscript : MonoBehaviour
                 gearCounter.color = Color.green;
                 }
             }
-            if (Input.GetKey(KeyCode.S)) || Input.GetKey(KeyCode.DownArrow) {
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow)) {
                 rb.AddForce(-Vector3.Scale(transform.forward, new Vector3(1,0,1)) * BrakeThrust);
             }
 
-            if (Input.GetKey(KeyCode.A)) || Input.GetKey(KeyCode.LeftArrow) {
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
         //     rb.AddTorque(transform.up * torque * horizontal);
                 rb.AddTorque(new Vector3(0,-torque,0));
             }
