@@ -12,7 +12,7 @@ public class carscript : MonoBehaviour
     private int gear = 1;
 
     private float start = -2347823;
-    private float torque;
+    private float torque = 1000;
 
     private float time;
 
@@ -28,7 +28,7 @@ public class carscript : MonoBehaviour
     
 
     private float Speed = 0;
-    private float gravity;
+    private float gravity = -20;
 
     private bool airborne;
     
@@ -36,8 +36,8 @@ public class carscript : MonoBehaviour
     
     Rigidbody rb;     
 
-    private float Thrust = 20f;
-    private float BrakeThrust = 40f; 
+    private float Thrust = 100f;
+    private float BrakeThrust = -50f; 
 
     private Vector3 CurrentPos = new Vector3(0,0,0);
     private Vector3 PreviousPos = new Vector3(0,0,0);
@@ -127,6 +127,7 @@ public class carscript : MonoBehaviour
             // transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
             transform.position = lastcheckpoint.transform.position + new Vector3(0,50,0);
             transform.rotation = lastcheckpoint.transform.rotation;
+            gear=1;
         }
 
 
