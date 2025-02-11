@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "racinggame.sln"
+    "dotnet.defaultSolution": "carracing.sln"
 }
