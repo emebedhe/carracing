@@ -197,7 +197,7 @@ public class carscript : MonoBehaviour
             speedText.color = Color.green;
         }
         else { speedText.color = Color.red;}
-        if (Input.GetKeyDown(KeyCode.Q)) {
+        if (Input.GetKeyDown(KeyCode.E)) {
       //      Debug.Log(Mathf.Ceil(Speed*100 + 10)/80); //the + 10 is a buffer so you don't have to go EXACTLY 80
     //        if ((Mathf.Ceil(Speed*100 + 10)/80) > gear) {
                 if (gear != 5) { 
@@ -205,7 +205,7 @@ public class carscript : MonoBehaviour
                 }
             }
      //   }
-        if (Input.GetKeyDown(KeyCode.E)) {
+        if (Input.GetKeyDown(KeyCode.Q)) {
          
             if (gear > 1) {
             gear -= 1;
