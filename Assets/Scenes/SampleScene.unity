@@ -938,7 +938,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2e07c9083e8d14a4882d86abbdf15528, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 55
+      value: 61
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 2e07c9083e8d14a4882d86abbdf15528, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3595,7 +3595,7 @@ Rigidbody:
   m_GameObject: {fileID: 2030025041}
   serializedVersion: 4
   m_Mass: 0.5
-  m_Drag: 0.5
+  m_Drag: 1.25
   m_AngularDrag: 0.5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}

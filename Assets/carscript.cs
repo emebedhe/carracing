@@ -9,6 +9,10 @@ public class carscript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Button Q;
+
+    //test variables
+
+
     public Button E;
     private bool qToUpshift;
     private bool eToUpshift;
@@ -43,7 +47,7 @@ public class carscript : MonoBehaviour
     
     Rigidbody rb;     
 
-    private float Thrust = 100f;
+    private float Thrust = 200f;
     private float BrakeThrust = 50f; 
 
     private Vector3 CurrentPos = new Vector3(0,0,0);
@@ -141,6 +145,7 @@ public class carscript : MonoBehaviour
             // transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
             transform.position = lastcheckpoint.transform.position + new Vector3(-15,0,-75);
             transform.rotation = lastcheckpoint.transform.rotation * Quaternion.Euler(new Vector3(0,182,0));
+            rb.linearVelocity = new Vector3(0,0,0);
         }
 
 
@@ -247,9 +252,9 @@ public class carscript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q)) {
          
                 if (qToUpshift == true) {
-                if (gear != 5) { 
+                // if (gear != 5) { 
                 gear += 1;
-                }
+                //}
                 }
                 else { if (gear > 1) {gear -=1;}}
         }
@@ -317,18 +322,6 @@ public class carscript : MonoBehaviour
     //    //Debug.Log(transform.forward);
     // }
 
-    void Accelerate() {
-        rb.AddForce(transform.up * Thrust);
-    }
-
-    void Brake() {
-        rb.AddForce(rb.transform.forward * Thrust * -1);
-    }
-
-    void Steer() {
-        float horizontal = Input.GetAxis("Horizontal");
-        rb.AddTorque(transform.up * torque * horizontal);
-    }
 
     // public void GetKeyPress(Vector3 inputVector) {
     //     inputVector.normalize();
