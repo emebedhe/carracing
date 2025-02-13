@@ -242,7 +242,7 @@ public class carscript : MonoBehaviour
     //        if ((Mathf.Ceil(Speed*100 + 10)/80) > gear) {
 
                 if (eToUpshift == true) {
-                if (gear != 5) { 
+                if (gear != 6) { 
                 gear += 1;
                 }
                 }
@@ -252,7 +252,7 @@ public class carscript : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q)) {
          
                 if (qToUpshift == true) {
-                // if (gear != 5) { 
+                if (gear != 6) { 
                 gear += 1;
                 //}
                 }
