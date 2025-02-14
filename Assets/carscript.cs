@@ -18,7 +18,6 @@ public class carscript : MonoBehaviour
     private bool eToUpshift;
     private Vector3 Velocity = new Vector3(0,0,0);
     private int gear = 1;
-    private bool canstartdriving = false;
 
     private float start = -2347823;
     private float torque = 1000;
@@ -31,9 +30,11 @@ public class carscript : MonoBehaviour
     public Text cpText;
     public Text timer;
     public Text finalcptime;
-    public float cp1time;
-
-    private bool canStart = false;
+    public float cp1time = -2347823;
+    public float cp2time = -2347823;
+    public float cp3time = -2347823;
+    public float cp4time = -2347823;
+    private bool canstartdriving = false;
 
     public GameObject lastcheckpoint;
     
@@ -74,17 +75,40 @@ public class carscript : MonoBehaviour
 
     void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Checkpoint") {
-            if (cplist.Contains(1)) {}
-            else { cplist.Add(1);}
+            if (cplist.Contains(other)) {}
+            else { cplist.Add(other);}
             lastcheckpoint = other.gameObject;
+            if (lastcheckpoint.name == "Cp1") {
             if (cp1time == -2347823) {
                 cp1time = Time.time-start;
                 Debug.Log(cp1time);
             }
+            }
+            if (lastcheckpoint.name == "Cp2") {
+            Debug.Log("what the bruh");
+            Debug.Log(cp2time);
+            Debug.Log(cp2time==0);
+                if (cp2time == 0) {
+                    cp2time = Time.time-start;
+                    Debug.Log(cp2time);
+                }
+            }
+            if (lastcheckpoint.name == "Cp3") {
+            if (cp3time == 0) {
+                cp3time = Time.time-start;
+                Debug.Log(cp3time);
+            }
+            }
+            if (lastcheckpoint.name == "Cp4") {
+            if (cp4time == 0) {
+                cp4time = Time.time-start;
+                Debug.Log(cp4time);
+            }
+            }
         }
 
         if (other.gameObject.tag == "Finishline") {
-            if (cplist.Count == 1) {
+            if (cplist.Count == 4) {
                 finished = true;
             }
         }
@@ -167,20 +191,25 @@ public class carscript : MonoBehaviour
 
         speedText.text = "Speed: "+Mathf.Round(Speed*100).ToString();
 
-        if (cplist.Count == 1) {
-            cpText.text = "Checkpoint 1/1";
-        }
-        else if (cplist.Count == 0) {
-            cpText.text = "Checkpoint 0/1";
-        }
-        else {
-            cpText.text = "Checkpoint 0/1";
-        }
+        // if (cplist.Count == 1) {
+        //     cpText.text = "Checkpoint 1/1";
+        // }
+        // else if (cplist.Count == 0) {
+        //     cpText.text = "Checkpoint 0/1";
+        // }
+        // else {
+        //     cpText.text = "Checkpoint 0/1";
+        // }
+
+        cpText.text = "Checkpoint " + cplist.Count.ToString() + "/4";
 
 
         if (finished == true) {
             finalcptime.text = "Checkpoint 1: " + Math.Round(cp1time,2).ToString();
             Debug.Log(cp1time);
+            Debug.Log(cp2time);
+            Debug.Log(cp3time);
+            Debug.Log(cp4time);
         }
         else if (finished == false) {
             time = Time.time;
