@@ -170,6 +170,7 @@ public class carscript : MonoBehaviour
             transform.position = lastcheckpoint.transform.position + new Vector3(-15,0,-75);
             transform.rotation = lastcheckpoint.transform.rotation * Quaternion.Euler(new Vector3(0,182,0));
             rb.linearVelocity = new Vector3(0,0,0);
+            gear = 1;
         }
 
 
