@@ -302,7 +302,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 7, y: 5, z: 1}
   m_Center: {x: 0, y: 2, z: 0}
-<<<<<<< HEAD
 --- !u!1 &308077836
 GameObject:
   m_ObjectHideFlags: 0
@@ -501,8 +500,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42ebf824878bd4d22b1a158c3d9eec54, type: 3}
-=======
->>>>>>> 198ef4c9c16f2ff42072db932249ddc8bd6d0cf0
 --- !u!1 &330585543
 GameObject:
   m_ObjectHideFlags: 0
