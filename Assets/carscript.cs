@@ -48,8 +48,8 @@ public class carscript : MonoBehaviour
     
     Rigidbody rb;     
 
-    private float Thrust = 200f;
-    private float BrakeThrust = 50f; 
+    private float Thrust = 250f;
+    private float BrakeThrust = 80f; 
 
     private Vector3 CurrentPos = new Vector3(0,0,0);
     private Vector3 PreviousPos = new Vector3(0,0,0);
