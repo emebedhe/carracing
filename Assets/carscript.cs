@@ -20,7 +20,7 @@ public class carscript : MonoBehaviour
     private int gear = 1;
 
     private float start = -2347823;
-    private float torque = 1000;
+    private float torque = 1300;
 
     private float time;
 
@@ -190,7 +190,7 @@ public class carscript : MonoBehaviour
 
         PreviousPos = CurrentPos;
 
-        speedText.text = "Speed: "+Mathf.Round(Speed*100).ToString();
+        speedText.text = "Speed: "+Mathf.Round(Speed*10).ToString();
 
         // if (cplist.Count == 1) {
         //     cpText.text = "Checkpoint 1/1";
