@@ -20,7 +20,7 @@ public class carscript : MonoBehaviour
     private int gear = 1;
 
     private float start = -2347823;
-    private float torque = 1300;
+    public float torque = 1500;
 
     private float time;
 
@@ -48,7 +48,7 @@ public class carscript : MonoBehaviour
     
     Rigidbody rb;     
 
-    private float Thrust = 250f;
+    public float Thrust = 350f;
     private float BrakeThrust = 80f; 
 
     private Vector3 CurrentPos = new Vector3(0,0,0);
@@ -167,7 +167,7 @@ public class carscript : MonoBehaviour
         if (Input.GetKey(KeyCode.R)) {
             // transform.position = new Vector3(1887,55,6407);
             // transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
-            transform.position = lastcheckpoint.transform.position + new Vector3(-15,0,-75);
+            transform.position = lastcheckpoint.transform.position + new Vector3(-15,30,-75);
             transform.rotation = lastcheckpoint.transform.rotation * Quaternion.Euler(new Vector3(0,182,0));
             rb.linearVelocity = new Vector3(0,0,0);
             gear = 1;
@@ -190,7 +190,7 @@ public class carscript : MonoBehaviour
 
         PreviousPos = CurrentPos;
 
-        speedText.text = "Speed: "+Mathf.Round(Speed*10).ToString();
+        speedText.text = "Speed: "+Mathf.Round(Speed*20).ToString();
 
         // if (cplist.Count == 1) {
         //     cpText.text = "Checkpoint 1/1";
