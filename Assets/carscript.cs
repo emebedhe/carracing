@@ -167,7 +167,7 @@ public class carscript : MonoBehaviour
         if (Input.GetKey(KeyCode.R)) {
             // transform.position = new Vector3(1887,55,6407);
             // transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
-            transform.position = lastcheckpoint.transform.position + new Vector3(-15,30,-75);
+            transform.position = lastcheckpoint.transform.position + new Vector3(-15,5,-75);
             transform.rotation = lastcheckpoint.transform.rotation * Quaternion.Euler(new Vector3(0,182,0));
             rb.linearVelocity = new Vector3(0,0,0);
             gear = 1;
@@ -190,7 +190,7 @@ public class carscript : MonoBehaviour
 
         PreviousPos = CurrentPos;
 
-        speedText.text = "Speed: "+Mathf.Round(Speed*20).ToString();
+        speedText.text = "Speed: "+Mathf.Round(Speed*25).ToString();
 
         // if (cplist.Count == 1) {
         //     cpText.text = "Checkpoint 1/1";
