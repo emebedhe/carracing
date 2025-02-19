@@ -299,6 +299,7 @@ public class carscript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F)) {
             rb.MoveRotation(Quaternion.Euler(new Vector3(0,rb.rotation.eulerAngles.y,0))); //flips car over
+            gear = 1;
         }
     }
 
