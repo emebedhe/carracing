@@ -20,7 +20,7 @@ public class carscript : MonoBehaviour
     private int gear = 1;
 
     private float start = -2347823;
-    public float torque = 1500;
+    
 
     private float time;
 
@@ -30,10 +30,10 @@ public class carscript : MonoBehaviour
     public Text cpText;
     public Text timer;
     public Text finalcptime;
-    public float cp1time = -2347823;
-    public float cp2time = -2347823;
-    public float cp3time = -2347823;
-    public float cp4time = -2347823;
+    private float cp1time = -2347823;
+    private float cp2time = -2347823;
+    private float cp3time = -2347823;
+    private float cp4time = -2347823;
     private bool canstartdriving = false;
 
     public GameObject lastcheckpoint;
@@ -49,7 +49,8 @@ public class carscript : MonoBehaviour
     Rigidbody rb;     
 
     public float Thrust = 350f;
-    private float BrakeThrust = 80f; 
+    public float torque = 1500;
+    public float BrakeThrust = 80f; 
 
     private Vector3 CurrentPos = new Vector3(0,0,0);
     private Vector3 PreviousPos = new Vector3(0,0,0);
@@ -175,7 +176,7 @@ public class carscript : MonoBehaviour
         if (Input.GetKey(KeyCode.Alpha1)) {
             // transform.position = new Vector3(1887,55,6407);
             // transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
-            transform.position = new Vector3(1050,15,0);
+            transform.position = new Vector3(1050,25,0);
             transform.rotation = lastcheckpoint.transform.rotation * Quaternion.Euler(new Vector3(0,182,0));
             rb.linearVelocity = new Vector3(0,0,0);
             gear = 1;
@@ -299,6 +300,7 @@ public class carscript : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.F)) {
             rb.MoveRotation(Quaternion.Euler(new Vector3(0,rb.rotation.eulerAngles.y,0))); //flips car over
+            gear = 1;
         }
     }
 
