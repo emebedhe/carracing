@@ -158,6 +158,9 @@ void Update()
     if(!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && steeringAxis != 0f){
         ResetSteeringAngle();
     }
+    if(Input.GetKey(KeyCode.Alpha1)){
+        transform.position = new Vector3(1100,25,10)
+    }
 }
 public void TurnLeft(){
     steeringAxis = steeringAxis - (Time.deltaTime * 10f * steerlerpthinglol);
