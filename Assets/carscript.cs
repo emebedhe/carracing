@@ -176,7 +176,7 @@ public class carscript : MonoBehaviour
         if (Input.GetKey(KeyCode.Alpha1)) {
             // transform.position = new Vector3(1887,55,6407);
             // transform.rotation = Quaternion.Euler(new Vector3(0,0,0));
-            transform.position = new Vector3(1050,25,0);
+            transform.position = new Vector3(1050,25,10);
             transform.rotation = lastcheckpoint.transform.rotation * Quaternion.Euler(new Vector3(0,182,0));
             rb.linearVelocity = new Vector3(0,0,0);
             gear = 1;
