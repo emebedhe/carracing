@@ -200,7 +200,7 @@ void Update()
     }
     if(Input.GetKey(KeyCode.Alpha1)){
         transform.position = new Vector3(269.732452f,8.38261509f,61.4506454f);
-        transform.rotation = new Vector3(0f,0f,0f)
+        transform.rotation = new Vector3(0f,0f,0f);
     }
 
     if (Input.GetKey(KeyCode.R)) {
