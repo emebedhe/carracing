@@ -13,6 +13,10 @@ public class carscript : MonoBehaviour
     public Text key1t;
     public Text key2t;
 
+    public Text timetext;
+
+    private bool started;
+
     public float cp1time = -2347823;
     public float cp2time = -2347823;
     public float cp3time = -2347823;
@@ -66,6 +70,7 @@ public class carscript : MonoBehaviour
     public bool finished = false;
 
     private float start = -234567890;
+    public float respawnoffset;
 
 // Start is called before the first frame update
 void Start() {
@@ -158,21 +163,21 @@ void Update()
         CancelInvoke("DecelerateCar");
         deceleratingCar = false;
         GoForward();
-        if (start == -234567890) { start = Time.time;}
+        if (start == -234567890) { start = Time.time; started = true;}
     }
     if(Input.GetKey(KeyCode.S)){
         CancelInvoke("DecelerateCar");
         deceleratingCar = false;
         GoReverse();
-        if (start == -234567890) { start = Time.time;}
+        if (start == -234567890) { start = Time.time; started = true;}
     }
     if(Input.GetKey(KeyCode.A)){
         TurnLeft();
-        if (start == -234567890) { start = Time.time;}
+        if (start == -234567890) { start = Time.time; started = true;}
     }
     if(Input.GetKey(KeyCode.D)){
         TurnRight();
-        if (start == -234567890) { start = Time.time;}
+        if (start == -234567890) { start = Time.time; started = true;}
     }
 
     if(Input.GetKey(KeyCode.Space)){
@@ -204,7 +209,10 @@ void Update()
 
     if (Input.GetKey(KeyCode.R)) {
         ResetPosition();
+        rb.linearVelocity = new Vector3(0,0,0);
     }
+
+    timetext.text = (Mathf.Round((Time.time - start) * 100)/100).ToString();
 
     // if (Input.anyKeyDown && key1 == "")
     // {
@@ -387,8 +395,12 @@ public void Handbrake(){
 }
 
 public void ResetPosition() {
+    if (lastcheckpoint == GameObject.Find("start_line")) {
     rb.transform.position = lastcheckpoint.transform.position;
     rb.transform.rotation = lastcheckpoint.transform.rotation;
+    }
+    else {rb.transform.position = lastcheckpoint.transform.position + new Vector3(0,respawnoffset,0);
+    rb.transform.rotation = lastcheckpoint.transform.rotation;}
     
 }
 
