@@ -8,15 +8,23 @@ public class carscript : MonoBehaviour
 {
 //CAR SETUP
 
-    public Button Q;
-    public Button E;
-    private bool qToUpshift;
-    private bool eToUpshift;
+    private ArrayList cplist = new ArrayList();
+
+    public Text key1t;
+    public Text key2t;
+
+    public float cp1time = -2347823;
+    public float cp2time = -2347823;
+    public float cp3time = -2347823;
+    public float cp4time = -2347823;
     public int maxSpeed = 90;
     public int maxReverseSpeed = 45; 
     public int accelerationMultiplier = 2; 
     public int maxSteeringAngle = 27;
     public float steerlerpthinglol = 0.5f;
+
+    public string key1 = "";
+    public string key2 = "";
 
     public int brakeForce = 350; 
     public int decelerationMultiplier = 2; 
@@ -35,6 +43,9 @@ public class carscript : MonoBehaviour
     public bool isDrifting; 
     public bool tractoin; 
 
+    private string upshift;
+
+
     Rigidbody rb;
     float steeringAxis;
     float throttleAxis; 
@@ -50,6 +61,11 @@ public class carscript : MonoBehaviour
     float RLWextremumSlip;
     WheelFrictionCurve RRwheelFriction;
     float RRWextremumSlip;
+
+    public GameObject lastcheckpoint;
+    public bool finished = false;
+
+    private float start = -234567890;
 
 // Start is called before the first frame update
 void Start()
@@ -85,32 +101,52 @@ void Start()
     RRwheelFriction.asymptoteValue = rrc.sidewaysFriction.asymptoteValue;
     RRwheelFriction.stiffness = rrc.sidewaysFriction.stiffness;
 
-    Button qUpshift = Q.GetComponent<Button>();
-    Button eUpshift = E.GetComponent<Button>();
-    qUpshift.onClick.AddListener(TaskOnClick1);
-    eUpshift.onClick.AddListener(TaskOnClick2);
+    lastcheckpoint = GameObject.Find("start_line");
+
+    key1t.enabled = false;
+    key2t.enabled = false;
 }
 
-void TaskOnClick1(){
-    Q.onClick.RemoveListener(TaskOnClick1);
-    Q.gameObject.SetActive(false);
-    E.onClick.RemoveListener(TaskOnClick1);
-    E.gameObject.SetActive(false);
-   // canstartdriving=true;
-    qToUpshift = true;
-    eToUpshift = false;
-}
+void OnTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "Checkpoint") {
+            if (cplist.Contains(other)) {}
+            else { cplist.Add(other);}
+            lastcheckpoint = other.gameObject;
+            if (lastcheckpoint.name == "Cp1") {
+            if (cp1time == -2347823) {
+                cp1time = Time.time-start;
+                Debug.Log(cp1time);
+            }
+            }
+            if (lastcheckpoint.name == "Cp2") {
+            Debug.Log("what the bruh");
+            Debug.Log(cp2time);
+            Debug.Log(cp2time==0);
+                if (cp2time == 0) {
+                    cp2time = Time.time-start;
+                    Debug.Log(cp2time);
+                }
+            }
+            if (lastcheckpoint.name == "Cp3") {
+            if (cp3time == 0) {
+                cp3time = Time.time-start;
+                Debug.Log(cp3time);
+            }
+            }
+            if (lastcheckpoint.name == "Cp4") {
+            if (cp4time == 0) {
+                cp4time = Time.time-start;
+                Debug.Log(cp4time);
+            }
+            }
+        }
 
-void TaskOnClick2(){
-    Q.onClick.RemoveListener(TaskOnClick1);
-    Q.gameObject.SetActive(false);
-    E.onClick.RemoveListener(TaskOnClick1);
-    E.gameObject.SetActive(false);
-    //canstartdriving=true;
-    eToUpshift = true;
-    qToUpshift = false;
-}
-
+        if (other.gameObject.tag == "Finishline") {
+            if (cplist.Count == 4) {
+                finished = true;
+            }
+        }
+    }
 // Update is called once per frame
 void Update()
 {
@@ -123,17 +159,21 @@ void Update()
         CancelInvoke("DecelerateCar");
         deceleratingCar = false;
         GoForward();
+        if (start == -234567890) { start = Time.time;}
     }
     if(Input.GetKey(KeyCode.S)){
         CancelInvoke("DecelerateCar");
         deceleratingCar = false;
         GoReverse();
+        if (start == -234567890) { start = Time.time;}
     }
     if(Input.GetKey(KeyCode.A)){
         TurnLeft();
+        if (start == -234567890) { start = Time.time;}
     }
     if(Input.GetKey(KeyCode.D)){
         TurnRight();
+        if (start == -234567890) { start = Time.time;}
     }
 
     if(Input.GetKey(KeyCode.Space)){
@@ -158,9 +198,25 @@ void Update()
     if(!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && steeringAxis != 0f){
         ResetSteeringAngle();
     }
-    if(Input.GetKey(KeyCode.Alpha1)){
-        transform.position = new Vector3(269.732452,8.38261509,61.4506454);
+    // if(Input.GetKey(KeyCode.Alpha1)){
+    //     transform.position = new Vector3(269.732452f,8.38261509f,61.4506454f);
+    // }
+
+    if (Input.GetKey(KeyCode.R)) {
+        ResetPosition();
     }
+
+    // if (Input.anyKeyDown && key1 == "")
+    // {
+    //     key1 = Input.inputString;
+    //     key1t.enabled = false;
+    //     key2t.enabled = true;
+    // }
+    // if (Input.anyKeyDown && key2 == "" && key1 != "") {
+    //     key2 = Input.inputString;
+    //     key2t.enabled = false;
+    // }  
+
 }
 public void TurnLeft(){
     steeringAxis = steeringAxis - (Time.deltaTime * 10f * steerlerpthinglol);
@@ -328,6 +384,12 @@ public void Handbrake(){
     tractoin = true;
 
 
+}
+
+public void ResetPosition() {
+    rb.transform.position = lastcheckpoint.transform.position;
+    rb.transform.rotation = lastcheckpoint.transform.rotation;
+    
 }
 
 public void RecoverTraction(){
