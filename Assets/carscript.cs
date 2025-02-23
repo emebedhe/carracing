@@ -7,13 +7,20 @@ using UnityEngine.UI;
 public class carscript : MonoBehaviour
 {
 //CAR SETUP
+    public GameObject FLMesh;
+    public GameObject FRMesh;
+
 
     private ArrayList cplist = new ArrayList();
+
+    public Collider grass;
+    private string track = "track 1";
 
     public Text key1t;
     public Text key2t;
 
     public Text timetext;
+    public Text speedtext;
 
     private bool started;
 
@@ -26,12 +33,9 @@ public class carscript : MonoBehaviour
     public int accelerationMultiplier = 2; 
     public int maxSteeringAngle = 27;
     public float steerlerpthinglol = 0.5f;
-
-    public string key1 = "";
-    public string key2 = "";
-
     public int brakeForce = 350; 
     public int decelerationMultiplier = 2; 
+    public float grassPenalty = 7;
     public int handbrakeDriftMultiplier = 5; 
     public Vector3 centerofmass; 
 
@@ -203,16 +207,41 @@ void Update()
         ResetSteeringAngle();
     }
     if(Input.GetKey(KeyCode.Alpha1)){
-        transform.position = new Vector3(269.732452f,8.38261509f,61.4506454f);
-        transform.rotation = Quaternion.Euler(0f,0f,0f);
+        transform.position = new Vector3(530.2919f,42.9f,-1059.4f);
+        transform.rotation = Quaternion.Euler(0f,90f,0f);
+        rb.linearVelocity = new Vector3(0,0,0);
+        maxSpeed = 50000;
+        track = "track 2";
     }
 
     if (Input.GetKey(KeyCode.R)) {
         ResetPosition();
         rb.linearVelocity = new Vector3(0,0,0);
+        maxSpeed = 180;
+        track = "track 1";
+    }
+    if (finished == false) {
+    timetext.text = (Mathf.Round((Time.time - start) * 100)/100).ToString();
     }
 
-    timetext.text = (Mathf.Round((Time.time - start) * 100)/100).ToString();
+    speedtext.text = Mathf.Round(carSpeed).ToString();
+    if (flc.GetGroundHit(out WheelHit hit)) {
+        if (hit.collider == grass) {
+            Debug.Log("On the grass!");
+            maxSpeed = 180;
+            rb.linearDamping = 0.015f * grassPenalty;
+        }
+        else if (track == "track 1") {
+            maxSpeed = 180;
+            rb.linearDamping = 0.015f;
+        }
+        else if (track == "track 2") {
+            maxSpeed = 50000;
+            rb.linearDamping = 0.015f;
+        }
+    }
+
+    AnimateWheelMesh();
 
     // if (Input.anyKeyDown && key1 == "")
     // {
@@ -225,6 +254,11 @@ void Update()
     //     key2t.enabled = false;
     // }  
 
+}
+
+public void AnimateWheelMesh(){
+    // FLMesh.transform.rotation = Quaternion.Euler(new Vector3(FLMesh.transform.rotation.x,steeringAxis * maxSteeringAngle,FLMesh.transform.rotation.z));
+    // FRMesh.transform.rotation = Quaternion.Euler(new Vector3(FRMesh.transform.rotation.x,steeringAxis * maxSteeringAngle,FRMesh.transform.rotation.z));
 }
 public void TurnLeft(){
     steeringAxis = steeringAxis - (Time.deltaTime * 10f * steerlerpthinglol);

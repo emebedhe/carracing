@@ -24,7 +24,7 @@ public class camerascript : MonoBehaviour
       
         transform.rotation = player.transform.rotation;
         // transform.rotation = Quaternion.Euler(0,0,0);
-        // transform.Rotate(rotationoffset);
+        transform.Rotate(rotationoffset);
       //  Debug.Log(transform.position.x-player.transform.position.x);
       //  Debug.Log(transform.position.z-player.transform.position.z); 
     
