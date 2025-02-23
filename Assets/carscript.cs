@@ -68,8 +68,7 @@ public class carscript : MonoBehaviour
     private float start = -234567890;
 
 // Start is called before the first frame update
-void Start()
-{
+void Start() {
     rb = gameObject.GetComponent<Rigidbody>();
     rb.centerOfMass = centerofmass;
     FLwheelFriction = new WheelFrictionCurve ();
