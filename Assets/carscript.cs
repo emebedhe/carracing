@@ -159,7 +159,8 @@ void Update()
         ResetSteeringAngle();
     }
     if(Input.GetKey(KeyCode.Alpha1)){
-        transform.position = new Vector3(269.732452,8.38261509,61.4506454);
+        transform.position = new Vector3(269.732452f,8.38261509f,61.4506454f);
+        transform.rotation = new Vector3(0,0,0)
     }
 }
 public void TurnLeft(){
