@@ -848,7 +848,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: 0}
+  m_AnchoredPosition: {x: -400, y: 250}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &528725118
@@ -1093,7 +1093,7 @@ PrefabInstance:
     - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: grass
       value: 
-      objectReference: {fileID: 1671952533}
+      objectReference: {fileID: 0}
     - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: key1t
       value: 
@@ -1101,7 +1101,7 @@ PrefabInstance:
     - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: key2t
       value: 
-      objectReference: {fileID: 1575813923}
+      objectReference: {fileID: 0}
     - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: FLMesh
       value: 
@@ -2506,7 +2506,10 @@ PrefabInstance:
       addedObject: {fileID: 495022646}
     - targetCorrespondingSourceObject: {fileID: 7655633259851401260, guid: 5b72f3ec8ace0c1429809b7d0276fccb, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1671952533}
+      addedObject: {fileID: 720594081}
+    - targetCorrespondingSourceObject: {fileID: 7655633259851401260, guid: 5b72f3ec8ace0c1429809b7d0276fccb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 720594082}
   m_SourcePrefab: {fileID: 100100000, guid: 5b72f3ec8ace0c1429809b7d0276fccb, type: 3}
 --- !u!1 &1419520160
 GameObject:
@@ -2605,8 +2608,9 @@ RectTransform:
   - {fileID: 1307110743}
   - {fileID: 1507928361}
   - {fileID: 1967406316}
-  - {fileID: 1575813922}
   - {fileID: 738701143}
+  - {fileID: 528725117}
+  - {fileID: 1596410213}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3099,7 +3103,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: 0}
+  m_AnchoredPosition: {x: -400, y: 200}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1596410214
@@ -3189,33 +3193,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2321811926305402693, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
   m_PrefabInstance: {fileID: 706064183}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1671952529 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7655633259851401260, guid: 5b72f3ec8ace0c1429809b7d0276fccb, type: 3}
-  m_PrefabInstance: {fileID: 1414984568}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1671952533
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1671952529}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -2441658414131813105, guid: 5b72f3ec8ace0c1429809b7d0276fccb, type: 3}
 --- !u!1 &1690843556
 GameObject:
   m_ObjectHideFlags: 0
@@ -3578,7 +3555,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -125}
+  m_AnchoredPosition: {x: -200, y: 50}
   m_SizeDelta: {x: 600, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1967406317
@@ -3594,7 +3571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.011096239, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3602,11 +3579,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 20
+    m_Font: {fileID: 12800000, guid: 496cccd98b816b243a467688e8e47ee8, type: 3}
+    m_FontSize: 16
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 2
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 0
     m_AlignByGeometry: 0
@@ -3614,9 +3591,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Please activate the appropriate mechanism to incrementally elevate the
-    gear ratio, ensuring a smooth and optimized transition to a higher performance
-    gear.
+  m_Text: Select Keybind for Upshift
 --- !u!222 &1967406318
 CanvasRenderer:
   m_ObjectHideFlags: 0
