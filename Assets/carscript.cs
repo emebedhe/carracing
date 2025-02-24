@@ -102,8 +102,8 @@ void Start() {
 
     lastcheckpoint = GameObject.Find("start_line");
 
-    key1t.enabled = false;
-    key2t.enabled = false;
+    // key1t.enabled = false;
+    // key2t.enabled = false;
 }
 
 void OnTriggerEnter(Collider other) {
