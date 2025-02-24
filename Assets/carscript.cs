@@ -207,7 +207,7 @@ void Update()
         ResetSteeringAngle();
     }
     if(Input.GetKey(KeyCode.Alpha1)){
-        transform.position = new Vector3(530.2919f,42.9f,-1059.4f);
+        transform.position = new Vector3(257f,42.9f,65f);
         transform.rotation = Quaternion.Euler(0f,90f,0f);
         rb.linearVelocity = new Vector3(0,0,0);
         maxSpeed = 50000;
