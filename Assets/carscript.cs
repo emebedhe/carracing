@@ -3,10 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
 
 public class carscript : MonoBehaviour
 {
 //CAR SETUP
+
+    public TextAsset replayFile;
+    private string replayFileString;
+    private List<string> eachLine;
+
+
     public GameObject FLMesh;
     public GameObject FRMesh;
 
@@ -76,6 +83,9 @@ public class carscript : MonoBehaviour
     private float start = -234567890;
     public float respawnoffset;
 
+    public Button Q;
+    public Button E;
+
 // Start is called before the first frame update
 void Start() {
     rb = gameObject.GetComponent<Rigidbody>();
@@ -111,8 +121,13 @@ void Start() {
 
     lastcheckpoint = GameObject.Find("start_line");
 
-    // key1t.enabled = false;
-    // key2t.enabled = false;
+    key1t.enabled = false;
+    key2t.enabled = false;
+    Button Q2 = Q.gameObject.GetComponent<Button>();
+    Button E2 = E.gameObject.GetComponent<Button>();
+    Q2.gameObject.SetActive(false);
+    E2.gameObject.SetActive(false);
+    
 }
 
 void OnTriggerEnter(Collider other) {
@@ -207,8 +222,8 @@ void Update()
         ResetSteeringAngle();
     }
     if(Input.GetKey(KeyCode.Alpha1)){
-        transform.position = new Vector3(267f,42.9f,65f);
-        transform.rotation = Quaternion.Euler(0f,0f,0f);
+        transform.position = new Vector3(-328.6675f,17.67268f,-521.3595f);
+        transform.rotation = Quaternion.Euler(0f,90f,0f);
         rb.linearVelocity = new Vector3(0,0,0);
         maxSpeed = 50000;
         track = "track 2";
@@ -220,9 +235,21 @@ void Update()
         maxSpeed = 180;
         track = "track 1";
     }
+    if (Input.GetKey(KeyCode.Backslash)) {
+        rb.linearVelocity = new Vector3(0,0,0);
+        maxSpeed = 180;
+        track = "track 1";
+        cplist = new ArrayList();
+        start = Time.time;
+        lastcheckpoint = GameObject.Find("start_line");
+        rb.transform.position = lastcheckpoint.transform.position;
+        rb.transform.rotation = lastcheckpoint.transform.rotation;
+    }
+
     if (finished == false) {
     timetext.text = (Mathf.Round((Time.time - start) * 100)/100).ToString();
     }
+
 
     speedtext.text = Mathf.Round(carSpeed).ToString();
     if (flc.GetGroundHit(out WheelHit hit)) {
@@ -257,8 +284,20 @@ void Update()
 }
 
 public void AnimateWheelMesh(){
-    // FLMesh.transform.rotation = Quaternion.Euler(new Vector3(FLMesh.transform.rotation.x,steeringAxis * maxSteeringAngle,FLMesh.transform.rotation.z));
-    // FRMesh.transform.rotation = Quaternion.Euler(new Vector3(FRMesh.transform.rotation.x,steeringAxis * maxSteeringAngle,FRMesh.transform.rotation.z));
+    // FLMesh.transform.rotation = Quaternion.Euler(new Vector3(FLMesh.transform.rotation.x,90,FLMesh.transform.rotation.z));
+    // FRMesh.transform.rotation = Quaternion.Euler(new Vector3(FRMesh.transform.rotation.x,90,FRMesh.transform.rotation.z));
+    // Quaternion FLRot;
+    // Vector3 FLPos;
+    // flc.GetWorldPose(out FLPos, out FLRot);
+    // FLMesh.transform.rotation = FLRot;
+    // // FLMesh.transform.position = FLPos;
+    // FLMesh.transform.Rotate(new Vector3(0,0,90));
+    // frc.GetWorldPose(out FLPos, out FLRot);
+    // FRMesh.transform.rotation = FLRot;
+    // // FRMesh.transform.position = FLPos;
+    // FRMesh.transform.Rotate(new Vector3(0,0,90));
+
+
 }
 public void TurnLeft(){
     steeringAxis = steeringAxis - (Time.deltaTime * 10f * steerlerpthinglol);
