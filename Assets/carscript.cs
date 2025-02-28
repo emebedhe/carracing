@@ -8,11 +8,15 @@ using System.IO;
 public class carscript : MonoBehaviour
 {
 //CAR SETUP
+    List<List<float>> replaymanager = new List<List<float>>();
+    private float replaylistlength = 0;
+    private float replaytime;
 
-    public TextAsset replayFile;
-    private string replayFileString;
-    private List<string> eachLine;
+    private int frametimer=0;
+    private int replayframe;
+    private int startframe;
 
+    private bool replaystarted = false;
 
     public GameObject FLMesh;
     public GameObject FRMesh;
@@ -171,12 +175,23 @@ void OnTriggerEnter(Collider other) {
         }
     }
 // Update is called once per frame
-void Update()
+void FixedUpdate()
 {
+    frametimer += 1;
     carSpeed = (2 * 3.14f * flc.radius * flc.rpm * 60) / 1000;
     localVelocityX = transform.InverseTransformDirection(rb.linearVelocity).x;
     localVelocityZ = transform.InverseTransformDirection(rb.linearVelocity).z;
-    
+    replaylistlength = 0;
+    replaymanager.Add(new List<float> {transform.position.x,transform.position.y,transform.position.z});
+
+    foreach (List<float> subList in replaymanager)
+    {
+        foreach (float item in subList)
+        {
+            replaylistlength += 1;
+        }
+    }
+    // Debug.Log(replaylistlength);
 
     if(Input.GetKey(KeyCode.W)){
         CancelInvoke("DecelerateCar");
@@ -267,6 +282,21 @@ void Update()
             rb.linearDamping = 0.015f;
         }
     }
+
+    if (Input.GetKey(KeyCode.P) && replaystarted == false) {
+        replaystarted = true;
+        replaytime = Time.time;
+        replayframe = frametimer;
+    }
+    if (replaystarted == true) {
+        int index = (int)frametimer - (int)replayframe;
+        Debug.Log(replaymanager[index][0]);
+        // foreach (float replayitem in replaymanager[index]) {
+        
+
+        // }
+    }
+
 
     AnimateWheelMesh();
 
