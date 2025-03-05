@@ -20,6 +20,8 @@ public class carscript : MonoBehaviour
 
     public GameObject FLMesh;
     public GameObject FRMesh;
+    public GameObject FLTread;
+    public GameObject FRTread;
 
 
     private ArrayList cplist = new ArrayList();
@@ -314,18 +316,29 @@ void FixedUpdate()
 }
 
 public void AnimateWheelMesh(){
-    // FLMesh.transform.rotation = Quaternion.Euler(new Vector3(FLMesh.transform.rotation.x,90,FLMesh.transform.rotation.z));
-    // FRMesh.transform.rotation = Quaternion.Euler(new Vector3(FRMesh.transform.rotation.x,90,FRMesh.transform.rotation.z));
-    // Quaternion FLRot;
-    // Vector3 FLPos;
-    // flc.GetWorldPose(out FLPos, out FLRot);
-    // FLMesh.transform.rotation = FLRot;
-    // // FLMesh.transform.position = FLPos;
-    // FLMesh.transform.Rotate(new Vector3(0,0,90));
-    // frc.GetWorldPose(out FLPos, out FLRot);
+    FLMesh.transform.rotation = Quaternion.Euler(new Vector3(FLMesh.transform.rotation.x,90,FLMesh.transform.rotation.z));
+    FRMesh.transform.rotation = Quaternion.Euler(new Vector3(FRMesh.transform.rotation.x,90,FRMesh.transform.rotation.z));
+    
+    Quaternion FLRot;
+    Vector3 FLPos;
+    flc.GetWorldPose(out FLPos, out FLRot);
+    FLMesh.transform.rotation = FLRot;
+    FLMesh.transform.position = FLPos;
+    FLTread.transform.rotation = FLRot;
+    FLTread.transform.position = FLPos;
+
+    // FLMesh.transform.position = FLPos;
+    FLMesh.transform.Rotate(new Vector3(0,0,90));
+    FLTread.transform.Rotate(new Vector3(0,0,90));
+    frc.GetWorldPose(out FLPos, out FLRot);
     // FRMesh.transform.rotation = FLRot;
-    // // FRMesh.transform.position = FLPos;
-    // FRMesh.transform.Rotate(new Vector3(0,0,90));
+    FRMesh.transform.rotation = FLRot;
+    FRMesh.transform.position = FLPos;
+    FRTread.transform.rotation = FLRot;
+    FRTread.transform.position = FLPos;
+    // FRMesh.transform.position = FLPos;
+    FRMesh.transform.Rotate(new Vector3(0,0,90));
+    FRTread.transform.Rotate(new Vector3(0,0,90));
 
 
 }
