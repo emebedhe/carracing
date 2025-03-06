@@ -35,12 +35,14 @@ public class camerascript : MonoBehaviour
         }
         if (cameraa == 1) {
           cartravelnormalised = carbody.linearVelocity.normalized;
+          offset = new Vector3(0,-25,0);
           transform.position = player.transform.position + new Vector3(0,30,0) + Vector3.Scale(cartravelnormalised, new Vector3(lllll,lllll,lllll)) + offset; //+ new Vector3(10,5,-5);
           transform.LookAt(player);
         } else {
           transform.position = player.transform.position+offset+player.transform.forward.normalized;
           transform.rotation = player.transform.rotation;
           transform.Rotate(rotationoffset);
+          offset = new Vector3(0,2,0);
         }
       //  Debug.Log(transform.position.x-player.transform.position.x);
       //  Debug.Log(transform.position.z-player.transform.position.z); 
