@@ -55,7 +55,7 @@ public class camerascript : MonoBehaviour
     
         //transform.Rotate(20,0,0);
     }
-
+//hi
    
 
 }
