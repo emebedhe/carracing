@@ -238,7 +238,7 @@ void FixedUpdate()
     if(!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && steeringAxis != 0f){
         ResetSteeringAngle();
     }
-    if(Input.GetKey(KeyCode.Alpha1)){
+    if(Input.GetKey(KeyCode.Slash)){
         transform.position = new Vector3(-328.6675f,17.67268f,-521.3595f);
         transform.rotation = Quaternion.Euler(0f,90f,0f);
         rb.linearVelocity = new Vector3(0,0,0);
