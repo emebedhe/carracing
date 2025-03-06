@@ -526,7 +526,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1762799462}
-  offset: {x: 0, y: 2, z: 0}
+  offset: {x: 0, y: -25, z: 0}
   rotationoffset: {x: 0, y: 0, z: 0}
   carbody: {fileID: 2003366884}
   lllll: -20
