@@ -42,8 +42,13 @@ public class camerascript : MonoBehaviour
           if (transform.InverseTransformDirection(carbody.linearVelocity).z >= 0.1f || transform.InverseTransformDirection(carbody.linearVelocity).z <= -0.1f) {
           transform.position = player.transform.position + new Vector3(0,30,0) + Vector3.Scale(cartravelnormalised, new Vector3(lllll,lllll,lllll)) + offset; //+ new Vector3(10,5,-5);
           transform.LookAt(player);
+
           }
-          // Debug.Log(transform.InverseTransformDirection(carbody.linearVelocity).z);
+          else {
+            transform.position = player.transform.position + new Vector3(0,30,0) + Vector3.Scale(player.transform.forward, new Vector3(lllll,lllll,lllll)) + offset;
+            transform.LookAt(player);
+          }
+          Debug.Log(transform.InverseTransformDirection(carbody.linearVelocity).z);
         } else {
           transform.position = player.transform.position+offset+player.transform.forward.normalized;
           transform.rotation = player.transform.rotation;
