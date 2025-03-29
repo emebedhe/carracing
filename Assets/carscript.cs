@@ -92,6 +92,10 @@ public class carscript : MonoBehaviour
     public Button Q;
     public Button E;
 
+    public bool paused = false;
+
+    public Button Play;
+
 // Start is called before the first frame update
 void Start() {
     rb = gameObject.GetComponent<Rigidbody>();
@@ -131,9 +135,10 @@ void Start() {
     key2t.enabled = false;
     Button Q2 = Q.gameObject.GetComponent<Button>();
     Button E2 = E.gameObject.GetComponent<Button>();
+    Button Play2 = Play.gameObject.GetComponent<Button>();
     Q2.gameObject.SetActive(false);
     E2.gameObject.SetActive(false);
-    
+    Play2.gameObject.SetActive(true);
 }
 
 void OnTriggerEnter(Collider other) {
@@ -176,6 +181,7 @@ void OnTriggerEnter(Collider other) {
             }
         }
     }
+    
 // Update is called once per frame
 void FixedUpdate()
 {

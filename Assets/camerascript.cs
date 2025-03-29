@@ -48,7 +48,16 @@ public class camerascript : MonoBehaviour
             transform.position = player.transform.position + new Vector3(0,30,0) + Vector3.Scale(player.transform.forward, new Vector3(lllll,lllll,lllll)) + offset;
             transform.LookAt(player);
           }
-          Debug.Log(transform.InverseTransformDirection(carbody.linearVelocity).z);
+          //Debug.Log(transform.InverseTransformDirection(carbody.linearVelocity).z);
+          // This if block detects whether or not the tab key is pressed. If so, it automatically looks from the front.
+          if (Input.GetKey(KeyCode.Tab)) {
+            transform.position = Vector3.Scale(player.transform.position,new Vector3(1f,1f,1f)) + new Vector3(0,30,0) + Vector3.Scale(player.transform.forward, new Vector3(-lllll,-lllll,-lllll)) + offset;
+            transform.LookAt(player);
+            Debug.Log("Original x");
+            Debug.Log(player.transform.forward.x);
+            Debug.Log("Changed x");
+            Debug.Log(Mathf.Abs(player.transform.forward.x)*-1);
+          }
         } else {
           transform.position = player.transform.position+offset+player.transform.forward.normalized;
           transform.rotation = player.transform.rotation;
