@@ -12,6 +12,8 @@ public class carscript : MonoBehaviour
     private float replaylistlength = 0;
     private float replaytime;
 
+    public GameObject stuntstartline;
+
     private int frametimer=0;
     private int replayframe;
     private int startframe;
@@ -190,7 +192,22 @@ void FixedUpdate()
     localVelocityX = transform.InverseTransformDirection(rb.linearVelocity).x;
     localVelocityZ = transform.InverseTransformDirection(rb.linearVelocity).z;
     replaylistlength = 0;
-    replaymanager.Add(new List<float> {transform.position.x,transform.position.y,transform.position.z});
+
+  
+    string stringlist = "";
+    stringlist = string.Join(", ",replaymanager);
+    Debug.Log(stringlist);
+    if (finished) {
+        using (StreamWriter sw = new StreamWriter("Assets/saves.txt"))
+            {
+                sw.WriteLine(stringlist);
+            }
+    }
+            
+    if (finished == false) {
+    replaymanager.Add(new List<float> {transform.position.x,transform.position.y,transform.position.z,transform.eulerAngles.x,transform.eulerAngles.y,transform.eulerAngles.z});
+
+    }
 
     foreach (List<float> subList in replaymanager)
     {
@@ -268,6 +285,13 @@ void FixedUpdate()
         rb.transform.position = lastcheckpoint.transform.position;
         rb.transform.rotation = lastcheckpoint.transform.rotation;
     }
+    if (Input.GetKey(KeyCode.Semicolon)) {
+        rb.linearVelocity = new Vector3(0,0,0);
+        track = "track 3";
+        maxSpeed = 50000;
+        transform.rotation = stuntstartline.transform.rotation;
+        transform.position = stuntstartline.transform.position;
+    }
 
     if (finished == false) {
     timetext.text = (Mathf.Round((Time.time - start) * 100)/100).ToString();
@@ -291,18 +315,26 @@ void FixedUpdate()
         }
     }
 
-    if (Input.GetKey(KeyCode.P) && replaystarted == false) {
+    // if (replaystarted == true) {
+    //     int index = (int)frametimer - (int)replayframe;
+    //     Debug.Log(replaymanager[index][0]);
+    //     // foreach (float replayitem in replaymanager[index]) {
+        
+
+    //     // }
+    // }
+
+    if (Input.GetKey(KeyCode.P) && replaystarted == false && finished == true) {
         replaystarted = true;
         replaytime = Time.time;
         replayframe = frametimer;
     }
-    if (replaystarted == true) {
+    
+    if (finished == true && replaystarted == true) {
+        replaystarted=true;
         int index = (int)frametimer - (int)replayframe;
-        Debug.Log(replaymanager[index][0]);
-        // foreach (float replayitem in replaymanager[index]) {
-        
-
-        // }
+        transform.position = new Vector3(replaymanager[index][0],replaymanager[index][1],replaymanager[index][2]);
+        transform.rotation = Quaternion.Euler(new Vector3(replaymanager[index][3],replaymanager[index][4],replaymanager[index][5]));
     }
 
 
