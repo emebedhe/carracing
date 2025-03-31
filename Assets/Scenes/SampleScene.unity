@@ -1107,11 +1107,7 @@ PrefabInstance:
     - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: stuntstartline
       value: 
-<<<<<<< HEAD
       objectReference: {fileID: 2137735513}
-=======
-      objectReference: {fileID: 1518730069}
->>>>>>> edc9cea610c93946a3ae95e166127d7a14805bd0
     - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: accelerationMultiplier
       value: 15
