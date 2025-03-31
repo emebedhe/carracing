@@ -11,6 +11,7 @@ public class carscript : MonoBehaviour
     List<List<float>> replaymanager = new List<List<float>>();
     private float replaylistlength = 0;
     private float replaytime;
+    private float currentreplayframe = 0;
 
     public GameObject stuntstartline;
 
@@ -192,7 +193,9 @@ void FixedUpdate()
     localVelocityX = transform.InverseTransformDirection(rb.linearVelocity).x;
     localVelocityZ = transform.InverseTransformDirection(rb.linearVelocity).z;
     replaylistlength = 0;
-    replaymanager.Add(new List<float> {transform.position.x,transform.position.y,transform.position.z});
+    if (finished == false) {
+    replaymanager.Add(new List<float> {transform.position.x,transform.position.y,transform.position.z,transform.eulerAngles.x,transform.eulerAngles.y,transform.eulerAngles.z});
+    }
 
     foreach (List<float> subList in replaymanager)
     {
@@ -300,18 +303,26 @@ void FixedUpdate()
         }
     }
 
-    if (Input.GetKey(KeyCode.P) && replaystarted == false) {
+    // if (replaystarted == true) {
+    //     int index = (int)frametimer - (int)replayframe;
+    //     Debug.Log(replaymanager[index][0]);
+    //     // foreach (float replayitem in replaymanager[index]) {
+        
+
+    //     // }
+    // }
+
+    if (Input.GetKey(KeyCode.P) && replaystarted == false && finished == true) {
         replaystarted = true;
         replaytime = Time.time;
         replayframe = frametimer;
     }
-    if (replaystarted == true) {
+    
+    if (finished == true && replaystarted == true) {
+        replaystarted=true;
         int index = (int)frametimer - (int)replayframe;
-        Debug.Log(replaymanager[index][0]);
-        // foreach (float replayitem in replaymanager[index]) {
-        
-
-        // }
+        transform.position = new Vector3(replaymanager[index][0],replaymanager[index][1],replaymanager[index][2]);
+        transform.rotation = Quaternion.Euler(new Vector3(replaymanager[index][3],replaymanager[index][4],replaymanager[index][5]));
     }
 
 
