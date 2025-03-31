@@ -12,6 +12,8 @@ public class carscript : MonoBehaviour
     private float replaylistlength = 0;
     private float replaytime;
 
+    public GameObject stuntstartline;
+
     private int frametimer=0;
     private int replayframe;
     private int startframe;
@@ -267,6 +269,13 @@ void FixedUpdate()
         lastcheckpoint = GameObject.Find("start_line");
         rb.transform.position = lastcheckpoint.transform.position;
         rb.transform.rotation = lastcheckpoint.transform.rotation;
+    }
+    if (Input.GetKey(KeyCode.Semicolon)) {
+        rb.linearVelocity = new Vector3(0,0,0);
+        track = "track 3";
+        maxSpeed = 50000;
+        transform.rotation = stuntstartline.transform.rotation;
+        transform.position = stuntstartline.transform.position;
     }
 
     if (finished == false) {

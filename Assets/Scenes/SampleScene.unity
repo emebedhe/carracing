@@ -1105,6 +1105,10 @@ PrefabInstance:
       value: -20
       objectReference: {fileID: 0}
     - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
+      propertyPath: stuntstartline
+      value: 
+      objectReference: {fileID: 1518730069}
+    - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: accelerationMultiplier
       value: 15
       objectReference: {fileID: 0}
@@ -2667,6 +2671,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1518730069 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2389535965521183495, guid: c7db5d586f06d7042a87ef8e5ac9360d, type: 3}
+  m_PrefabInstance: {fileID: 2137735512}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1596410212
 GameObject:
   m_ObjectHideFlags: 0
