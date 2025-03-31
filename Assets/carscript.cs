@@ -193,6 +193,19 @@ void FixedUpdate()
     localVelocityX = transform.InverseTransformDirection(rb.linearVelocity).x;
     localVelocityZ = transform.InverseTransformDirection(rb.linearVelocity).z;
     replaylistlength = 0;
+
+    string stringlist = "";
+     stringlist = string.Join(", ",replaymanager);
+     Debug.Log(stringlist);
+     if (finished) {
+         using (StreamWriter sw = new StreamWriter("Assets/saves.txt"))
+             {
+                 sw.WriteLine(stringlist);
+             }
+    }
+
+    
+
     if (finished == false) {
     replaymanager.Add(new List<float> {transform.position.x,transform.position.y,transform.position.z,transform.eulerAngles.x,transform.eulerAngles.y,transform.eulerAngles.z});
     }
