@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 using UnityEngine.UI;
 using System.IO;
 
@@ -9,9 +10,11 @@ public class carscript : MonoBehaviour
 {
 //CAR SETUP
     List<List<float>> replaymanager = new List<List<float>>();
-    private float replaylistlength = 0;
+    //private float replaylistlength = 0;
     private float replaytime;
-    private float currentreplayframe = 0;
+    //private float currentreplayframe = 0;
+
+    public bool createreplay = false;
 
     public GameObject stuntstartline;
 
@@ -20,6 +23,7 @@ public class carscript : MonoBehaviour
     private int startframe;
 
     private bool replaystarted = false;
+    private bool replaywritten = false;
 
     public GameObject FLMesh;
     public GameObject FRMesh;
@@ -35,10 +39,12 @@ public class carscript : MonoBehaviour
     public Text key1t;
     public Text key2t;
 
+    public Text cptext;
+
     public Text timetext;
     public Text speedtext;
 
-    private bool started;
+    private bool started = false;
 
     public float cp1time = -2347823;
     public float cp2time = -2347823;
@@ -136,12 +142,6 @@ void Start() {
 
     key1t.enabled = false;
     key2t.enabled = false;
-    Button Q2 = Q.gameObject.GetComponent<Button>();
-    Button E2 = E.gameObject.GetComponent<Button>();
-    Button Play2 = Play.gameObject.GetComponent<Button>();
-    Q2.gameObject.SetActive(false);
-    E2.gameObject.SetActive(false);
-    Play2.gameObject.SetActive(true);
 }
 
 void OnTriggerEnter(Collider other) {
@@ -159,19 +159,19 @@ void OnTriggerEnter(Collider other) {
             Debug.Log("what the bruh");
             Debug.Log(cp2time);
             Debug.Log(cp2time==0);
-                if (cp2time == 0) {
+                if (cp2time == -2347823) {
                     cp2time = Time.time-start;
                     Debug.Log(cp2time);
                 }
             }
             if (lastcheckpoint.name == "Cp3") {
-            if (cp3time == 0) {
+            if (cp3time == -2347823) {
                 cp3time = Time.time-start;
                 Debug.Log(cp3time);
             }
             }
             if (lastcheckpoint.name == "Cp4") {
-            if (cp4time == 0) {
+            if (cp4time == -2347823) {
                 cp4time = Time.time-start;
                 Debug.Log(cp4time);
             }
@@ -192,9 +192,12 @@ void FixedUpdate()
     carSpeed = (2 * 3.14f * flc.radius * flc.rpm * 60) / 1000;
     localVelocityX = transform.InverseTransformDirection(rb.linearVelocity).x;
     localVelocityZ = transform.InverseTransformDirection(rb.linearVelocity).z;
-    replaylistlength = 0;
+    // replaylistlength = 0;
 
     string stringlist = "";
+    if (finished && replaywritten == false) {
+    cptext.text = cp1time.ToString() + "\n" + cp2time.ToString() + "\n" + cp3time.ToString() + "\n" + cp4time.ToString();
+    replaywritten = true;
     List<float> stringlistlist = new List<float>();
     foreach (List<float> item in replaymanager) {
         foreach (float element in item) {
@@ -211,21 +214,14 @@ void FixedUpdate()
         }
     
     }
-
-
-
-
-
-    if (finished == false) {
-    replaymanager.Add(new List<float> {transform.position.x,transform.position.y,transform.position.z,transform.eulerAngles.x,transform.eulerAngles.y,transform.eulerAngles.z});
+    }
+    if (createreplay == true) {
+        createreplay = false;
+        ReplayCreation();
     }
 
-    foreach (List<float> subList in replaymanager)
-    {
-        foreach (float item in subList)
-        {
-            replaylistlength += 1;
-        }
+    if (!finished) {
+    replaymanager.Add(new List<float> {transform.position.x,transform.position.y,transform.position.z,transform.eulerAngles.x,transform.eulerAngles.y,transform.eulerAngles.z});
     }
     // Debug.Log(replaylistlength);
 
@@ -295,6 +291,7 @@ void FixedUpdate()
         lastcheckpoint = GameObject.Find("start_line");
         rb.transform.position = lastcheckpoint.transform.position;
         rb.transform.rotation = lastcheckpoint.transform.rotation;
+        replaymanager = new List<List<float>>();
     }
     if (Input.GetKey(KeyCode.Semicolon)) {
         rb.linearVelocity = new Vector3(0,0,0);
@@ -606,5 +603,14 @@ public void RecoverTraction(){
     driftingAxis = 0f;
     }
 }
+
+public void ReplayCreation() 
+    {
+        string path = "Assets/saves.txt";
+        StreamReader reader = new StreamReader(path); 
+        string savefilestring = reader.ReadToEnd();
+        Debug.Log(reader.ReadToEnd());
+        reader.Close();
+    }
 
 }

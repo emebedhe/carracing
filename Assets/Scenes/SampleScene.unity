@@ -940,6 +940,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 375898450}
     - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
+      propertyPath: cptext
+      value: 
+      objectReference: {fileID: 738701144}
+    - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: FLTread
       value: 
       objectReference: {fileID: 52270717}
@@ -1401,7 +1405,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: New Text
+  m_Text: 
 --- !u!222 &738701145
 CanvasRenderer:
   m_ObjectHideFlags: 0
