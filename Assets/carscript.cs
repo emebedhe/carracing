@@ -196,6 +196,7 @@ void FixedUpdate()
 
     string stringlist = "";
     if (finished && replaywritten == false) {
+    //replaymanager.Add(new List<float> {Time.time-start});
     cptext.text = cp1time.ToString() + "\n" + cp2time.ToString() + "\n" + cp3time.ToString() + "\n" + cp4time.ToString();
     replaywritten = true;
     List<float> stringlistlist = new List<float>();
@@ -208,9 +209,9 @@ void FixedUpdate()
         stringlist = string.Join(", ",stringlistlist);
         //Debug.Log(stringlist);
         if (finished) {
-        using (StreamWriter sw = new StreamWriter("Assets/saves.txt"))
+        using (StreamWriter sw = new StreamWriter("Assets/saves.txt",true))
         {
-        sw.WriteLine(stringlist);
+        sw.WriteLine(stringlist+"|"+(Time.time-start).ToString());
         }
     
     }
