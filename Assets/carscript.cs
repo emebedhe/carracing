@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 using System.IO;
+using System.Linq;
 
 public class carscript : MonoBehaviour
 {
@@ -152,9 +153,9 @@ void Start() {
             finishtimes.Add(float.Parse(splitData[1]));
         }
     }
-    foreach (float time in finishtimes) {
-    Debug.Log(time);
-    }
+    // foreach (float time in finishtimes) {
+    // Debug.Log(time);
+    // }
 }
 
 void OnTriggerEnter(Collider other) {
@@ -208,6 +209,7 @@ void FixedUpdate()
     // replaylistlength = 0;
 
     string stringlist = "";
+    if (finishtimes.Count()<5||(Time.time-start) < finishtimes.Max()){
     if (finished && replaywritten == false) {
     //replaymanager.Add(new List<float> {Time.time-start});
     cptext.text = cp1time.ToString() + "\n" + cp2time.ToString() + "\n" + cp3time.ToString() + "\n" + cp4time.ToString();
@@ -227,6 +229,7 @@ void FixedUpdate()
         sw.WriteLine(stringlist+"|"+(Time.time-start).ToString());
         }
     
+    }
     }
     }
     if (createreplay == true) {
