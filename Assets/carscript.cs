@@ -221,7 +221,7 @@ void FixedUpdate()
     }
 
     if (!finished) {
-    replaymanager.Add(new List<float> {transform.position.x,transform.position.y,transform.position.z,transform.eulerAngles.x,transform.eulerAngles.y,transform.eulerAngles.z});
+    replaymanager.Add(new List<float> {Mathf.Round(transform.position.x * 1000f) * 0.001f,Mathf.Round(transform.position.y * 1000f) * 0.001f,Mathf.Round(transform.position.z * 1000f) * 0.001f,Mathf.Round(transform.eulerAngles.x * 1000f) * 0.001f,Mathf.Round(transform.eulerAngles.y * 1000f) * 0.001f,Mathf.Round(transform.eulerAngles.z * 1000f) * 0.001f});
     }
     // Debug.Log(replaylistlength);
 
@@ -269,7 +269,7 @@ void FixedUpdate()
         ResetSteeringAngle();
     }
     if(Input.GetKey(KeyCode.Slash)){
-        transform.position = new Vector3(-328.6675f,17.67268f,-521.3595f);
+        transform.position = new Vector3(532.7f,16.9f,226.9f);
         transform.rotation = Quaternion.Euler(0f,90f,0f);
         rb.linearVelocity = new Vector3(0,0,0);
         maxSpeed = 50000;
@@ -444,7 +444,7 @@ public void GoForward(){
     }else {
             flc.motorTorque = 0;
             frc.motorTorque = 0;
-        rlc.motorTorque = 0;
+            rlc.motorTorque = 0;
             rrc.motorTorque = 0;
         }
     }
@@ -611,6 +611,7 @@ public void ReplayCreation()
         string savefilestring = reader.ReadToEnd();
         Debug.Log(reader.ReadToEnd());
         reader.Close();
+    
     }
 
 }
