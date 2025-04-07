@@ -2970,7 +2970,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1919877172}
   - component: {fileID: 1919877171}
-  - component: {fileID: 1919877173}
   m_Layer: 0
   m_Name: :)
   m_TagString: Untagged
@@ -3099,23 +3098,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1919877173
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919877170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10b0f9b22f1b3480386217861ad6dec6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  offset: {x: 0, y: -25, z: 0}
-  rotationoffset: {x: 0, y: 0, z: 0}
-  carbody: {fileID: 0}
-  lllll: -20
 --- !u!146 &1938468209 stripped
 WheelCollider:
   m_CorrespondingSourceObject: {fileID: 2859508977287673787, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}

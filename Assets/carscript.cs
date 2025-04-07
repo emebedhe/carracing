@@ -222,7 +222,7 @@ void FixedUpdate()
     }
 
     if (!finished) {
-    replaymanager.Add(new List<float> {Mathf.Round(transform.position.x * 1000f) * 0.001f,Mathf.Round(transform.position.y * 1000f) * 0.001f,Mathf.Round(transform.position.z * 1000f) * 0.001f,Mathf.Round(transform.eulerAngles.x * 1000f) * 0.001f,Mathf.Round(transform.eulerAngles.y * 1000f) * 0.001f,Mathf.Round(transform.eulerAngles.z * 1000f) * 0.001f});
+    replaymanager.Add(new List<float> {(float)Math.Round(transform.position.x,3),(float)Math.Round(transform.position.y,3),(float)Math.Round(transform.position.z,3),(float)Math.Round(transform.eulerAngles.x,3),(float)Math.Round(transform.eulerAngles.y,3),(float)Math.Round(transform.eulerAngles.z,3)});
     }
     // Debug.Log(replaylistlength);
 
@@ -610,7 +610,7 @@ public void ReplayCreation()
         string path = "Assets/saves.txt";
         StreamReader reader = new StreamReader(path); 
         string savefilestring = reader.ReadToEnd();
-        Debug.Log(reader.ReadToEnd());
+        Debug.Log(savefilestring);
         reader.Close();
     
     }
