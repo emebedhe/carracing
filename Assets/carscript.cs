@@ -11,6 +11,7 @@ public class carscript : MonoBehaviour
 //CAR SETUP
     List<List<float>> replaymanager = new List<List<float>>();
     //private float replaylistlength = 0;
+    List<float> finishtimes = new List<float>();
     private float replaytime;
     //private float currentreplayframe = 0;
 
@@ -29,8 +30,6 @@ public class carscript : MonoBehaviour
     public GameObject FRMesh;
     public GameObject FLTread;
     public GameObject FRTread;
-
-
     private ArrayList cplist = new ArrayList();
 
     public Collider grass;
@@ -137,11 +136,25 @@ void Start() {
     RRwheelFriction.asymptoteSlip = rrc.sidewaysFriction.asymptoteSlip;
     RRwheelFriction.asymptoteValue = rrc.sidewaysFriction.asymptoteValue;
     RRwheelFriction.stiffness = rrc.sidewaysFriction.stiffness;
-
     lastcheckpoint = GameObject.Find("start_line");
-
     key1t.enabled = false;
     key2t.enabled = false;
+    List<string> idk;
+    StreamReader reader = new StreamReader("Assets/saves.txt");
+    idk = new List<string>(reader.ReadToEnd().Split('\n')); // Correct conversion
+
+    // Process each line
+    foreach (string item in idk)
+    {
+        string[] splitData = item.Split('|'); // Ensure proper splitting
+        if (splitData.Length > 1) // Avoid errors from improperly formatted lines
+        {
+            finishtimes.Add(float.Parse(splitData[1]));
+        }
+    }
+    foreach (float time in finishtimes) {
+    Debug.Log(time);
+    }
 }
 
 void OnTriggerEnter(Collider other) {
