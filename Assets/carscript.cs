@@ -5,11 +5,14 @@ using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
 using System.IO;
+using System.Linq;
 
 public class carscript : MonoBehaviour
 {
 //CAR SETUP
     List<List<float>> replaymanager = new List<List<float>>();
+
+    public AudioSource accelplay;
     //private float replaylistlength = 0;
     List<float> finishtimes = new List<float>();
     private float replaytime;
@@ -152,9 +155,9 @@ void Start() {
             finishtimes.Add(float.Parse(splitData[1]));
         }
     }
-    foreach (float time in finishtimes) {
-    Debug.Log(time);
-    }
+    // foreach (float time in finishtimes) {
+    // Debug.Log(time);
+    // }
 }
 
 void OnTriggerEnter(Collider other) {
@@ -208,6 +211,7 @@ void FixedUpdate()
     // replaylistlength = 0;
 
     string stringlist = "";
+    if (finishtimes.Count()<5||(Time.time-start) < finishtimes.Max()){
     if (finished && replaywritten == false) {
     //replaymanager.Add(new List<float> {Time.time-start});
     cptext.text = cp1time.ToString() + "\n" + cp2time.ToString() + "\n" + cp3time.ToString() + "\n" + cp4time.ToString();
@@ -229,21 +233,23 @@ void FixedUpdate()
     
     }
     }
+    }
     if (createreplay == true) {
         createreplay = false;
         ReplayCreation();
     }
 
     if (!finished) {
-    replaymanager.Add(new List<float> {Mathf.Round(transform.position.x * 1000f) * 0.001f,Mathf.Round(transform.position.y * 1000f) * 0.001f,Mathf.Round(transform.position.z * 1000f) * 0.001f,Mathf.Round(transform.eulerAngles.x * 1000f) * 0.001f,Mathf.Round(transform.eulerAngles.y * 1000f) * 0.001f,Mathf.Round(transform.eulerAngles.z * 1000f) * 0.001f});
+    replaymanager.Add(new List<float> {(float)Math.Round(transform.position.x,3),(float)Math.Round(transform.position.y,3),(float)Math.Round(transform.position.z,3),(float)Math.Round(transform.eulerAngles.x,3),(float)Math.Round(transform.eulerAngles.y,3),(float)Math.Round(transform.eulerAngles.z,3)});
     }
     // Debug.Log(replaylistlength);
-
+    accelplay.mute = true;
     if(Input.GetKey(KeyCode.W)){
         CancelInvoke("DecelerateCar");
         deceleratingCar = false;
         GoForward();
         if (start == -234567890) { start = Time.time; started = true;}
+        accelplay.mute = false;
     }
     if(Input.GetKey(KeyCode.S)){
         CancelInvoke("DecelerateCar");
@@ -623,7 +629,7 @@ public void ReplayCreation()
         string path = "Assets/saves.txt";
         StreamReader reader = new StreamReader(path); 
         string savefilestring = reader.ReadToEnd();
-        Debug.Log(reader.ReadToEnd());
+        Debug.Log(savefilestring);
         reader.Close();
     
     }
