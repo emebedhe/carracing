@@ -5,6 +5,7 @@ using UnityEngine;
 public class camerascript : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameObject player1;
     public Transform player;
     public Vector3 offset;
     public Vector3 rotationoffset;
@@ -39,7 +40,7 @@ public class camerascript : MonoBehaviour
         }
         if (cameraa == 1) {
           cartravelnormalised = carbody.linearVelocity.normalized;
-          if (transform.InverseTransformDirection(carbody.linearVelocity).z >= 0.1f || transform.InverseTransformDirection(carbody.linearVelocity).z <= -0.1f) {
+          if (transform.InverseTransformDirection(carbody.linearVelocity).z >= 0.1f || transform.InverseTransformDirection(carbody.linearVelocity).z <= -0.1f){// || player1.GetComponent<carscript>().replaystarted) {
           transform.position = player.transform.position + new Vector3(0,30,0) + Vector3.Scale(cartravelnormalised, new Vector3(lllll,lllll,lllll)) + offset; //+ new Vector3(10,5,-5);
           transform.LookAt(player);
 
@@ -53,10 +54,10 @@ public class camerascript : MonoBehaviour
           if (Input.GetKey(KeyCode.Tab)) {
             transform.position = Vector3.Scale(player.transform.position,new Vector3(1f,1f,1f)) + new Vector3(0,30,0) + Vector3.Scale(player.transform.forward, new Vector3(-lllll,-lllll,-lllll)) + offset;
             transform.LookAt(player);
-            Debug.Log("Original x");
-            Debug.Log(player.transform.forward.x);
-            Debug.Log("Changed x");
-            Debug.Log(Mathf.Abs(player.transform.forward.x)*-1);
+            //Debug.Log("Original x");
+            //Debug.Log(player.transform.forward.x);
+            //Debug.Log("Changed x");
+            //Debug.Log(Mathf.Abs(player.transform.forward.x)*-1);
           }
         } else {
           transform.position = player.transform.position+offset+player.transform.forward.normalized;

@@ -26,7 +26,7 @@ public class carscript : MonoBehaviour
     private int replayframe;
     private int startframe;
 
-    private bool replaystarted = false;
+    public bool replaystarted = false;
     private bool replaywritten = false;
 
     public GameObject FLMesh;
@@ -145,6 +145,7 @@ void Start() {
     List<string> idk;
     StreamReader reader = new StreamReader("Assets/saves.txt");
     idk = new List<string>(reader.ReadToEnd().Split('\n')); // Correct conversion
+    reader.Close();
 
     // Process each line
     foreach (string item in idk)
@@ -211,11 +212,25 @@ void FixedUpdate()
     // replaylistlength = 0;
 
     string stringlist = "";
+    //Debug.Log(finishtimes.Count());
     if (finishtimes.Count()<5||(Time.time-start) < finishtimes.Max()){
     if (finished && replaywritten == false) {
     //replaymanager.Add(new List<float> {Time.time-start});
     cptext.text = cp1time.ToString() + "\n" + cp2time.ToString() + "\n" + cp3time.ToString() + "\n" + cp4time.ToString();
     replaywritten = true;
+    if (finishtimes.Count()==5){
+        string filePath = "saves.txt";
+        string targetEnding = finishtimes.Max().ToString(); // Replace with the characters you're looking for
+
+        // Read all lines into memory
+        string[] lines = File.ReadAllLines(filePath);
+
+        // Filter out lines that end with the target characters
+        lines = lines.Where(line => !line.EndsWith(targetEnding)).ToArray();
+
+        // Overwrite the file with the modified content
+        File.WriteAllLines(filePath, lines);
+    }
     List<float> stringlistlist = new List<float>();
     foreach (List<float> item in replaymanager) {
         foreach (float element in item) {
@@ -228,7 +243,8 @@ void FixedUpdate()
         if (finished) {
         using (StreamWriter sw = new StreamWriter("Assets/saves.txt",true))
         {
-        sw.WriteLine(stringlist+"|"+(Time.time-start).ToString());
+        sw.WriteLine(stringlist+"|"+(Mathf.Round(Time.time-start*10000)/10000).ToString());
+        sw.Close();
         }
     
     }
