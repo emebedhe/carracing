@@ -219,7 +219,7 @@ void FixedUpdate()
     cptext.text = cp1time.ToString() + "\n" + cp2time.ToString() + "\n" + cp3time.ToString() + "\n" + cp4time.ToString();
     replaywritten = true;
     if (finishtimes.Count()==5){
-        string filePath = "saves.txt";
+        string filePath = "Assets/saves.txt";
         string targetEnding = finishtimes.Max().ToString(); // Replace with the characters you're looking for
 
         // Read all lines into memory
