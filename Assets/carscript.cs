@@ -159,6 +159,7 @@ void Start() {
     // foreach (float time in finishtimes) {
     // Debug.Log(time);
     // }
+    Debug.Log(finishtimes.Count());
 }
 
 void OnTriggerEnter(Collider other) {
@@ -243,7 +244,7 @@ void FixedUpdate()
         if (finished) {
         using (StreamWriter sw = new StreamWriter("Assets/saves.txt",true))
         {
-        sw.WriteLine(stringlist+"|"+(Mathf.Round(Time.time-start*10000)/10000).ToString());
+        sw.WriteLine(stringlist+"|"+(Math.Round(Time.time-start,5).ToString()));
         sw.Close();
         }
     
@@ -394,6 +395,7 @@ void FixedUpdate()
     //     key2 = Input.inputString;
     //     key2t.enabled = false;
     // }  
+
 
 }
 
