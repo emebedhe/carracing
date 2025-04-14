@@ -10,9 +10,17 @@ using System.Linq;
 public class carscript : MonoBehaviour
 {
 //CAR SETUP
+    public GameObject ghost;
+
     List<List<float>> replaymanager = new List<List<float>>();
+    List<string> replay1 = new List<string>();
+    List<List<string>> replay2 = new List<List<string>>();
+    List<List<string>> replay3 = new List<List<string>>();
+    List<List<string>> replay4 = new List<List<string>>();
+    List<List<string>> replay5 = new List<List<string>>();
 
     public AudioSource accelplay;
+    public AudioSource brakeplay;
     //private float replaylistlength = 0;
     List<float> finishtimes = new List<float>();
     private float replaytime;
@@ -24,7 +32,7 @@ public class carscript : MonoBehaviour
 
     private int frametimer=0;
     private int replayframe;
-    private int startframe;
+
 
     public bool replaystarted = false;
     private bool replaywritten = false;
@@ -107,6 +115,9 @@ public class carscript : MonoBehaviour
 
     public Button Play;
 
+    private float currentframe;
+    private float startframe;
+
 // Start is called before the first frame update
 void Start() {
     rb = gameObject.GetComponent<Rigidbody>();
@@ -142,24 +153,46 @@ void Start() {
     lastcheckpoint = GameObject.Find("start_line");
     key1t.enabled = false;
     key2t.enabled = false;
+
+
+    //REPLAY PROCESSING
     List<string> idk;
     StreamReader reader = new StreamReader("Assets/saves.txt");
-    idk = new List<string>(reader.ReadToEnd().Split('\n')); // Correct conversion
+    idk = new List<string>(reader.ReadToEnd().Split('\n'));
     reader.Close();
+    List<string> saved5replays = new List<string>();
 
     // Process each line
     foreach (string item in idk)
     {
-        string[] splitData = item.Split('|'); // Ensure proper splitting
-        if (splitData.Length > 1) // Avoid errors from improperly formatted lines
+        string[] splitData = item.Split('|'); 
+        if (splitData.Length > 1) 
         {
             finishtimes.Add(float.Parse(splitData[1]));
+            saved5replays.Add(splitData[0]);
         }
     }
-    // foreach (float time in finishtimes) {
-    // Debug.Log(time);
+    Debug.Log(saved5replays[0].GetType());
+
+
+    replay1 = saved5replays[0].Split(",").ToList();
+    Debug.Log(replay1.Count());
+    // replay2 = saved5replays[1];
+    // replay3 = saved5replays[2];
+    // replay4 = saved5replays[3];
+    // replay5 = saved5replays[4];
+
+
+    // Debug.Log(saved5replays[0]);
+    // Debug.Log(finishtimes.Count());
+
+    // foreach (string replay in saved5replays) {
+    //     Debug.Log(replay);
     // }
-    Debug.Log(finishtimes.Count());
+    // foreach (float item in finishtimes) {
+    //     Debug.Log(item);
+    // }
+
 }
 
 void OnTriggerEnter(Collider other) {
@@ -205,8 +238,11 @@ void OnTriggerEnter(Collider other) {
     
 // Update is called once per frame
 void FixedUpdate()
-{
-    frametimer += 1;
+{   
+    frametimer+=1;
+    ghost.transform.position = new Vector3(float.Parse(replay1[(frametimer-1)*6]),float.Parse(replay1[(frametimer-1)*6+1]),float.Parse(replay1[(frametimer-1)*6+2]));
+    ghost.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay1[(frametimer-1)*6+3]) , float.Parse(replay1[(frametimer-1)*6+4]) , float.Parse(replay1[(frametimer-1)*6+5]) ) );
+
     carSpeed = (2 * 3.14f * flc.radius * flc.rpm * 60) / 1000;
     localVelocityX = transform.InverseTransformDirection(rb.linearVelocity).x;
     localVelocityZ = transform.InverseTransformDirection(rb.linearVelocity).z;
@@ -214,24 +250,49 @@ void FixedUpdate()
 
     string stringlist = "";
     //Debug.Log(finishtimes.Count());
-    if (finishtimes.Count()<5||(Time.time-start) < finishtimes.Max()){
+
+
+    if (finishtimes.Count()<5||(Time.time-start) < finishtimes.Max()){ 
+    //IF: Your time is quicker than the worst time in finishtimes OR finishtimes has less than 5 itmes
+
     if (finished && replaywritten == false) {
+    //IF: Your replay hasn't been written yet AND you finished
+
     //replaymanager.Add(new List<float> {Time.time-start});
+
     cptext.text = cp1time.ToString() + "\n" + cp2time.ToString() + "\n" + cp3time.ToString() + "\n" + cp4time.ToString();
     replaywritten = true;
+    //REPLAY HAS BEEN WRITTEN
+
     if (finishtimes.Count()==5){
+        //IF: There are 5 times in the list
+    
         string filePath = "Assets/saves.txt";
         string targetEnding = finishtimes.Max().ToString(); // Replace with the characters you're looking for
 
         // Read all lines into memory
+        foreach (string line in File.ReadAllLines(filePath))
+        {
+            if (line.Split('|')[1] == targetEnding) {
+                Debug.Log("hehe");
+            }
+            else {
+                Debug.Log("ehehe");
+            }
+        }
+
+
         string[] lines = File.ReadAllLines(filePath);
 
         // Filter out lines that end with the target characters
         lines = lines.Where(line => !line.EndsWith(targetEnding)).ToArray();
-
+        
         // Overwrite the file with the modified content
         File.WriteAllLines(filePath, lines);
+
+
     }
+
     List<float> stringlistlist = new List<float>();
     foreach (List<float> item in replaymanager) {
         foreach (float element in item) {
@@ -239,18 +300,19 @@ void FixedUpdate()
         }
 
     }
-        stringlist = string.Join(", ",stringlistlist);
-        //Debug.Log(stringlist);
-        if (finished) {
+    stringlist = string.Join(", ",stringlistlist);
+
+
+    if (finished) {
         using (StreamWriter sw = new StreamWriter("Assets/saves.txt",true))
         {
-        sw.WriteLine(stringlist+"|"+(Math.Round(Time.time-start,5).ToString()));
+        sw.WriteLine(stringlist+"|"+(Math.Round(Time.time-start,4).ToString()));
         sw.Close();
         }
-    
     }
     }
     }
+
     if (createreplay == true) {
         createreplay = false;
         ReplayCreation();
@@ -261,32 +323,35 @@ void FixedUpdate()
     }
     // Debug.Log(replaylistlength);
     accelplay.mute = true;
+    brakeplay.mute = true;
     if(Input.GetKey(KeyCode.W)){
         CancelInvoke("DecelerateCar");
         deceleratingCar = false;
         GoForward();
-        if (start == -234567890) { start = Time.time; started = true;}
+        if (start == -234567890) { start = Time.time; started = true; startframe = currentframe;}
         accelplay.mute = false;
     }
     if(Input.GetKey(KeyCode.S)){
         CancelInvoke("DecelerateCar");
         deceleratingCar = false;
         GoReverse();
-        if (start == -234567890) { start = Time.time; started = true;}
+        if (start == -234567890) { start = Time.time; started = true; startframe = currentframe;}
+        brakeplay.mute = false;
     }
     if(Input.GetKey(KeyCode.A)){
         TurnLeft();
-        if (start == -234567890) { start = Time.time; started = true;}
+        if (start == -234567890) { start = Time.time; started = true; startframe = currentframe;}
     }
     if(Input.GetKey(KeyCode.D)){
         TurnRight();
-        if (start == -234567890) { start = Time.time; started = true;}
+        if (start == -234567890) { start = Time.time; started = true; startframe = currentframe;} 
     }
 
     if(Input.GetKey(KeyCode.Space)){
         CancelInvoke("DecelerateCar");
         deceleratingCar = false;
         Handbrake();
+        brakeplay.mute = false;
     }
 
     if(Input.GetKeyUp(KeyCode.Space)){
@@ -324,7 +389,7 @@ void FixedUpdate()
         maxSpeed = 180;
         track = "track 1";
         cplist = new ArrayList();
-        start = Time.time;
+        start = Time.time; startframe = currentframe;
         lastcheckpoint = GameObject.Find("start_line");
         rb.transform.position = lastcheckpoint.transform.position;
         rb.transform.rotation = lastcheckpoint.transform.rotation;
@@ -384,6 +449,7 @@ void FixedUpdate()
 
 
     AnimateWheelMesh();
+    currentframe += 1;
 
     // if (Input.anyKeyDown && key1 == "")
     // {
