@@ -11,13 +11,20 @@ public class carscript : MonoBehaviour
 {
 //CAR SETUP
     public GameObject ghost;
+    public GameObject ghost2;
+    public GameObject ghost3;
+    public GameObject ghost4;
+    public GameObject ghost5;
+
+    private List<int> replaysdisplayed = new List<int>(){1,2,3,4,5};
 
     List<List<float>> replaymanager = new List<List<float>>();
     List<string> replay1 = new List<string>();
-    List<List<string>> replay2 = new List<List<string>>();
-    List<List<string>> replay3 = new List<List<string>>();
-    List<List<string>> replay4 = new List<List<string>>();
-    List<List<string>> replay5 = new List<List<string>>();
+    List<string> replay2 = new List<string>();
+    List<string> replay3 = new List<string>();
+    List<string> replay4 = new List<string>();
+    List<string> replay5 = new List<string>();
+
 
     public AudioSource accelplay;
     public AudioSource brakeplay;
@@ -176,6 +183,10 @@ void Start() {
 
 
     replay1 = saved5replays[0].Split(",").ToList();
+    replay2 = saved5replays[1].Split(",").ToList();
+    replay3 = saved5replays[2].Split(",").ToList();
+    replay4 = saved5replays[3].Split(",").ToList();
+    replay5 = saved5replays[4].Split(",").ToList();
     Debug.Log(replay1.Count());
     // replay2 = saved5replays[1];
     // replay3 = saved5replays[2];
@@ -239,9 +250,46 @@ void OnTriggerEnter(Collider other) {
 // Update is called once per frame
 void FixedUpdate()
 {   
+    foreach (float item in replaysdisplayed) {
+        Debug.Log(item);
+    }
     frametimer+=1;
+    if (replaysdisplayed.Contains(1)) {
     ghost.transform.position = new Vector3(float.Parse(replay1[(frametimer-1)*6]),float.Parse(replay1[(frametimer-1)*6+1]),float.Parse(replay1[(frametimer-1)*6+2]));
     ghost.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay1[(frametimer-1)*6+3]) , float.Parse(replay1[(frametimer-1)*6+4]) , float.Parse(replay1[(frametimer-1)*6+5]) ) );
+    }
+    else {
+        ghost.transform.position = new Vector3(0,-1000,0);
+    }
+    if (replaysdisplayed.Contains(2)) {
+    ghost2.transform.position = new Vector3(float.Parse(replay2[(frametimer-1)*6]),float.Parse(replay2[(frametimer-1)*6+1]),float.Parse(replay2[(frametimer-1)*6+2]));
+    ghost2.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay2[(frametimer-1)*6+3]) , float.Parse(replay2[(frametimer-1)*6+4]) , float.Parse(replay2[(frametimer-1)*6+5]) ) );
+    }
+    else {
+        ghost2.transform.position = new Vector3(0,-1000,0);
+    }
+    if (replaysdisplayed.Contains(3)) {
+    ghost3.transform.position = new Vector3(float.Parse(replay3[(frametimer-1)*6]),float.Parse(replay3[(frametimer-1)*6+1]),float.Parse(replay3[(frametimer-1)*6+2]));
+    ghost3.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay3[(frametimer-1)*6+3]) , float.Parse(replay3[(frametimer-1)*6+4]) , float.Parse(replay3[(frametimer-1)*6+5]) ) );
+    }
+    else {
+        ghost3.transform.position = new Vector3(0,-1000,0);
+    }
+    if (replaysdisplayed.Contains(4)) {
+    ghost4.transform.position = new Vector3(float.Parse(replay4[(frametimer-1)*6]),float.Parse(replay4[(frametimer-1)*6+1]),float.Parse(replay4[(frametimer-1)*6+2]));
+    ghost4.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay4[(frametimer-1)*6+3]) , float.Parse(replay4[(frametimer-1)*6+4]) , float.Parse(replay4[(frametimer-1)*6+5]) ) );
+    }
+    else {
+        ghost4.transform.position = new Vector3(0,-1000,0);
+    }
+    if (replaysdisplayed.Contains(5)) {
+    ghost5.transform.position = new Vector3(float.Parse(replay5[(frametimer-1)*6]),float.Parse(replay5[(frametimer-1)*6+1]),float.Parse(replay5[(frametimer-1)*6+2]));
+    ghost5.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay5[(frametimer-1)*6+3]) , float.Parse(replay5[(frametimer-1)*6+4]) , float.Parse(replay5[(frametimer-1)*6+5]) ) );
+    }
+    else {
+        ghost5.transform.position = new Vector3(0,-1000,0);
+    }
+
 
     carSpeed = (2 * 3.14f * flc.radius * flc.rpm * 60) / 1000;
     localVelocityX = transform.InverseTransformDirection(rb.linearVelocity).x;
@@ -445,6 +493,48 @@ void FixedUpdate()
         int index = (int)frametimer - (int)replayframe;
         transform.position = new Vector3(replaymanager[index][0],replaymanager[index][1],replaymanager[index][2]);
         transform.rotation = Quaternion.Euler(new Vector3(replaymanager[index][3],replaymanager[index][4],replaymanager[index][5]));
+    }
+
+    if (Input.GetKey(KeyCode.Alpha1)) {
+        if (replaysdisplayed.Contains(1)) {
+            replaysdisplayed.Remove(1);
+        }
+        else {
+            replaysdisplayed.Add(1);
+        }
+    }
+
+    if (Input.GetKey(KeyCode.Alpha2)) {
+        if (replaysdisplayed.Contains(2)) {
+            replaysdisplayed.Remove(2);
+        }
+        else {
+            replaysdisplayed.Add(2);
+        }
+    }
+    if (Input.GetKey(KeyCode.Alpha3)) {
+        if (replaysdisplayed.Contains(3)) {
+            replaysdisplayed.Remove(3);
+        }
+        else {
+            replaysdisplayed.Add(3);
+        }
+    }
+    if (Input.GetKey(KeyCode.Alpha4)) {
+        if (replaysdisplayed.Contains(4)) {
+            replaysdisplayed.Remove(4);
+        }
+        else {
+            replaysdisplayed.Add(4);
+        }
+    }
+    if (Input.GetKey(KeyCode.Alpha5)) {
+        if (replaysdisplayed.Contains(5)) {
+            replaysdisplayed.Remove(5);
+        }
+        else {
+            replaysdisplayed.Add(5);
+        }
     }
 
 
