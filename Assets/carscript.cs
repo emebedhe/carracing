@@ -324,25 +324,25 @@ void FixedUpdate()
     // Debug.Log(replaylistlength);
     accelplay.mute = true;
     brakeplay.mute = true;
-    if(Input.GetKey(KeyCode.W)){
+    if(Input.GetKey(KeyCode.W)||Input.GetKey(KeyCode.UpArrow)){
         CancelInvoke("DecelerateCar");
         deceleratingCar = false;
         GoForward();
         if (start == -234567890) { start = Time.time; started = true; startframe = currentframe;}
         accelplay.mute = false;
     }
-    if(Input.GetKey(KeyCode.S)){
+    if(Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.DownArrow)){
         CancelInvoke("DecelerateCar");
         deceleratingCar = false;
         GoReverse();
         if (start == -234567890) { start = Time.time; started = true; startframe = currentframe;}
         brakeplay.mute = false;
     }
-    if(Input.GetKey(KeyCode.A)){
+    if(Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.LeftArrow)){
         TurnLeft();
         if (start == -234567890) { start = Time.time; started = true; startframe = currentframe;}
     }
-    if(Input.GetKey(KeyCode.D)){
+    if(Input.GetKey(KeyCode.D)||Input.GetKey(KeyCode.RightArrow)){
         TurnRight();
         if (start == -234567890) { start = Time.time; started = true; startframe = currentframe;} 
     }
@@ -358,16 +358,16 @@ void FixedUpdate()
         RecoverTraction();
     }
 
-    if((!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W))){
+    if((!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow))){
         ThrottleOff();
     }
 
-    if((!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W)) && !Input.GetKey(KeyCode.Space) && !deceleratingCar){
+    if((!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow)) && !Input.GetKey(KeyCode.Space) && !deceleratingCar){
         InvokeRepeating("DecelerateCar", 0f, 0.1f);
         deceleratingCar = true;
     }
 
-    if(!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && steeringAxis != 0f){
+    if(!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && steeringAxis != 0f && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow)){
         ResetSteeringAngle();
     }
     if(Input.GetKey(KeyCode.Slash)){

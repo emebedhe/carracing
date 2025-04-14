@@ -424,7 +424,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10b0f9b22f1b3480386217861ad6dec6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1: {fileID: 0}
+  player1: {fileID: 1201159703}
   player: {fileID: 1762799462}
   offset: {x: 0, y: -25, z: 0}
   rotationoffset: {x: 0, y: 0, z: 0}
@@ -1979,6 +1979,11 @@ GameObject:
 --- !u!146 &1129950632 stripped
 WheelCollider:
   m_CorrespondingSourceObject: {fileID: 6129869091033930575, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
+  m_PrefabInstance: {fileID: 706064183}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1201159703 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 252218888809016447, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
   m_PrefabInstance: {fileID: 706064183}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1273962182
