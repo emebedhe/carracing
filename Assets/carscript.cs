@@ -38,6 +38,8 @@ public class carscript : MonoBehaviour
     public GameObject stuntstartline;
 
     private int frametimer=0;
+    private float startframe=0;
+    private int drivingframe=0;
     private int replayframe;
 
 
@@ -123,7 +125,6 @@ public class carscript : MonoBehaviour
     public Button Play;
 
     private float currentframe;
-    private float startframe;
 
 // Start is called before the first frame update
 void Start() {
@@ -203,6 +204,9 @@ void Start() {
     // foreach (float item in finishtimes) {
     //     Debug.Log(item);
     // }
+    
+    rb.transform.position = lastcheckpoint.transform.position;
+    rb.transform.rotation = lastcheckpoint.transform.rotation;
 
 }
 
@@ -253,41 +257,72 @@ void FixedUpdate()
     foreach (float item in replaysdisplayed) {
         Debug.Log(item);
     }
+
     frametimer+=1;
-    if (replaysdisplayed.Contains(1)) {
-    ghost.transform.position = new Vector3(float.Parse(replay1[(frametimer-1)*6]),float.Parse(replay1[(frametimer-1)*6+1]),float.Parse(replay1[(frametimer-1)*6+2]));
-    ghost.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay1[(frametimer-1)*6+3]) , float.Parse(replay1[(frametimer-1)*6+4]) , float.Parse(replay1[(frametimer-1)*6+5]) ) );
+    if (started == true) {
+    try {
+        if (replaysdisplayed.Contains(1)) {
+            ghost.transform.position = new Vector3(float.Parse(replay1[(frametimer-drivingframe-1)*6]),float.Parse(replay1[(frametimer-drivingframe-1)*6+1]),float.Parse(replay1[(frametimer-drivingframe-1)*6+2]));
+            ghost.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay1[(frametimer-drivingframe-1)*6+3]) , float.Parse(replay1[(frametimer-drivingframe-1)*6+4]) , float.Parse(replay1[(frametimer-drivingframe-1)*6+5]) ) );
+        }
+        else {
+            ghost.transform.position = new Vector3(0,-1000,0);
+        }
     }
-    else {
+    catch (System.Exception e) {
         ghost.transform.position = new Vector3(0,-1000,0);
     }
-    if (replaysdisplayed.Contains(2)) {
-    ghost2.transform.position = new Vector3(float.Parse(replay2[(frametimer-1)*6]),float.Parse(replay2[(frametimer-1)*6+1]),float.Parse(replay2[(frametimer-1)*6+2]));
-    ghost2.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay2[(frametimer-1)*6+3]) , float.Parse(replay2[(frametimer-1)*6+4]) , float.Parse(replay2[(frametimer-1)*6+5]) ) );
+    try {
+        
+        if (replaysdisplayed.Contains(2)) {
+            ghost2.transform.position = new Vector3(float.Parse(replay2[(frametimer-drivingframe-1)*6]),float.Parse(replay2[(frametimer-drivingframe-1)*6+1]),float.Parse(replay2[(frametimer-drivingframe-1)*6+2]));
+            ghost2.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay2[(frametimer-drivingframe-1)*6+3]) , float.Parse(replay2[(frametimer-drivingframe-1)*6+4]) , float.Parse(replay2[(frametimer-drivingframe-1)*6+5]) ) );
+        }
+        else {
+            ghost2.transform.position = new Vector3(0,-1000,0);
+        }
     }
-    else {
+    catch (System.Exception e) {
         ghost2.transform.position = new Vector3(0,-1000,0);
     }
-    if (replaysdisplayed.Contains(3)) {
-    ghost3.transform.position = new Vector3(float.Parse(replay3[(frametimer-1)*6]),float.Parse(replay3[(frametimer-1)*6+1]),float.Parse(replay3[(frametimer-1)*6+2]));
-    ghost3.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay3[(frametimer-1)*6+3]) , float.Parse(replay3[(frametimer-1)*6+4]) , float.Parse(replay3[(frametimer-1)*6+5]) ) );
+
+    try {
+        if (replaysdisplayed.Contains(3)) {
+            ghost3.transform.position = new Vector3(float.Parse(replay3[(frametimer-drivingframe-1)*6]),float.Parse(replay3[(frametimer-drivingframe-1)*6+1]),float.Parse(replay3[(frametimer-drivingframe-1)*6+2]));
+            ghost3.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay3[(frametimer-drivingframe-1)*6+3]) , float.Parse(replay3[(frametimer-drivingframe-1)*6+4]) , float.Parse(replay3[(frametimer-drivingframe-1)*6+5]) ) );
+        }
+        else {
+            ghost3.transform.position = new Vector3(0,-1000,0);
+        }
     }
-    else {
+    catch (System.Exception e) {
         ghost3.transform.position = new Vector3(0,-1000,0);
     }
-    if (replaysdisplayed.Contains(4)) {
-    ghost4.transform.position = new Vector3(float.Parse(replay4[(frametimer-1)*6]),float.Parse(replay4[(frametimer-1)*6+1]),float.Parse(replay4[(frametimer-1)*6+2]));
-    ghost4.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay4[(frametimer-1)*6+3]) , float.Parse(replay4[(frametimer-1)*6+4]) , float.Parse(replay4[(frametimer-1)*6+5]) ) );
+
+    try {
+        if (replaysdisplayed.Contains(4)) {
+            ghost4.transform.position = new Vector3(float.Parse(replay4[(frametimer-drivingframe-1)*6]),float.Parse(replay4[(frametimer-drivingframe-1)*6+1]),float.Parse(replay4[(frametimer-drivingframe-1)*6+2]));
+            ghost4.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay4[(frametimer-drivingframe-1)*6+3]) , float.Parse(replay4[(frametimer-drivingframe-1)*6+4]) , float.Parse(replay4[(frametimer-drivingframe-1)*6+5]) ) );
+        }
+        else {
+            ghost4.transform.position = new Vector3(0,-1000,0);
+        }
     }
-    else {
+    catch (System.Exception e) {
         ghost4.transform.position = new Vector3(0,-1000,0);
     }
-    if (replaysdisplayed.Contains(5)) {
-    ghost5.transform.position = new Vector3(float.Parse(replay5[(frametimer-1)*6]),float.Parse(replay5[(frametimer-1)*6+1]),float.Parse(replay5[(frametimer-1)*6+2]));
-    ghost5.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay5[(frametimer-1)*6+3]) , float.Parse(replay5[(frametimer-1)*6+4]) , float.Parse(replay5[(frametimer-1)*6+5]) ) );
+    try {
+        if (replaysdisplayed.Contains(5)) {
+            ghost5.transform.position = new Vector3(float.Parse(replay5[(frametimer-drivingframe-1)*6]),float.Parse(replay5[(frametimer-drivingframe-1)*6+1]),float.Parse(replay5[(frametimer-drivingframe-1)*6+2]));
+            ghost5.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay5[(frametimer-drivingframe-1)*6+3]) , float.Parse(replay5[(frametimer-drivingframe-1)*6+4]) , float.Parse(replay5[(frametimer-drivingframe-1)*6+5]) ) );
+        }
+        else {
+            ghost5.transform.position = new Vector3(0,-1000,0);
+        }
     }
-    else {
-        ghost5.transform.position = new Vector3(0,-1000,0);
+    catch (System.Exception e) {
+        ghost.transform.position = new Vector3(0,-1000,0);
+    }
     }
 
 
@@ -377,6 +412,7 @@ void FixedUpdate()
         deceleratingCar = false;
         GoForward();
         if (start == -234567890) { start = Time.time; started = true; startframe = currentframe;}
+        if (drivingframe == 0) { drivingframe = frametimer; }
         accelplay.mute = false;
     }
     if(Input.GetKey(KeyCode.S)||Input.GetKey(KeyCode.DownArrow)){
@@ -384,15 +420,18 @@ void FixedUpdate()
         deceleratingCar = false;
         GoReverse();
         if (start == -234567890) { start = Time.time; started = true; startframe = currentframe;}
+        if (drivingframe == 0) { drivingframe = frametimer; }
         brakeplay.mute = false;
     }
     if(Input.GetKey(KeyCode.A)||Input.GetKey(KeyCode.LeftArrow)){
         TurnLeft();
         if (start == -234567890) { start = Time.time; started = true; startframe = currentframe;}
+        if (drivingframe == 0) { drivingframe = frametimer; }
     }
     if(Input.GetKey(KeyCode.D)||Input.GetKey(KeyCode.RightArrow)){
         TurnRight();
         if (start == -234567890) { start = Time.time; started = true; startframe = currentframe;} 
+        if (drivingframe == 0) { drivingframe = frametimer; }
     }
 
     if(Input.GetKey(KeyCode.Space)){
@@ -435,6 +474,7 @@ void FixedUpdate()
     if (Input.GetKey(KeyCode.Backslash)) {
         rb.linearVelocity = new Vector3(0,0,0);
         maxSpeed = 180;
+        drivingframe = frametimer;
         track = "track 1";
         cplist = new ArrayList();
         start = Time.time; startframe = currentframe;
