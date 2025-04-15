@@ -482,6 +482,7 @@ void FixedUpdate()
         rb.transform.position = lastcheckpoint.transform.position;
         rb.transform.rotation = lastcheckpoint.transform.rotation;
         replaymanager = new List<List<float>>();
+        flc.brakeTorque = float.MaxValue;frc.brakeTorque = float.MaxValue;rlc.brakeTorque = float.MaxValue;rrc.brakeTorque = float.MaxValue;
     }
     if (Input.GetKey(KeyCode.Semicolon)) {
         rb.linearVelocity = new Vector3(0,0,0);
