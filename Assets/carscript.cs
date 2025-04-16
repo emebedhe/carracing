@@ -57,6 +57,7 @@ public class carscript : MonoBehaviour
 
     public Text key1t;
     public Text key2t;
+    public Text checkpointcrossed;
 
     public Text cptext;
 
@@ -209,22 +210,24 @@ void Start() {
     rb.transform.rotation = lastcheckpoint.transform.rotation;
 
 }
-
+void DisableText()
+{ 
+    checkpointcrossed.enabled = false; 
+} 
 void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Checkpoint") {
+            checkpointcrossed.enabled = true;
+            checkpointcrossed.text = other.gameObject.name + " crossed: " + (Mathf.Round((Time.time - start) * 100)/100).ToString();
+            Invoke("DisableText", 1f);
             if (cplist.Contains(other)) {}
             else { cplist.Add(other);}
             lastcheckpoint = other.gameObject;
             if (lastcheckpoint.name == "Cp1") {
             if (cp1time == -2347823) {
                 cp1time = Time.time-start;
-                Debug.Log(cp1time);
             }
             }
             if (lastcheckpoint.name == "Cp2") {
-            Debug.Log("what the bruh");
-            Debug.Log(cp2time);
-            Debug.Log(cp2time==0);
                 if (cp2time == -2347823) {
                     cp2time = Time.time-start;
                     Debug.Log(cp2time);
@@ -233,13 +236,12 @@ void OnTriggerEnter(Collider other) {
             if (lastcheckpoint.name == "Cp3") {
             if (cp3time == -2347823) {
                 cp3time = Time.time-start;
-                Debug.Log(cp3time);
             }
             }
             if (lastcheckpoint.name == "Cp4") {
             if (cp4time == -2347823) {
                 cp4time = Time.time-start;
-                Debug.Log(cp4time);
+
             }
             }
         }
