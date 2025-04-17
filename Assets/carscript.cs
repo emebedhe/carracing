@@ -241,7 +241,6 @@ void OnTriggerEnter(Collider other) {
             if (lastcheckpoint.name == "Cp4") {
             if (cp4time == -2347823) {
                 cp4time = Time.time-start;
-
             }
             }
         }
