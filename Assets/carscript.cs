@@ -390,7 +390,11 @@ void FixedUpdate()
     if (finished) {
         using (StreamWriter sw = new StreamWriter("Assets/saves.txt",true))
         {
-        sw.WriteLine(stringlist+"|"+(Math.Round(Time.time-start,4).ToString()));
+        sw.WriteLine(stringlist+"|"+(Math.Round(Time.time-start,4).ToString())
+                        +"|"+(Math.Round(cp1time,4).ToString())
+                        +"|"+(Math.Round(cp2time,4).ToString())
+                        +"|"+(Math.Round(cp3time,4).ToString())
+                        +"|"+(Math.Round(cp4time,4).ToString()));
         sw.Close();
         }
     }
