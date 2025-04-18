@@ -10,6 +10,7 @@ using System.Linq;
 public class carscript : MonoBehaviour
 {
 //CAR SETUP
+    
     public GameObject ghost;
     public GameObject ghost2;
     public GameObject ghost3;
@@ -55,6 +56,8 @@ public class carscript : MonoBehaviour
     public Collider grass;
     private string track = "track 1";
 
+    private string cptextdisplay = "";
+
     public Text key1t;
     public Text key2t;
     public Text checkpointcrossed;
@@ -63,6 +66,8 @@ public class carscript : MonoBehaviour
 
     public Text timetext;
     public Text speedtext;
+
+    public Text replaystext;
 
     private bool started = false;
 
@@ -127,6 +132,12 @@ public class carscript : MonoBehaviour
 
     private float currentframe;
 
+    private List<float> cp1times = new List<float>();
+    private List<float> cp2times = new List<float>();
+    private List<float> cp3times = new List<float>();
+    private List<float> cp4times = new List<float>();
+
+
 // Start is called before the first frame update
 void Start() {
     rb = gameObject.GetComponent<Rigidbody>();
@@ -166,6 +177,7 @@ void Start() {
 
     //REPLAY PROCESSING
     List<string> idk;
+
     StreamReader reader = new StreamReader("Assets/saves.txt");
     idk = new List<string>(reader.ReadToEnd().Split('\n'));
     reader.Close();
@@ -179,6 +191,10 @@ void Start() {
         {
             finishtimes.Add(float.Parse(splitData[1]));
             saved5replays.Add(splitData[0]);
+            cp1times.Add(float.Parse(splitData[2]));
+            cp2times.Add(float.Parse(splitData[3]));
+            cp3times.Add(float.Parse(splitData[4]));
+            cp4times.Add(float.Parse(splitData[5]));
         }
     }
     Debug.Log(saved5replays[0].GetType());
@@ -208,39 +224,54 @@ void Start() {
     
     rb.transform.position = lastcheckpoint.transform.position;
     rb.transform.rotation = lastcheckpoint.transform.rotation;
+    Debug.Log(finishtimes.Max());
 
 }
 void DisableText()
 { 
     checkpointcrossed.enabled = false; 
+    cptextdisplay = "";
 } 
 void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Checkpoint") {
-            checkpointcrossed.enabled = true;
-            checkpointcrossed.text = other.gameObject.name + " crossed: " + (Mathf.Round((Time.time - start) * 100)/100).ToString();
-            Invoke("DisableText", 1f);
             if (cplist.Contains(other)) {}
             else { cplist.Add(other);}
             lastcheckpoint = other.gameObject;
             if (lastcheckpoint.name == "Cp1") {
             if (cp1time == -2347823) {
                 cp1time = Time.time-start;
+                checkpointcrossed.enabled = true;
+                checkpointcrossed.text = Math.Round(cp1time,3).ToString() + "\n" + ((cp1times.Min() - cp1time < 0 ? "+" : "-") + Math.Abs(Math.Round(cp1times.Min() - cp1time, 3)).ToString());
+                cptextdisplay="cp1";
+                Invoke("DisableText", 2.5f);
             }
             }
             if (lastcheckpoint.name == "Cp2") {
                 if (cp2time == -2347823) {
                     cp2time = Time.time-start;
                     Debug.Log(cp2time);
+                    checkpointcrossed.enabled = true;
+                    checkpointcrossed.text = Math.Round(cp2time,3).ToString() + "\n" + ((cp2times.Min() - cp2time < 0 ? "+" : "-") + Math.Abs(Math.Round(cp2times.Min() - cp2time, 3)).ToString());
+                    cptextdisplay="cp2";
+                    Invoke("DisableText", 2.5f);
                 }
             }
             if (lastcheckpoint.name == "Cp3") {
             if (cp3time == -2347823) {
                 cp3time = Time.time-start;
+                checkpointcrossed.enabled = true;
+                checkpointcrossed.text = Math.Round(cp3time,3).ToString() + "\n" + ((cp3times.Min() - cp3time < 0 ? "+" : "-") + Math.Abs(Math.Round(cp3times.Min() - cp3time, 3)).ToString());
+                cptextdisplay="cp3";
+                Invoke("DisableText", 2.5f);
             }
             }
             if (lastcheckpoint.name == "Cp4") {
             if (cp4time == -2347823) {
                 cp4time = Time.time-start;
+                checkpointcrossed.enabled = true;
+                checkpointcrossed.text = Math.Round(cp4time,3).ToString() + "\n" + ((cp4times.Min() - cp4time < 0 ? "+" : "-") + Math.Abs(Math.Round(cp4times.Min() - cp4time, 3)).ToString());
+                cptextdisplay="cp4";
+                Invoke("DisableText", 2.5f);
             }
             }
         }
@@ -255,11 +286,26 @@ void OnTriggerEnter(Collider other) {
 // Update is called once per frame
 void FixedUpdate()
 {   
-    foreach (float item in replaysdisplayed) {
-        Debug.Log(item);
+    replaysdisplayed.Sort();
+    if (cptextdisplay != "") {
+        if (cptextdisplay == "cp1") {
+            replaystext.text = "Replays shown:\n" + string.Join("\n", replaysdisplayed.OrderBy(index => Math.Abs(cp1times[index - 1] - cp1time)).Select(index => $"Replay {index}: {cp1times[index - 1]} ; {(cp1time - cp1times[index - 1] < 0 ? "-" : "+")}{Math.Abs(Math.Round(cp1time - cp1times[index - 1], 3))}"));
+        }
+        else if (cptextdisplay == "cp2") {
+            replaystext.text = "Replays shown:\n" + string.Join("\n", replaysdisplayed.OrderBy(index => Math.Abs(cp2times[index - 1] - cp2time)).Select(index => $"Replay {index}: {cp2times[index - 1]} ; {(cp2time - cp2times[index - 1] < 0 ? "-" : "+")}{Math.Abs(Math.Round(cp2time - cp2times[index - 1], 3))}"));
+        }
+        else if (cptextdisplay == "cp3") {
+            replaystext.text = "Replays shown:\n" + string.Join("\n", replaysdisplayed.OrderBy(index => Math.Abs(cp3times[index - 1] - cp3time)).Select(index => $"Replay {index}: {cp3times[index - 1]} ; {(cp3time - cp3times[index - 1] < 0 ? "-" : "+")}{Math.Abs(Math.Round(cp3time - cp3times[index - 1], 3))}"));
+        }
+        else if (cptextdisplay == "cp4") {
+            replaystext.text = "Replays shown:\n" + string.Join("\n", replaysdisplayed.OrderBy(index => Math.Abs(cp4times[index - 1] - cp4time)).Select(index => $"Replay {index}: {cp4times[index - 1]} ; {(cp4time - cp4times[index - 1] < 0 ? "-" : "+")}{Math.Abs(Math.Round(cp4time - cp4times[index - 1], 3))}"));
+        }
     }
-
-    frametimer+=1;
+    else {
+        replaystext.text = "Replays shown:\n" + string.Join("\n", replaysdisplayed.Select(index => $"Replay {index}: {finishtimes[index - 1]}"));
+    }
+    
+    frametimer += 1;
     if (started == true) {
     try {
         if (replaysdisplayed.Contains(1)) {
@@ -334,19 +380,12 @@ void FixedUpdate()
 
     string stringlist = "";
     //Debug.Log(finishtimes.Count());
-
-
+    if (finished && replaywritten == false) {     //IF: Your replay hasn't been written yet AND you finished
+    cptext.text = cp1time.ToString() + "\n" + cp2time.ToString() + "\n" + cp3time.ToString() + "\n" + cp4time.ToString();
+    replaywritten = true;     //REPLAY HAS BEEN WRITTEN
     if (finishtimes.Count()<5||(Time.time-start) < finishtimes.Max()){ 
     //IF: Your time is quicker than the worst time in finishtimes OR finishtimes has less than 5 itmes
 
-    if (finished && replaywritten == false) {
-    //IF: Your replay hasn't been written yet AND you finished
-
-    //replaymanager.Add(new List<float> {Time.time-start});
-
-    cptext.text = cp1time.ToString() + "\n" + cp2time.ToString() + "\n" + cp3time.ToString() + "\n" + cp4time.ToString();
-    replaywritten = true;
-    //REPLAY HAS BEEN WRITTEN
 
     if (finishtimes.Count()==5){
         //IF: There are 5 times in the list
@@ -394,7 +433,8 @@ void FixedUpdate()
                         +"|"+(Math.Round(cp1time,4).ToString())
                         +"|"+(Math.Round(cp2time,4).ToString())
                         +"|"+(Math.Round(cp3time,4).ToString())
-                        +"|"+(Math.Round(cp4time,4).ToString()));
+                        +"|"+(Math.Round(cp4time,4).ToString())
+                        +"|"+(Math.Round(Time.time-start,4).ToString()));
         sw.Close();
         }
     }
@@ -477,6 +517,10 @@ void FixedUpdate()
         track = "track 1";
     }
     if (Input.GetKey(KeyCode.Backslash)) {
+        cp1time = -2347823;
+        cp2time = -2347823;
+        cp3time = -2347823;
+        cp4time = -2347823;
         rb.linearVelocity = new Vector3(0,0,0);
         maxSpeed = 180;
         drivingframe = frametimer;
@@ -541,7 +585,7 @@ void FixedUpdate()
         transform.rotation = Quaternion.Euler(new Vector3(replaymanager[index][3],replaymanager[index][4],replaymanager[index][5]));
     }
 
-    if (Input.GetKey(KeyCode.Alpha1)) {
+    if (Input.GetKeyDown(KeyCode.Alpha1)) {
         if (replaysdisplayed.Contains(1)) {
             replaysdisplayed.Remove(1);
         }
@@ -550,7 +594,7 @@ void FixedUpdate()
         }
     }
 
-    if (Input.GetKey(KeyCode.Alpha2)) {
+    if (Input.GetKeyDown(KeyCode.Alpha2)) {
         if (replaysdisplayed.Contains(2)) {
             replaysdisplayed.Remove(2);
         }
@@ -558,7 +602,7 @@ void FixedUpdate()
             replaysdisplayed.Add(2);
         }
     }
-    if (Input.GetKey(KeyCode.Alpha3)) {
+    if (Input.GetKeyDown(KeyCode.Alpha3)) {
         if (replaysdisplayed.Contains(3)) {
             replaysdisplayed.Remove(3);
         }
@@ -566,7 +610,7 @@ void FixedUpdate()
             replaysdisplayed.Add(3);
         }
     }
-    if (Input.GetKey(KeyCode.Alpha4)) {
+    if (Input.GetKeyDown(KeyCode.Alpha4)) {
         if (replaysdisplayed.Contains(4)) {
             replaysdisplayed.Remove(4);
         }
@@ -574,7 +618,7 @@ void FixedUpdate()
             replaysdisplayed.Add(4);
         }
     }
-    if (Input.GetKey(KeyCode.Alpha5)) {
+    if (Input.GetKeyDown(KeyCode.Alpha5)) {
         if (replaysdisplayed.Contains(5)) {
             replaysdisplayed.Remove(5);
         }
