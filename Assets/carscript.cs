@@ -323,8 +323,14 @@ void FixedUpdate()
     if (started == true) {
     try {
         if (replaysdisplayed.Contains(1)) {
-            ghost.transform.position = new Vector3(float.Parse(replay1[(frametimer-drivingframe-1)*6]),float.Parse(replay1[(frametimer-drivingframe-1)*6+1]),float.Parse(replay1[(frametimer-drivingframe-1)*6+2]));
-            ghost.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay1[(frametimer-drivingframe-1)*6+3]) , float.Parse(replay1[(frametimer-drivingframe-1)*6+4]) , float.Parse(replay1[(frametimer-drivingframe-1)*6+5]) ) );
+            ghost.transform.position = 
+                new Vector3(float.Parse(replay1[(frametimer-drivingframe-1)*6]),
+                            float.Parse(replay1[(frametimer-drivingframe-1)*6+1]),
+                            float.Parse(replay1[(frametimer-drivingframe-1)*6+2]));
+            ghost.transform.rotation = 
+                Quaternion.Euler(new Vector3( float.Parse(replay1[(frametimer-drivingframe-1)*6+3]),
+                                            float.Parse(replay1[(frametimer-drivingframe-1)*6+4]),
+                                            float.Parse(replay1[(frametimer-drivingframe-1)*6+5])));
         }
         else {
             ghost.transform.position = new Vector3(0,-1000,0);
@@ -461,7 +467,12 @@ void FixedUpdate()
     }
 
     if (!finished) {
-    replaymanager.Add(new List<float> {(float)Math.Round(transform.position.x,3),(float)Math.Round(transform.position.y,3),(float)Math.Round(transform.position.z,3),(float)Math.Round(transform.eulerAngles.x,3),(float)Math.Round(transform.eulerAngles.y,3),(float)Math.Round(transform.eulerAngles.z,3)});
+    replaymanager.Add(new List<float> {(float)Math.Round(transform.position.x,3),
+                    (float)Math.Round(transform.position.y,3),
+                    (float)Math.Round(transform.position.z,3),
+                    (float)Math.Round(transform.eulerAngles.x,3),
+                    (float)Math.Round(transform.eulerAngles.y,3),
+                    (float)Math.Round(transform.eulerAngles.z,3)});
     }
     // Debug.Log(replaylistlength);
     accelplay.mute = true;
