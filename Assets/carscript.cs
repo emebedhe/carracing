@@ -238,7 +238,30 @@ void Start() {
     replay5button.GetComponentInChildren<Text>().text = "Replay 5: " + finishtimes[4].ToString();
 
 
-    replay1button.onClick.AddListener(() => {replaysdisplayed.Add(1);});
+    replay1button.onClick.AddListener(() => {
+        if (replaysdisplayed.Contains(1)) {
+            replaysdisplayed.Remove(1);
+        } else {replaysdisplayed.Add(1);}});
+    
+    replay2button.onClick.AddListener(() => {
+        if (replaysdisplayed.Contains(2)) {
+            replaysdisplayed.Remove(2);
+        } else {replaysdisplayed.Add(2);}});
+    
+    replay3button.onClick.AddListener(() => {
+        if (replaysdisplayed.Contains(3)) {
+            replaysdisplayed.Remove(3);
+        } else {replaysdisplayed.Add(3);}});
+
+    replay4button.onClick.AddListener(() => {
+        if (replaysdisplayed.Contains(4)) {
+            replaysdisplayed.Remove(4);
+        } else {replaysdisplayed.Add(4);}});
+    
+    replay5button.onClick.AddListener(() => {
+        if (replaysdisplayed.Contains(5)) {
+            replaysdisplayed.Remove(5);
+        } else {replaysdisplayed.Add(5);}});
 
 }
 void DisableText()
@@ -300,7 +323,7 @@ void OnTriggerEnter(Collider other) {
 // Update is called once per frame
 void FixedUpdate()
 {   
-    //Debug.Log(replaysdisplayed.WhereCount());
+    Debug.Log(replaysdisplayed.Where(s=>s!=null && s ==1).Count());
     replaysdisplayed.Sort();
     if (cptextdisplay != "") {
         if (cptextdisplay == "cp1") {
