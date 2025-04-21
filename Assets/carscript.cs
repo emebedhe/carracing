@@ -300,6 +300,7 @@ void OnTriggerEnter(Collider other) {
 // Update is called once per frame
 void FixedUpdate()
 {   
+    //Debug.Log(replaysdisplayed.WhereCount());
     replaysdisplayed.Sort();
     if (cptextdisplay != "") {
         if (cptextdisplay == "cp1") {
@@ -319,6 +320,11 @@ void FixedUpdate()
         replaystext.text = "Replays shown:\n" + string.Join("\n", replaysdisplayed.Select(index => $"Replay {index}: {finishtimes[index - 1]}"));
     }
     
+    foreach (Button a in new List<Button>(){replay1button,replay2button,replay3button,replay4button,replay5button}) {
+        a.image.color = Color.black;
+    }
+
+
     frametimer += 1;
     if (started == true) {
     try {
@@ -331,6 +337,8 @@ void FixedUpdate()
                 Quaternion.Euler(new Vector3( float.Parse(replay1[(frametimer-drivingframe-1)*6+3]),
                                             float.Parse(replay1[(frametimer-drivingframe-1)*6+4]),
                                             float.Parse(replay1[(frametimer-drivingframe-1)*6+5])));
+
+            replay1button.image.color = Color.white;
         }
         else {
             ghost.transform.position = new Vector3(0,-1000,0);
@@ -344,6 +352,7 @@ void FixedUpdate()
         if (replaysdisplayed.Contains(2)) {
             ghost2.transform.position = new Vector3(float.Parse(replay2[(frametimer-drivingframe-1)*6]),float.Parse(replay2[(frametimer-drivingframe-1)*6+1]),float.Parse(replay2[(frametimer-drivingframe-1)*6+2]));
             ghost2.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay2[(frametimer-drivingframe-1)*6+3]) , float.Parse(replay2[(frametimer-drivingframe-1)*6+4]) , float.Parse(replay2[(frametimer-drivingframe-1)*6+5]) ) );
+            replay2button.image.color = Color.white;
         }
         else {
             ghost2.transform.position = new Vector3(0,-1000,0);
@@ -357,6 +366,7 @@ void FixedUpdate()
         if (replaysdisplayed.Contains(3)) {
             ghost3.transform.position = new Vector3(float.Parse(replay3[(frametimer-drivingframe-1)*6]),float.Parse(replay3[(frametimer-drivingframe-1)*6+1]),float.Parse(replay3[(frametimer-drivingframe-1)*6+2]));
             ghost3.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay3[(frametimer-drivingframe-1)*6+3]) , float.Parse(replay3[(frametimer-drivingframe-1)*6+4]) , float.Parse(replay3[(frametimer-drivingframe-1)*6+5]) ) );
+            replay3button.image.color = Color.white;
         }
         else {
             ghost3.transform.position = new Vector3(0,-1000,0);
@@ -370,6 +380,7 @@ void FixedUpdate()
         if (replaysdisplayed.Contains(4)) {
             ghost4.transform.position = new Vector3(float.Parse(replay4[(frametimer-drivingframe-1)*6]),float.Parse(replay4[(frametimer-drivingframe-1)*6+1]),float.Parse(replay4[(frametimer-drivingframe-1)*6+2]));
             ghost4.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay4[(frametimer-drivingframe-1)*6+3]) , float.Parse(replay4[(frametimer-drivingframe-1)*6+4]) , float.Parse(replay4[(frametimer-drivingframe-1)*6+5]) ) );
+            replay4button.image.color = Color.white;
         }
         else {
             ghost4.transform.position = new Vector3(0,-1000,0);
@@ -382,6 +393,7 @@ void FixedUpdate()
         if (replaysdisplayed.Contains(5)) {
             ghost5.transform.position = new Vector3(float.Parse(replay5[(frametimer-drivingframe-1)*6]),float.Parse(replay5[(frametimer-drivingframe-1)*6+1]),float.Parse(replay5[(frametimer-drivingframe-1)*6+2]));
             ghost5.transform.rotation = Quaternion.Euler(new Vector3( float.Parse(replay5[(frametimer-drivingframe-1)*6+3]) , float.Parse(replay5[(frametimer-drivingframe-1)*6+4]) , float.Parse(replay5[(frametimer-drivingframe-1)*6+5]) ) );
+            replay5button.image.color = Color.white;
         }
         else {
             ghost5.transform.position = new Vector3(0,-1000,0);
@@ -652,6 +664,8 @@ void FixedUpdate()
             replaysdisplayed.Add(5);
         }
     }
+
+    
 
 
     AnimateWheelMesh();
