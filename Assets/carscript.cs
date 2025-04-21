@@ -68,6 +68,11 @@ public class carscript : MonoBehaviour
     public Text speedtext;
 
     public Text replaystext;
+    public Button replay1button;
+    public Button replay2button;
+    public Button replay3button;
+    public Button replay4button;
+    public Button replay5button;
 
     private bool started = false;
 
@@ -225,6 +230,15 @@ void Start() {
     rb.transform.position = lastcheckpoint.transform.position;
     rb.transform.rotation = lastcheckpoint.transform.rotation;
     Debug.Log(finishtimes.Max());
+
+    replay1button.GetComponentInChildren<Text>().text = "Replay 1: " + finishtimes[0].ToString();
+    replay2button.GetComponentInChildren<Text>().text = "Replay 2: " + finishtimes[1].ToString();
+    replay3button.GetComponentInChildren<Text>().text = "Replay 3: " + finishtimes[2].ToString();  
+    replay4button.GetComponentInChildren<Text>().text = "Replay 4: " + finishtimes[3].ToString();
+    replay5button.GetComponentInChildren<Text>().text = "Replay 5: " + finishtimes[4].ToString();
+
+
+    replay1button.onClick.AddListener(() => {replaysdisplayed.Add(1);});
 
 }
 void DisableText()
@@ -576,6 +590,7 @@ void FixedUpdate()
         replaystarted = true;
         replaytime = Time.time;
         replayframe = frametimer;
+        drivingframe = frametimer;
     }
     
     if (finished == true && replaystarted == true) {
