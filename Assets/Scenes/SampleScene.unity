@@ -1800,7 +1800,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: ba5278382327640578efd9a5e07ee89d, type: 3}
   m_Resource: {fileID: 8300000, guid: ba5278382327640578efd9a5e07ee89d, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 3
   Loop: 1
   Mute: 0
@@ -2197,6 +2197,10 @@ PrefabInstance:
       propertyPath: brakeForce
       value: 2000
       objectReference: {fileID: 0}
+    - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
+      propertyPath: maincamera
+      value: 
+      objectReference: {fileID: 330585545}
     - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: replaystext
       value: 
@@ -5554,7 +5558,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: ef89e3e695b2e4742aabb4bb71cfce74, type: 3}
   m_Resource: {fileID: 8300000, guid: ef89e3e695b2e4742aabb4bb71cfce74, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.2
   m_Pitch: 3
   Loop: 1
   Mute: 0

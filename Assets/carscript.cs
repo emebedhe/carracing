@@ -4,13 +4,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UI;
+using UnityEngine.Networking;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+
+
+#if UNITY_EDITOR
+[InitializeOnLoad]
+public class AllowInsecureHttp
+{
+    static AllowInsecureHttp()
+    {
+        PlayerSettings.insecureHttpOption = InsecureHttpOption.AlwaysAllowed;
+    }
+}
+#endif
+
 
 public class carscript : MonoBehaviour
 {
+    // Note: InsecureHttpOption is not a Unity-specific setting. 
+    // If you are referring to enabling insecure HTTP requests in Unity, 
+    // you can allow HTTP connections by modifying the Unity Player Settings.
+
+
 //CAR SETUP
-    
+    private static readonly HttpClient client = new HttpClient();
+
+    public Camera maincamera;
     public GameObject ghost;
     public GameObject ghost2;
     public GameObject ghost3;
@@ -145,6 +167,9 @@ public class carscript : MonoBehaviour
 
 // Start is called before the first frame update
 void Start() {
+    StartCoroutine(Upload());
+    // StartCoroutine(GetRequest("lab.longview.school:8080/~ashritbeskrowni/saves.txt"));
+
     rb = gameObject.GetComponent<Rigidbody>();
     rb.centerOfMass = centerofmass;
     FLwheelFriction = new WheelFrictionCurve ();
@@ -202,7 +227,6 @@ void Start() {
             cp4times.Add(float.Parse(splitData[5]));
         }
     }
-    Debug.Log(saved5replays[0].GetType());
 
 
     replay1 = saved5replays[0].Split(",").ToList();
@@ -210,7 +234,6 @@ void Start() {
     replay3 = saved5replays[2].Split(",").ToList();
     replay4 = saved5replays[3].Split(",").ToList();
     replay5 = saved5replays[4].Split(",").ToList();
-    Debug.Log(replay1.Count());
     // replay2 = saved5replays[1];
     // replay3 = saved5replays[2];
     // replay4 = saved5replays[3];
@@ -229,7 +252,6 @@ void Start() {
     
     rb.transform.position = lastcheckpoint.transform.position;
     rb.transform.rotation = lastcheckpoint.transform.rotation;
-    Debug.Log(finishtimes.Max());
 
     replay1button.GetComponentInChildren<Text>().text = "Replay 1: " + finishtimes[0].ToString();
     replay2button.GetComponentInChildren<Text>().text = "Replay 2: " + finishtimes[1].ToString();
@@ -269,6 +291,58 @@ void DisableText()
     checkpointcrossed.enabled = false; 
     cptextdisplay = "";
 } 
+
+    IEnumerator GetRequest(string uri)
+    {
+        using (UnityWebRequest webRequest = UnityWebRequest.Get(uri))
+        {
+            // Request and wait for the desired page.
+            yield return webRequest.SendWebRequest();
+
+            string[] pages = uri.Split('/');
+            int page = pages.Length - 1;
+
+            switch (webRequest.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                    Debug.LogError(pages[page] + ": Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.DataProcessingError:
+                    Debug.LogError(pages[page] + ": Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.ProtocolError:
+                    Debug.LogError(pages[page] + ": HTTP Error: " + webRequest.error);
+                    break;
+                case UnityWebRequest.Result.Success:
+                    Debug.Log(pages[page] + ":\nReceived: " + webRequest.downloadHandler.text);
+                    break;
+            }
+        }
+        
+    }
+
+    IEnumerator Upload()
+    {
+        using (UnityWebRequest www = new UnityWebRequest("http://lab.longview.school:8080/~ashritbeskrowni/post", "POST"))
+        {
+            byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes("{ \"field1\": 1, \"field2\": 2 }");
+            www.uploadHandler = new UploadHandlerRaw(bodyRaw);
+            www.downloadHandler = new DownloadHandlerBuffer();
+            www.SetRequestHeader("Content-Type", "application/json");
+        
+        
+            yield return www.SendWebRequest();
+
+            if (www.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError(www.error);
+            }
+            else
+            {
+                Debug.Log("Form upload complete!");
+            }
+        }
+    }
 void OnTriggerEnter(Collider other) {
         if (other.gameObject.tag == "Checkpoint") {
             if (cplist.Contains(other)) {}
@@ -323,7 +397,6 @@ void OnTriggerEnter(Collider other) {
 // Update is called once per frame
 void FixedUpdate()
 {   
-    Debug.Log(replaysdisplayed.Where(s=>s!=null && s ==1).Count());
     replaysdisplayed.Sort();
     if (cptextdisplay != "") {
         if (cptextdisplay == "cp1") {
@@ -501,7 +574,7 @@ void FixedUpdate()
         ReplayCreation();
     }
 
-    if (!finished) {
+    if (!finished && started) {
     replaymanager.Add(new List<float> {(float)Math.Round(transform.position.x,3),
                     (float)Math.Round(transform.position.y,3),
                     (float)Math.Round(transform.position.z,3),
@@ -577,6 +650,7 @@ void FixedUpdate()
         track = "track 1";
     }
     if (Input.GetKey(KeyCode.Backslash)) {
+        started = false;
         cp1time = -2347823;
         cp2time = -2347823;
         cp3time = -2347823;
@@ -647,6 +721,12 @@ void FixedUpdate()
     }
 
     if (Input.GetKeyDown(KeyCode.Alpha1)) {
+        // maincamera.enabled = false;
+        // ghost.GetComponentInChildren<Camera>().enabled = true;
+        // ghost2.GetComponentInChildren<Camera>().enabled = false;
+        // ghost3.GetComponentInChildren<Camera>().enabled = false;   
+        // ghost4.GetComponentInChildren<Camera>().enabled = false;
+        // ghost5.GetComponentInChildren<Camera>().enabled = false;
         if (replaysdisplayed.Contains(1)) {
             replaysdisplayed.Remove(1);
         }
@@ -656,6 +736,13 @@ void FixedUpdate()
     }
 
     if (Input.GetKeyDown(KeyCode.Alpha2)) {
+        // maincamera.enabled = false;
+        // ghost2.GetComponentInChildren<Camera>().enabled = true;
+        // ghost.GetComponentInChildren<Camera>().enabled = false;
+        // ghost3.GetComponentInChildren<Camera>().enabled = false;   
+        // ghost4.GetComponentInChildren<Camera>().enabled = false;
+        // ghost5.GetComponentInChildren<Camera>().enabled = false;
+
         if (replaysdisplayed.Contains(2)) {
             replaysdisplayed.Remove(2);
         }
@@ -664,6 +751,12 @@ void FixedUpdate()
         }
     }
     if (Input.GetKeyDown(KeyCode.Alpha3)) {
+        // maincamera.enabled = false;
+        // ghost3.GetComponentInChildren<Camera>().enabled = true;
+        // ghost.GetComponentInChildren<Camera>().enabled = false;
+        // ghost2.GetComponentInChildren<Camera>().enabled = false;   
+        // ghost4.GetComponentInChildren<Camera>().enabled = false;
+        // ghost5.GetComponentInChildren<Camera>().enabled = false;
         if (replaysdisplayed.Contains(3)) {
             replaysdisplayed.Remove(3);
         }
@@ -672,6 +765,12 @@ void FixedUpdate()
         }
     }
     if (Input.GetKeyDown(KeyCode.Alpha4)) {
+        // maincamera.enabled = false;
+        // ghost4.GetComponentInChildren<Camera>().enabled = true;
+        // ghost.GetComponentInChildren<Camera>().enabled = false;
+        // ghost2.GetComponentInChildren<Camera>().enabled = false;   
+        // ghost3.GetComponentInChildren<Camera>().enabled = false;
+        // ghost5.GetComponentInChildren<Camera>().enabled = false;
         if (replaysdisplayed.Contains(4)) {
             replaysdisplayed.Remove(4);
         }
@@ -680,6 +779,12 @@ void FixedUpdate()
         }
     }
     if (Input.GetKeyDown(KeyCode.Alpha5)) {
+        // maincamera.enabled = false;
+        // ghost5.GetComponentInChildren<Camera>().enabled = true;
+        // ghost.GetComponentInChildren<Camera>().enabled = false;
+        // ghost2.GetComponentInChildren<Camera>().enabled = false;   
+        // ghost4.GetComponentInChildren<Camera>().enabled = false;
+        // ghost3.GetComponentInChildren<Camera>().enabled = false;
         if (replaysdisplayed.Contains(5)) {
             replaysdisplayed.Remove(5);
         }

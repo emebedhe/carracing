@@ -59,8 +59,13 @@ public class camerascript : MonoBehaviour
             //Debug.Log("Changed x");
             //Debug.Log(Mathf.Abs(player.transform.forward.x)*-1);
           }
-          if (player1.GetComponent<carscript>().replaystarted){
+          try {
+          if (player1.GetComponent<carscript>().replaystarted) {
             transform.position = Vector3.Scale(player.transform.position,new Vector3(1f,1f,1f)) + new Vector3(0,30,0) + Vector3.Scale(player.transform.forward, new Vector3(lllll,lllll,lllll)) + offset;
+            transform.LookAt(player);
+          }}
+          catch {
+                        transform.position = Vector3.Scale(player.transform.position,new Vector3(1f,1f,1f)) + new Vector3(0,30,0) + Vector3.Scale(player.transform.forward, new Vector3(lllll,lllll,lllll)) + offset;
             transform.LookAt(player);
           }
 
