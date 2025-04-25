@@ -323,7 +323,7 @@ void DisableText()
 
     IEnumerator Upload()
     {
-        using (UnityWebRequest www = new UnityWebRequest("http://lab.longview.school:8080/~ashritbeskrowni/post", "POST"))
+        using (UnityWebRequest www = new UnityWebRequest("http://lab.longview.school:8080/~ashritbeskrowni/main.py", "POST"))
         {
             byte[] bodyRaw = System.Text.Encoding.UTF8.GetBytes("{ \"field1\": 1, \"field2\": 2 }");
             www.uploadHandler = new UploadHandlerRaw(bodyRaw);

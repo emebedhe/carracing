@@ -169,10 +169,6 @@ MonoBehaviour:
   m_SourceFontFilePath: 
   m_AtlasPopulationMode: 1
   InternalDynamicOS: 0
-<<<<<<< HEAD
-  m_GlyphTable: []
-  m_CharacterTable: []
-=======
   m_GlyphTable:
   - m_Index: 399
     m_Metrics:
@@ -308,7 +304,6 @@ MonoBehaviour:
     m_Unicode: 51
     m_GlyphIndex: 23
     m_Scale: 1
->>>>>>> 5396dce3403aae1e87fd2e6a428df8f916b834a9
   m_AtlasTextures:
   - {fileID: 28204114720316640}
   m_AtlasTextureIndex: 0
