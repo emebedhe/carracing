@@ -172,6 +172,7 @@ void Start() {
 
     rb = gameObject.GetComponent<Rigidbody>();
     rb.centerOfMass = centerofmass;
+
     FLwheelFriction = new WheelFrictionCurve ();
     FLwheelFriction.extremumSlip = flc.sidewaysFriction.extremumSlip;
     FLWextremumSlip = flc.sidewaysFriction.extremumSlip;
@@ -258,7 +259,13 @@ void Start() {
     replay3button.GetComponentInChildren<Text>().text = "Replay 3: " + finishtimes[2].ToString();  
     replay4button.GetComponentInChildren<Text>().text = "Replay 4: " + finishtimes[3].ToString();
     replay5button.GetComponentInChildren<Text>().text = "Replay 5: " + finishtimes[4].ToString();
-
+    
+    ghost.GetComponentInChildren<Camera>().enabled = false;
+    ghost2.GetComponentInChildren<Camera>().enabled = false;
+    ghost3.GetComponentInChildren<Camera>().enabled = false;
+    ghost4.GetComponentInChildren<Camera>().enabled = false;
+    ghost5.GetComponentInChildren<Camera>().enabled = false;
+    maincamera.enabled = true;
 
     replay1button.onClick.AddListener(() => {
         if (replaysdisplayed.Contains(1)) {
@@ -422,6 +429,7 @@ void FixedUpdate()
 
 
     frametimer += 1;
+
     if (started == true) {
     try {
         if (replaysdisplayed.Contains(1)) {
@@ -513,14 +521,10 @@ void FixedUpdate()
     replaywritten = true;     //REPLAY HAS BEEN WRITTEN
     if (finishtimes.Count()<5||(Time.time-start) < finishtimes.Max()){ 
     //IF: Your time is quicker than the worst time in finishtimes OR finishtimes has less than 5 itmes
-
-
     if (finishtimes.Count()==5){
         //IF: There are 5 times in the list
-    
         string filePath = "Assets/saves.txt";
         string targetEnding = finishtimes.Max().ToString(); // Replace with the characters you're looking for
-
         // Read all lines into memory
         foreach (string line in File.ReadAllLines(filePath))
         {
@@ -531,17 +535,11 @@ void FixedUpdate()
                 Debug.Log("ehehe");
             }
         }
-
-
         string[] lines = File.ReadAllLines(filePath);
-
         // Filter out lines that end with the target characters
         lines = lines.Where(line => !line.EndsWith(targetEnding)).ToArray();
-        
         // Overwrite the file with the modified content
         File.WriteAllLines(filePath, lines);
-
-
     }
 
     List<float> stringlistlist = new List<float>();
@@ -616,7 +614,6 @@ void FixedUpdate()
         CancelInvoke("DecelerateCar");
         deceleratingCar = false;
         Handbrake();
-        brakeplay.mute = false;
     }
 
     if(Input.GetKeyUp(KeyCode.Space)){
@@ -658,9 +655,10 @@ void FixedUpdate()
         rb.linearVelocity = new Vector3(0,0,0);
         maxSpeed = 180;
         drivingframe = frametimer;
+
         track = "track 1";
         cplist = new ArrayList();
-        start = Time.time; startframe = currentframe;
+        start = -234567890; startframe = currentframe;
         lastcheckpoint = GameObject.Find("start_line");
         rb.transform.position = lastcheckpoint.transform.position;
         rb.transform.rotation = lastcheckpoint.transform.rotation;
@@ -720,77 +718,87 @@ void FixedUpdate()
         transform.rotation = Quaternion.Euler(new Vector3(replaymanager[index][3],replaymanager[index][4],replaymanager[index][5]));
     }
 
-    if (Input.GetKeyDown(KeyCode.Alpha1)) {
-        // maincamera.enabled = false;
-        // ghost.GetComponentInChildren<Camera>().enabled = true;
-        // ghost2.GetComponentInChildren<Camera>().enabled = false;
-        // ghost3.GetComponentInChildren<Camera>().enabled = false;   
-        // ghost4.GetComponentInChildren<Camera>().enabled = false;
-        // ghost5.GetComponentInChildren<Camera>().enabled = false;
-        if (replaysdisplayed.Contains(1)) {
-            replaysdisplayed.Remove(1);
-        }
-        else {
-            replaysdisplayed.Add(1);
-        }
+    if (Input.GetKey(KeyCode.Alpha1)) {
+        maincamera.enabled = false;
+        ghost.GetComponentInChildren<Camera>().enabled = true;
+        ghost2.GetComponentInChildren<Camera>().enabled = false;
+        ghost3.GetComponentInChildren<Camera>().enabled = false;   
+        ghost4.GetComponentInChildren<Camera>().enabled = false;
+        ghost5.GetComponentInChildren<Camera>().enabled = false;
+        // if (replaysdisplayed.Contains(1)) {
+        //     replaysdisplayed.Remove(1);
+        // }
+        // else {
+        //     replaysdisplayed.Add(1);
+        // }
     }
 
-    if (Input.GetKeyDown(KeyCode.Alpha2)) {
-        // maincamera.enabled = false;
-        // ghost2.GetComponentInChildren<Camera>().enabled = true;
-        // ghost.GetComponentInChildren<Camera>().enabled = false;
-        // ghost3.GetComponentInChildren<Camera>().enabled = false;   
-        // ghost4.GetComponentInChildren<Camera>().enabled = false;
-        // ghost5.GetComponentInChildren<Camera>().enabled = false;
+    if (Input.GetKey(KeyCode.Alpha2)) {
+        maincamera.enabled = false;
+        ghost2.GetComponentInChildren<Camera>().enabled = true;
+        ghost.GetComponentInChildren<Camera>().enabled = false;
+        ghost3.GetComponentInChildren<Camera>().enabled = false;   
+        ghost4.GetComponentInChildren<Camera>().enabled = false;
+        ghost5.GetComponentInChildren<Camera>().enabled = false;
 
-        if (replaysdisplayed.Contains(2)) {
-            replaysdisplayed.Remove(2);
-        }
-        else {
-            replaysdisplayed.Add(2);
-        }
+        // if (replaysdisplayed.Contains(2)) {
+        //     replaysdisplayed.Remove(2);
+        // }
+        // else {
+        //     replaysdisplayed.Add(2);
+        // }
     }
-    if (Input.GetKeyDown(KeyCode.Alpha3)) {
-        // maincamera.enabled = false;
-        // ghost3.GetComponentInChildren<Camera>().enabled = true;
-        // ghost.GetComponentInChildren<Camera>().enabled = false;
-        // ghost2.GetComponentInChildren<Camera>().enabled = false;   
-        // ghost4.GetComponentInChildren<Camera>().enabled = false;
-        // ghost5.GetComponentInChildren<Camera>().enabled = false;
-        if (replaysdisplayed.Contains(3)) {
-            replaysdisplayed.Remove(3);
-        }
-        else {
-            replaysdisplayed.Add(3);
-        }
+    if (Input.GetKey(KeyCode.Alpha3)) {
+        maincamera.enabled = false;
+        ghost3.GetComponentInChildren<Camera>().enabled = true;
+        ghost.GetComponentInChildren<Camera>().enabled = false;
+        ghost2.GetComponentInChildren<Camera>().enabled = false;   
+        ghost4.GetComponentInChildren<Camera>().enabled = false;
+        ghost5.GetComponentInChildren<Camera>().enabled = false;
+        // if (replaysdisplayed.Contains(3)) {
+        //     replaysdisplayed.Remove(3);
+        // }
+        // else {
+        //     replaysdisplayed.Add(3);
+        // }
     }
-    if (Input.GetKeyDown(KeyCode.Alpha4)) {
-        // maincamera.enabled = false;
-        // ghost4.GetComponentInChildren<Camera>().enabled = true;
-        // ghost.GetComponentInChildren<Camera>().enabled = false;
-        // ghost2.GetComponentInChildren<Camera>().enabled = false;   
-        // ghost3.GetComponentInChildren<Camera>().enabled = false;
-        // ghost5.GetComponentInChildren<Camera>().enabled = false;
-        if (replaysdisplayed.Contains(4)) {
-            replaysdisplayed.Remove(4);
-        }
-        else {
-            replaysdisplayed.Add(4);
-        }
+    if (Input.GetKey(KeyCode.Alpha4)) {
+        maincamera.enabled = false;
+        ghost4.GetComponentInChildren<Camera>().enabled = true;
+        ghost.GetComponentInChildren<Camera>().enabled = false;
+        ghost2.GetComponentInChildren<Camera>().enabled = false;   
+        ghost3.GetComponentInChildren<Camera>().enabled = false;
+        ghost5.GetComponentInChildren<Camera>().enabled = false;
+        // if (replaysdisplayed.Contains(4)) {
+        // //     replaysdisplayed.Remove(4);
+        // // }
+        // // else {
+        // //     replaysdisplayed.Add(4);
+        // // }
     }
-    if (Input.GetKeyDown(KeyCode.Alpha5)) {
-        // maincamera.enabled = false;
-        // ghost5.GetComponentInChildren<Camera>().enabled = true;
-        // ghost.GetComponentInChildren<Camera>().enabled = false;
-        // ghost2.GetComponentInChildren<Camera>().enabled = false;   
-        // ghost4.GetComponentInChildren<Camera>().enabled = false;
-        // ghost3.GetComponentInChildren<Camera>().enabled = false;
-        if (replaysdisplayed.Contains(5)) {
-            replaysdisplayed.Remove(5);
-        }
-        else {
-            replaysdisplayed.Add(5);
-        }
+    if (Input.GetKey(KeyCode.Alpha5)) {
+        ghost5.GetComponentInChildren<Camera>().enabled = true;
+        ghost.GetComponentInChildren<Camera>().enabled = false;
+        ghost2.GetComponentInChildren<Camera>().enabled = false;   
+        ghost4.GetComponentInChildren<Camera>().enabled = false;
+        ghost3.GetComponentInChildren<Camera>().enabled = false;
+        maincamera.enabled = false;
+        // if (replaysdisplayed.Contains(5)) {
+        //     replaysdisplayed.Remove(5);
+        // }
+        // else {
+        //     replaysdisplayed.Add(5);
+        // }
+    }
+
+    if (Input.GetKey(KeyCode.Alpha0)) {
+        ghost.GetComponentInChildren<Camera>().enabled = false;
+        maincamera.enabled = true;
+        ghost5.GetComponentInChildren<Camera>().enabled = false;
+        ghost2.GetComponentInChildren<Camera>().enabled = false;   
+        ghost4.GetComponentInChildren<Camera>().enabled = false;
+        ghost3.GetComponentInChildren<Camera>().enabled = false;
+
     }
 
     
@@ -1004,8 +1012,6 @@ public void Handbrake(){
     rrc.sidewaysFriction = RRwheelFriction;
     }
     tractoin = true;
-
-
 }
 
 public void ResetPosition() {
