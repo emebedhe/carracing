@@ -30,11 +30,11 @@ public class camerascript : MonoBehaviour
         // transform.rotation = player.transform.rotation;
         // transform.rotation = Quaternion.Euler(0,0,0);
         transform.Rotate(rotationoffset);
-        if (Input.GetKey(KeyCode.Alpha1)) {
+        if (Input.GetKey(KeyCode.Alpha8)) {
           cameraa = 1;
           offset = new Vector3(0,-25,0);
         }
-        else if (Input.GetKey(KeyCode.Alpha2)) {
+        else if (Input.GetKey(KeyCode.Alpha9)) {
           cameraa = 2;
           offset = new Vector3(0,2,0);
         }
@@ -70,9 +70,11 @@ public class camerascript : MonoBehaviour
           }
 
         } else {
-          transform.position = player.transform.position+offset+player.transform.forward.normalized;
+          // transform.position = player.transform.position+offset+player.transform.forward.normalized;
+          // transform.rotation = player.transform.rotation;
+          // transform.Rotate(rotationoffset);
+          transform.localPosition = new Vector3(0,2,1);
           transform.rotation = player.transform.rotation;
-          transform.Rotate(rotationoffset);
 
         }
       //  Debug.Log(transform.position.x-player.transform.position.x);
