@@ -404,6 +404,14 @@ void OnTriggerEnter(Collider other) {
 // Update is called once per frame
 void FixedUpdate()
 {   
+    if (Input.GetKey(KeyCode.LeftBracket)) {
+        drivingframe += 60;
+    }
+        if (Input.GetKey(KeyCode.RightBracket)) {
+        drivingframe -= 60;
+    }
+
+
     replaysdisplayed.Sort();
     if (cptextdisplay != "") {
         if (cptextdisplay == "cp1") {
