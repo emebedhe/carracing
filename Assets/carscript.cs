@@ -48,6 +48,8 @@ public class carscript : MonoBehaviour
     List<string> replay4 = new List<string>();
     List<string> replay5 = new List<string>();
 
+    public TrailRenderer lefttrail;
+    public TrailRenderer righttrail;
 
     public AudioSource accelplay;
     public AudioSource brakeplay;
@@ -212,12 +214,15 @@ void Start() {
     StreamReader reader = new StreamReader("Assets/saves.txt");
     idk = new List<string>(reader.ReadToEnd().Split('\n'));
     reader.Close();
+
     List<string> saved5replays = new List<string>();
+
 
     // Process each line
     foreach (string item in idk)
     {
         string[] splitData = item.Split('|'); 
+
         if (splitData.Length > 1) 
         {
             finishtimes.Add(float.Parse(splitData[1]));
@@ -229,7 +234,7 @@ void Start() {
         }
     }
 
-
+    
     replay1 = saved5replays[0].Split(",").ToList();
     replay2 = saved5replays[1].Split(",").ToList();
     replay3 = saved5replays[2].Split(",").ToList();
@@ -404,6 +409,9 @@ void OnTriggerEnter(Collider other) {
 // Update is called once per frame
 void FixedUpdate()
 {   
+
+    trails();
+    tractoin = false;
     if (Input.GetKey(KeyCode.LeftBracket)) {
         drivingframe += 60;
     }
@@ -415,16 +423,16 @@ void FixedUpdate()
     replaysdisplayed.Sort();
     if (cptextdisplay != "") {
         if (cptextdisplay == "cp1") {
-            replaystext.text = "Replays shown:\n" + string.Join("\n", replaysdisplayed.OrderBy(index => Math.Abs(cp1times[index - 1] - cp1time)).Select(index => $"Replay {index}: {cp1times[index - 1]} ; {(cp1time - cp1times[index - 1] < 0 ? "-" : "+")}{Math.Abs(Math.Round(cp1time - cp1times[index - 1], 3))}"));
+            replaystext.text = "Replays shown:\n" + string.Join("\n", replaysdisplayed.OrderBy(index => Math.Abs(cp1times[index - 1] - cp1time)).Select(index => $"Replay {index}: {cp1times[index - 1]} ; {(cp1time - cp1times[index - 1] < 0 ? "+" : "-")}{Math.Abs(Math.Round(cp1time - cp1times[index - 1], 3))}"));
         }
         else if (cptextdisplay == "cp2") {
-            replaystext.text = "Replays shown:\n" + string.Join("\n", replaysdisplayed.OrderBy(index => Math.Abs(cp2times[index - 1] - cp2time)).Select(index => $"Replay {index}: {cp2times[index - 1]} ; {(cp2time - cp2times[index - 1] < 0 ? "-" : "+")}{Math.Abs(Math.Round(cp2time - cp2times[index - 1], 3))}"));
+            replaystext.text = "Replays shown:\n" + string.Join("\n", replaysdisplayed.OrderBy(index => Math.Abs(cp2times[index - 1] - cp2time)).Select(index => $"Replay {index}: {cp2times[index - 1]} ; {(cp2time - cp2times[index - 1] < 0 ? "+" : "-")}{Math.Abs(Math.Round(cp2time - cp2times[index - 1], 3))}"));
         }
         else if (cptextdisplay == "cp3") {
-            replaystext.text = "Replays shown:\n" + string.Join("\n", replaysdisplayed.OrderBy(index => Math.Abs(cp3times[index - 1] - cp3time)).Select(index => $"Replay {index}: {cp3times[index - 1]} ; {(cp3time - cp3times[index - 1] < 0 ? "-" : "+")}{Math.Abs(Math.Round(cp3time - cp3times[index - 1], 3))}"));
+            replaystext.text = "Replays shown:\n" + string.Join("\n", replaysdisplayed.OrderBy(index => Math.Abs(cp3times[index - 1] - cp3time)).Select(index => $"Replay {index}: {cp3times[index - 1]} ; {(cp3time - cp3times[index - 1] < 0 ? "+" : "-")}{Math.Abs(Math.Round(cp3time - cp3times[index - 1], 3))}"));
         }
         else if (cptextdisplay == "cp4") {
-            replaystext.text = "Replays shown:\n" + string.Join("\n", replaysdisplayed.OrderBy(index => Math.Abs(cp4times[index - 1] - cp4time)).Select(index => $"Replay {index}: {cp4times[index - 1]} ; {(cp4time - cp4times[index - 1] < 0 ? "-" : "+")}{Math.Abs(Math.Round(cp4time - cp4times[index - 1], 3))}"));
+            replaystext.text = "Replays shown:\n" + string.Join("\n", replaysdisplayed.OrderBy(index => Math.Abs(cp4times[index - 1] - cp4time)).Select(index => $"Replay {index}: {cp4times[index - 1]} ; {(cp4time - cp4times[index - 1] < 0 ? "+" : "-")}{Math.Abs(Math.Round(cp4time - cp4times[index - 1], 3))}"));
         }
     }
     else {
@@ -525,7 +533,7 @@ void FixedUpdate()
     string stringlist = "";
     //Debug.Log(finishtimes.Count());
     if (finished && replaywritten == false) {     //IF: Your replay hasn't been written yet AND you finished
-    cptext.text = cp1time.ToString() + "\n" + cp2time.ToString() + "\n" + cp3time.ToString() + "\n" + cp4time.ToString();
+    cptext.text = Math.Round(cp1time, 2).ToString() + "\n" + Math.Round(cp2time, 2).ToString() + "\n" + Math.Round(cp3time, 2).ToString() + "\n" + Math.Round(cp4time, 2).ToString();
     replaywritten = true;     //REPLAY HAS BEEN WRITTEN
     if (finishtimes.Count()<5||(Time.time-start) < finishtimes.Max()){ 
     //IF: Your time is quicker than the worst time in finishtimes OR finishtimes has less than 5 itmes
@@ -689,7 +697,6 @@ void FixedUpdate()
     speedtext.text = Mathf.Round(carSpeed).ToString();
     if (flc.GetGroundHit(out WheelHit hit)) {
         if (hit.collider == grass) {
-            Debug.Log("On the grass!");
             maxSpeed = 180;
             rb.linearDamping = 0.015f * grassPenalty;
         }
@@ -1079,5 +1086,23 @@ public void ReplayCreation()
         reader.Close();
     
     }
+
+public void trails(){
+    if (rrc.isGrounded && rlc.isGrounded) {
+        try{
+            if((tractoin || Mathf.Abs(localVelocityX) > 5f) && Mathf.Abs(carSpeed) > 12f){
+                lefttrail.emitting = true;
+                righttrail.emitting = true;
+            }
+            else {
+                lefttrail.emitting = false;
+                righttrail.emitting = false;
+            }
+        }
+        catch(Exception ex){
+            Debug.LogWarning(ex);
+        }
+    } else {lefttrail.emitting = false; righttrail.emitting = false;}
+}
 
 }
