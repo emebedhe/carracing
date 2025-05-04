@@ -2731,11 +2731,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2859508977287673787, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: m_ForwardFriction.m_Stiffness
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2859508977287673787, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: m_SidewaysFriction.m_Stiffness
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3339278046661397874, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: m_LocalScale.x
@@ -2787,19 +2787,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5867965697461904431, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: m_ForwardFriction.m_Stiffness
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5867965697461904431, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: m_SidewaysFriction.m_Stiffness
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6129869091033930575, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: m_ForwardFriction.m_Stiffness
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6129869091033930575, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: m_SidewaysFriction.m_Stiffness
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7059037707469809896, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: m_LocalScale.x
@@ -2891,11 +2891,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8358952615338736958, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: m_ForwardFriction.m_Stiffness
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8358952615338736958, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: m_SidewaysFriction.m_Stiffness
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8444520120723109087, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: m_LocalPosition.x
