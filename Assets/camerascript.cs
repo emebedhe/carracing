@@ -30,13 +30,19 @@ public class camerascript : MonoBehaviour
         // transform.rotation = player.transform.rotation;
         // transform.rotation = Quaternion.Euler(0,0,0);
         transform.Rotate(rotationoffset);
-        if (Input.GetKey(KeyCode.Alpha8)) {
-          cameraa = 1;
-          offset = new Vector3(0,-25,0);
-        }
-        else if (Input.GetKey(KeyCode.Alpha9)) {
-          cameraa = 2;
-          offset = new Vector3(0,2,0);
+        if (Input.GetKeyDown(KeyCode.C)) {
+          if (cameraa == 1) {
+            cameraa = 2;
+            offset = new Vector3(0,2,0);
+          }
+          else if (cameraa == 2) {
+            cameraa = 1;
+            offset = new Vector3(0,-25,0);
+          }
+          // cameraa = 1;
+          // offset = new Vector3(0,-25,0);
+          // cameraa = 2;
+          // offset = new Vector3(0,2,0);
         }
         if (cameraa == 1) {
           cartravelnormalised = carbody.linearVelocity.normalized;

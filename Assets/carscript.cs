@@ -630,11 +630,11 @@ void FixedUpdate()
         CancelInvoke("DecelerateCar");
         deceleratingCar = false;
         Handbrake();
-    }
+    } else {RecoverTraction();}
 
-    if(Input.GetKeyUp(KeyCode.Space)){
-        RecoverTraction();
-    }
+    // if(Input.GetKeyUp(KeyCode.Space)){
+    //     RecoverTraction();
+    // }
 
     if((!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow))){
         ThrottleOff();
@@ -1045,36 +1045,44 @@ public void RecoverTraction(){
     if(driftingAxis < 0f){
     driftingAxis = 0f;
     }
-    if(FLwheelFriction.extremumSlip > FLWextremumSlip){
-    FLwheelFriction.extremumSlip = FLWextremumSlip * handbrakeDriftMultiplier * driftingAxis;
-    flc.sidewaysFriction = FLwheelFriction;
+    // if(FLwheelFriction.extremumSlip > FLWextremumSlip){
+    // FLwheelFriction.extremumSlip = FLWextremumSlip * handbrakeDriftMultiplier * driftingAxis;
+    // flc.sidewaysFriction = FLwheelFriction;
 
-    FRwheelFriction.extremumSlip = FRWextremumSlip * handbrakeDriftMultiplier * driftingAxis;
-    frc.sidewaysFriction = FRwheelFriction;
+    // FRwheelFriction.extremumSlip = FRWextremumSlip * handbrakeDriftMultiplier * driftingAxis;
+    // frc.sidewaysFriction = FRwheelFriction;
 
-    RLwheelFriction.extremumSlip = RLWextremumSlip * handbrakeDriftMultiplier * driftingAxis;
-    rlc.sidewaysFriction = RLwheelFriction;
+    // RLwheelFriction.extremumSlip = RLWextremumSlip * handbrakeDriftMultiplier * driftingAxis;
+    // rlc.sidewaysFriction = RLwheelFriction;
 
-    RRwheelFriction.extremumSlip = RRWextremumSlip * handbrakeDriftMultiplier * driftingAxis;
-    rrc.sidewaysFriction = RRwheelFriction;
+    // RRwheelFriction.extremumSlip = RRWextremumSlip * handbrakeDriftMultiplier * driftingAxis;
+    // rrc.sidewaysFriction = RRwheelFriction;
 
-    Invoke("RecoverTraction", Time.deltaTime);
+    // Invoke("RecoverTraction", Time.deltaTime);
 
-    }else if (FLwheelFriction.extremumSlip < FLWextremumSlip){
-    FLwheelFriction.extremumSlip = FLWextremumSlip;
-    flc.sidewaysFriction = FLwheelFriction;
+    // }else if (FLwheelFriction.extremumSlip < FLWextremumSlip){
+    // FLwheelFriction.extremumSlip = FLWextremumSlip;
+    // flc.sidewaysFriction = FLwheelFriction;
 
-    FRwheelFriction.extremumSlip = FRWextremumSlip;
-    frc.sidewaysFriction = FRwheelFriction;
+    // FRwheelFriction.extremumSlip = FRWextremumSlip;
+    // frc.sidewaysFriction = FRwheelFriction;
 
-    RLwheelFriction.extremumSlip = RLWextremumSlip;
-    rlc.sidewaysFriction = RLwheelFriction;
+    // RLwheelFriction.extremumSlip = RLWextremumSlip;
+    // rlc.sidewaysFriction = RLwheelFriction;
 
+    // RRwheelFriction.extremumSlip = RRWextremumSlip;
+    // rrc.sidewaysFriction = RRwheelFriction;
     RRwheelFriction.extremumSlip = RRWextremumSlip;
-    rrc.sidewaysFriction = RRwheelFriction;
+    FLwheelFriction.extremumSlip = FLWextremumSlip;
+    FRwheelFriction.extremumSlip = FRWextremumSlip;
+    RLwheelFriction.extremumSlip = RLWextremumSlip;
 
+    flc.sidewaysFriction = FLwheelFriction;
+    frc.sidewaysFriction = FRwheelFriction;
+    rlc.sidewaysFriction = RLwheelFriction;
+    rrc.sidewaysFriction = RRwheelFriction;
     driftingAxis = 0f;
-    }
+    // }
 }
 
 public void ReplayCreation() 
