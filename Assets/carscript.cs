@@ -24,9 +24,6 @@ public class AllowInsecureHttp
 
 public class carscript : MonoBehaviour
 {
-    // Note: InsecureHttpOption is not a Unity-specific setting. 
-    // If you are referring to enabling insecure HTTP requests in Unity, 
-    // you can allow HTTP connections by modifying the Unity Player Settings.
 
 
 //CAR SETUP
@@ -861,8 +858,10 @@ public void AnimateWheelMesh(){
     FRMesh.transform.Rotate(new Vector3(0,0,90));
     FRTread.transform.Rotate(new Vector3(0,0,90));
 
-
 }
+
+
+
 public void TurnLeft(){
     steeringAxis = steeringAxis - (Time.deltaTime * 10f * steerlerpthinglol);
     if(steeringAxis < -1f){
