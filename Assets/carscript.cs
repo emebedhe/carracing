@@ -29,6 +29,9 @@ public class carscript : MonoBehaviour
 //CAR SETUP
     private static readonly HttpClient client = new HttpClient();
 
+    public List<GameObject> lights = new List<GameObject>();
+    private bool headlights = true;
+
     public Camera maincamera;
     public GameObject ghost;
     public GameObject ghost2;
@@ -403,6 +406,15 @@ void OnTriggerEnter(Collider other) {
         }
     }
     
+
+void Update() {
+    if (Input.GetKeyDown(KeyCode.H)) {
+        headlights = !headlights;
+        foreach (GameObject light in lights) {
+            light.SetActive(headlights);
+        }
+    }
+}
 // Update is called once per frame
 void FixedUpdate()
 {   
