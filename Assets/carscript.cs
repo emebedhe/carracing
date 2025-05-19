@@ -683,7 +683,6 @@ public class carscript : MonoBehaviour
                             new Vector3(float.Parse(replay1[(frametimer - drivingframe - 1) * 6]),
                                         float.Parse(replay1[(frametimer - drivingframe - 1) * 6 + 1]),
                                         float.Parse(replay1[(frametimer - drivingframe - 1) * 6 + 2]));
-                        Debug.Log(replay1[(frametimer - drivingframe - 1) * 6]);
                         ghost.transform.rotation =
                             Quaternion.Euler(new Vector3(float.Parse(replay1[(frametimer - drivingframe - 1) * 6 + 3]),
                                                         float.Parse(replay1[(frametimer - drivingframe - 1) * 6 + 4]),
@@ -694,13 +693,11 @@ public class carscript : MonoBehaviour
                     else
                     {
                         ghost.transform.position = new Vector3(0, -1000, 0);
-                        Debug.Log("reset!");
                     }
                 }
                 catch (System.Exception e)
                 {
                     ghost.transform.position = new Vector3(0, -1000, 0);
-                    Debug.Log("fffnf?!");
                 }
                 try
                 {
