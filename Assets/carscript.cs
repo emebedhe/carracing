@@ -335,6 +335,7 @@ public class carscript : MonoBehaviour
                     GameObject.Destroy(child.gameObject);
                 }
             }
+            GameObject.Destroy(GameObject.Find("stunt_track"));
             GameObject.Destroy(GameObject.Find("leo_track"));
             GameObject.Destroy(GameObject.Find("start_line_leo"));
             spawnpoint = GameObject.Find("start_line_tobes");
@@ -403,6 +404,7 @@ public class carscript : MonoBehaviour
                     GameObject.Destroy(child.gameObject);
                 }
             }
+            GameObject.Destroy(GameObject.Find("stunt_track"));
             GameObject.Destroy(GameObject.Find("tobiaswplam_track"));
             GameObject.Destroy(GameObject.Find("start_line_tobes"));
             spawnpoint = GameObject.Find("start_line_leo");
@@ -616,7 +618,8 @@ public class carscript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-
+        accelplay.mute = true;
+        brakeplay.mute = true;
 
         if (track != "")
         {
