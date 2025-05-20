@@ -766,7 +766,7 @@ public class carscript : MonoBehaviour
                         ghost5.transform.position = new Vector3(0, -1000, 0);
                     }
                 }
-                catch (System.Exception e)
+                catch (System.Exception) //e
                 {
                     ghost5.transform.position = new Vector3(0, -1000, 0);
                 }
