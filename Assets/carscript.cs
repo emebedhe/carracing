@@ -80,7 +80,7 @@ public class carscript : MonoBehaviour
     private float checkpointtotal;
 
     public Collider grass;
-    private string track = "";
+    public string track = "";
 
     private string cptextdisplay = "";
 
@@ -173,6 +173,8 @@ public class carscript : MonoBehaviour
     private List<float> cp3times = new List<float>();
     private List<float> cp4times = new List<float>();
 
+    public Vector3 originalrotation;
+
 
     // Start is called before the first frame update
     void Start()
@@ -263,9 +265,21 @@ public class carscript : MonoBehaviour
         // foreach (float item in finishtimes) {
         //     Debug.Log(item);
         // }
+        foreach (Button replaybutton in new List<Button>() { replay1button, replay2button, replay3button, replay4button, replay5button })
+        {
+            replaybutton.enabled = false;
+            replaybutton.gameObject.SetActive(false);
+        }
 
-        rb.transform.position = lastcheckpoint.transform.position;
+
+        rb.transform.position = new Vector3(0, -1000, 0);
         rb.transform.rotation = lastcheckpoint.transform.rotation;
+
+        foreach (GameObject ghostt in new List<GameObject>() { ghost, ghost2, ghost3, ghost4, ghost5 })
+        {
+            ghostt.transform.position = new Vector3(0, -1000, 0);
+            ghostt.transform.rotation = lastcheckpoint.transform.rotation;
+        }
 
         ghost.GetComponentInChildren<Camera>().enabled = false;
         ghost2.GetComponentInChildren<Camera>().enabled = false;
@@ -321,6 +335,12 @@ public class carscript : MonoBehaviour
 
         track2.onClick.AddListener(() =>
         {
+
+            foreach (Button replaybutton in new List<Button>() { replay1button, replay2button, replay3button, replay4button, replay5button })
+            {
+                replaybutton.enabled = true;
+                replaybutton.gameObject.SetActive(true);
+            }
             track = "track 2";
             GameObject checkpointsLeo = GameObject.Find("checkpoints_leo");
             if (checkpointsLeo != null)
@@ -348,6 +368,7 @@ public class carscript : MonoBehaviour
 
             checkpointtotal = 1;
             rb.transform.position = lastcheckpoint.transform.position;
+            originalrotation = rb.transform.rotation.eulerAngles;
             path = "Assets/saves_tobias.txt";
 
 
@@ -390,6 +411,12 @@ public class carscript : MonoBehaviour
 
         track1.onClick.AddListener(() =>
         {
+
+            foreach (Button replaybutton in new List<Button>() { replay1button, replay2button, replay3button, replay4button, replay5button })
+            {
+                replaybutton.enabled = true;
+                replaybutton.gameObject.SetActive(true);
+            }
             track = "track 1";
             GameObject checkpointsLeo = GameObject.Find("checkpoints_tobes");
             if (checkpointsLeo != null)
@@ -417,6 +444,7 @@ public class carscript : MonoBehaviour
 
             checkpointtotal = 4;
             rb.transform.position = lastcheckpoint.transform.position;
+            originalrotation = rb.transform.rotation.eulerAngles;
             path = "Assets/saves_leo.txt";
 
 
@@ -624,8 +652,9 @@ public class carscript : MonoBehaviour
         if (track != "")
         {
 
-            trails();
+
             tractoin = false;
+
             if (Input.GetKey(KeyCode.LeftBracket))
             {
                 drivingframe += 60;
@@ -948,7 +977,7 @@ public class carscript : MonoBehaviour
                 start = -234567890; startframe = currentframe;
                 lastcheckpoint = spawnpoint;
                 rb.transform.position = lastcheckpoint.transform.position;
-                rb.transform.rotation = lastcheckpoint.transform.rotation;
+                rb.transform.rotation = Quaternion.Euler(originalrotation);
                 replaymanager = new List<List<float>>();
                 flc.brakeTorque = float.MaxValue; frc.brakeTorque = float.MaxValue; rlc.brakeTorque = float.MaxValue; rrc.brakeTorque = float.MaxValue;
             }
@@ -1105,6 +1134,7 @@ public class carscript : MonoBehaviour
 
 
             AnimateWheelMesh();
+            trails();
             currentframe += 1;
 
             // if (Input.anyKeyDown && key1 == "")
@@ -1120,6 +1150,7 @@ public class carscript : MonoBehaviour
 
 
         }
+        else {transform.position = new Vector3(0, -1000, 0);}
     }
 
 public void AnimateWheelMesh() {
