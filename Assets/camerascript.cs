@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 
 public class camerascript : MonoBehaviour
@@ -20,6 +21,8 @@ public class camerascript : MonoBehaviour
 
   buttonscript buttonscript2;
   buttonscript buttonscript1;
+
+  public GameObject titletext;
 
   void Start()
   {
@@ -118,22 +121,25 @@ public class camerascript : MonoBehaviour
 
       //transform.Rotate(20,0,0);
     }
-    
+
     else if (buttonscript1.voids == "track1")
     {
       Debug.Log("YAM");
       LeoOnHover();
+      titletext.gameObject.SetActive(false);
     }
     else if (buttonscript2.voids == "track2")
     {
       Debug.Log("YAM");
       TobesOnHover();
+      titletext.gameObject.SetActive(false);
     }
 
     else
     {
       transform.position = new Vector3(10000, 1001, 0);
       transform.rotation = Quaternion.Euler(new Vector3(90, 0, 0));
+      titletext.gameObject.SetActive(true);
     }
   }
 
