@@ -180,6 +180,7 @@ public class carscript : MonoBehaviour
     void Start()
     {
         StartCoroutine(Upload());
+        timetext.text = "";
         // StartCoroutine(GetRequest("lab.longview.school:8080/~ashritbeskrowni/saves.txt"));
 
         rb = gameObject.GetComponent<Rigidbody>();
@@ -982,14 +983,6 @@ public class carscript : MonoBehaviour
                 rb.transform.rotation = Quaternion.Euler(originalrotation);
                 replaymanager = new List<List<float>>();
                 flc.brakeTorque = float.MaxValue; frc.brakeTorque = float.MaxValue; rlc.brakeTorque = float.MaxValue; rrc.brakeTorque = float.MaxValue;
-            }
-            if (Input.GetKey(KeyCode.Semicolon))
-            {
-                rb.linearVelocity = new Vector3(0, 0, 0);
-                track = "track 3";
-                maxSpeed = 50000;
-                transform.rotation = stuntstartline.transform.rotation;
-                transform.position = stuntstartline.transform.position;
             }
 
             if (finished == false)
