@@ -335,7 +335,7 @@ public class carscript : MonoBehaviour
 
         track2.onClick.AddListener(() =>
         {
-
+            rb.linearVelocity = new Vector3(0, 0, 0);
             foreach (Button replaybutton in new List<Button>() { replay1button, replay2button, replay3button, replay4button, replay5button })
             {
                 replaybutton.enabled = true;
@@ -412,7 +412,7 @@ public class carscript : MonoBehaviour
 
         track1.onClick.AddListener(() =>
         {
-
+            rb.linearVelocity = new Vector3(0, 0, 0);
             foreach (Button replaybutton in new List<Button>() { replay1button, replay2button, replay3button, replay4button, replay5button })
             {
                 replaybutton.enabled = true;
