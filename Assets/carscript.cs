@@ -358,6 +358,7 @@ public class carscript : MonoBehaviour
             GameObject.Destroy(GameObject.Find("stunt_track"));
             GameObject.Destroy(GameObject.Find("leo_track"));
             GameObject.Destroy(GameObject.Find("start_line_leo"));
+            GameObject.Destroy(GameObject.Find("titletext"));
             spawnpoint = GameObject.Find("start_line_tobes");
             track2.enabled = false;
             track2.gameObject.SetActive(false);
@@ -434,6 +435,7 @@ public class carscript : MonoBehaviour
             GameObject.Destroy(GameObject.Find("stunt_track"));
             GameObject.Destroy(GameObject.Find("tobiaswplam_track"));
             GameObject.Destroy(GameObject.Find("start_line_tobes"));
+            GameObject.Destroy(GameObject.Find("titletext"));
             spawnpoint = GameObject.Find("start_line_leo");
             track2.enabled = false;
             track2.gameObject.SetActive(false);
