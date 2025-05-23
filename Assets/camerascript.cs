@@ -124,13 +124,12 @@ public class camerascript : MonoBehaviour
 
     else if (buttonscript1.voids == "track1")
     {
-      Debug.Log("YAM");
+
       LeoOnHover();
       titletext.gameObject.SetActive(false);
     }
     else if (buttonscript2.voids == "track2")
     {
-      Debug.Log("YAM");
       TobesOnHover();
       titletext.gameObject.SetActive(false);
     }
@@ -147,7 +146,6 @@ public class camerascript : MonoBehaviour
   {
     transform.position = new Vector3(1955.995f, 5427.038f,1567.463f);
     track = "none";
-    Debug.Log("leo");
   }
 
   public void TobesOnHover()
@@ -155,7 +153,6 @@ public class camerascript : MonoBehaviour
     track = "none";
     transform.position = new Vector3(0f, 1926.731f, 0f);
     transform.rotation = Quaternion.Euler(new Vector3(90, 0, 0));
-    Debug.Log("tobes");
   }
 
 }
