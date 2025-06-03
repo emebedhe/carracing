@@ -3345,6 +3345,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1411989761}
     - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
+      propertyPath: directional_light
+      value: 
+      objectReference: {fileID: 410087040}
+    - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: lights.Array.size
       value: 4
       objectReference: {fileID: 0}
