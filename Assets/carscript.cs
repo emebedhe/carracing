@@ -150,19 +150,16 @@ public class carscript : MonoBehaviour
 
     public GameObject lastcheckpoint;
     public bool finished = false;
-
     private float start = -234567890;
     public float respawnoffset;
-
-    public Button Q;
-    public Button E;
-
+//    public Button Q;
+//    public Button E;
     public bool paused = false;
-
     public Button Play;
-
     public Button track1;
     public Button track2;
+
+    public Light directional_light;
 
     private GameObject spawnpoint;
 
@@ -639,10 +636,20 @@ public class carscript : MonoBehaviour
 
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.H)) {
+        if (Input.GetKeyDown(KeyCode.H))
+        {
             headlights = !headlights;
-            foreach (GameObject light in lights) {
+            foreach (GameObject light in lights)
+            {
                 light.SetActive(headlights);
+            }
+            if (directional_light.intensity == 1.0f)
+            {
+                directional_light.intensity = 2.5f;
+            }
+            else
+            {
+                directional_light.intensity = 1.0f;
             }
         }
     }
