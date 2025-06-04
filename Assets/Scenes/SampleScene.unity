@@ -3309,6 +3309,10 @@ PrefabInstance:
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
+      propertyPath: start_replay
+      value: 
+      objectReference: {fileID: 1456836913}
+    - target: {fileID: 1178099962453072948, guid: 2ae1544222b5d4448b8b3a48eaaabb06, type: 3}
       propertyPath: replay1button
       value: 
       objectReference: {fileID: 1329804647}

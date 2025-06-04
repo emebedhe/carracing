@@ -407,15 +407,13 @@ public class carscript : MonoBehaviour
             replay5button.GetComponentInChildren<Text>().text = "Replay 5: " + finishtimes[4].ToString();
         });
         start_replay.enabled = false;
+        start_replay.gameObject.SetActive(false);
         start_replay.onClick.AddListener(() =>
         {
-            if (replaystarted == false && finished == true)
-            {
-                replaystarted = true;
-                replaytime = Time.time;
-                replayframe = frametimer;
-                drivingframe = frametimer;
-            }
+            replaystarted = true;
+            replaytime = Time.time;
+            replayframe = frametimer;
+            drivingframe = frametimer;
         }
         );
         track1.onClick.AddListener(() =>
@@ -841,6 +839,8 @@ public class carscript : MonoBehaviour
             //Debug.Log(finishtimes.Count());
             if (finished && replaywritten == false)
             {     //IF: Your replay hasn't been written yet AND you finished
+                start_replay.gameObject.SetActive(true);
+                start_replay.enabled = true;
                 cptext.text = Math.Round(cp1time, 2).ToString() + "\n" + Math.Round(cp2time, 2).ToString() + "\n" + Math.Round(cp3time, 2).ToString() + "\n" + Math.Round(cp4time, 2).ToString();
                 replaywritten = true;     //REPLAY HAS BEEN WRITTEN
                 if (finishtimes.Count() < 5 || (Time.time - start) < finishtimes.Max())
