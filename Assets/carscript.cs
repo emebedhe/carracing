@@ -869,51 +869,51 @@ public class carscript : MonoBehaviour
                         // Overwrite the file with the modified content
                         File.WriteAllLines(filePath, lines);
                     }
+                
+            
+
+                List<float> stringlistlist = new List<float>();
+                    foreach (List<float> item in replaymanager)
+                    {
+                        foreach (float element in item)
+                        {
+                            stringlistlist.Add(element);
+                        }
+
+                    }
+                    stringlist = string.Join(", ", stringlistlist);
+
+
+                    if (finished)
+                    {
+                        using (StreamWriter sw = new StreamWriter(path, true))
+                        {
+                            if (track == "track 1")
+                            {
+                                sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
+                                            + "|" + (Math.Round(cp1time, 4).ToString())
+                                            + "|" + (Math.Round(cp2time, 4).ToString())
+                                            + "|" + (Math.Round(cp3time, 4).ToString())
+                                            + "|" + (Math.Round(cp4time, 4).ToString())
+                                            + "|" + (Math.Round(Time.time - start, 4).ToString()));
+                            }
+                            else if (track == "track 2")
+                            {
+                                sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
+                                                + "|" + (Math.Round(cp1time, 4).ToString())
+                                                + "|" + (Math.Round(Time.time - start, 4).ToString()));
+                                sw.Close();
+                            }
+                        }
+                    }
                 }
             }
 
-            //         List<float> stringlistlist = new List<float>();
-                //         foreach (List<float> item in replaymanager)
-                //         {
-                //             foreach (float element in item)
-                //             {
-                //                 stringlistlist.Add(element);
-                //             }
-
-                //         }
-                //         stringlist = string.Join(", ", stringlistlist);
-
-
-                //         if (finished)
-                //         {
-                //             using (StreamWriter sw = new StreamWriter(path, true))
-                //             {
-                //                 if (track == "track 1")
-                //                 {
-                //                     sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
-                //                                 + "|" + (Math.Round(cp1time, 4).ToString())
-                //                                 + "|" + (Math.Round(cp2time, 4).ToString())
-                //                                 + "|" + (Math.Round(cp3time, 4).ToString())
-                //                                 + "|" + (Math.Round(cp4time, 4).ToString())
-                //                                 + "|" + (Math.Round(Time.time - start, 4).ToString()));
-                //                 }
-                //                 else if (track == "track 2")
-                //                 {
-                //                     sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
-                //                                     + "|" + (Math.Round(cp1time, 4).ToString())
-                //                                     + "|" + (Math.Round(Time.time - start, 4).ToString()));
-                //                     sw.Close();
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
-
-                if (createreplay == true)
-                {
-                    createreplay = false;
-                    ReplayCreation();
-                }
+            if (createreplay == true)
+            {
+                createreplay = false;
+                ReplayCreation();
+            }
 
             if (!finished && started)
             {
@@ -993,6 +993,8 @@ public class carscript : MonoBehaviour
             }
             if (Input.GetKey(KeyCode.Backslash))
             {
+                start_replay.gameObject.SetActive(false);
+                start_replay.enabled = false;
                 started = false;
                 cp1time = -2347823;
                 cp2time = -2347823;
@@ -1000,6 +1002,7 @@ public class carscript : MonoBehaviour
                 cp4time = -2347823;
                 rb.linearVelocity = new Vector3(0, 0, 0);
                 maxSpeed = 180;
+                frametimer = 0;
                 drivingframe = frametimer;
                 cptext.text = "";
                 replaystarted = false;
