@@ -39,7 +39,7 @@ public class carscript : MonoBehaviour
     public GameObject ghost3;
     public GameObject ghost4;
     public GameObject ghost5;
-
+    public Button start_replay;
     private List<int> replaysdisplayed = new List<int>() { 1, 2, 3, 4, 5 };
 
     List<List<float>> replaymanager = new List<List<float>>();
@@ -182,7 +182,7 @@ public class carscript : MonoBehaviour
 
         rb = gameObject.GetComponent<Rigidbody>();
         rb.centerOfMass = centerofmass;
-
+        
         FLwheelFriction = new WheelFrictionCurve();
         FLwheelFriction.extremumSlip = flc.sidewaysFriction.extremumSlip;
         FLWextremumSlip = flc.sidewaysFriction.extremumSlip;
@@ -406,8 +406,16 @@ public class carscript : MonoBehaviour
             replay4button.GetComponentInChildren<Text>().text = "Replay 4: " + finishtimes[3].ToString();
             replay5button.GetComponentInChildren<Text>().text = "Replay 5: " + finishtimes[4].ToString();
         });
-
-
+        start_replay.enabled = false;
+        start_replay.gameObject.SetActive(false);
+        start_replay.onClick.AddListener(() =>
+        {
+            replaystarted = true;
+            replaytime = Time.time;
+            replayframe = frametimer;
+            drivingframe = frametimer;
+        }
+        );
         track1.onClick.AddListener(() =>
         {
             rb.linearVelocity = new Vector3(0, 0, 0);
@@ -629,79 +637,7 @@ public class carscript : MonoBehaviour
         {
             if (cplist.Count == checkpointtotal)
             {
-                if (!finished)
-                {
-                    finished = true;
-                    string stringlist = "";
-            //Debug.Log(finishtimes.Count());
-            if (finished && replaywritten == false)
-            {     //IF: Your replay hasn't been written yet AND you finished
-                cptext.text = Math.Round(cp1time, 2).ToString() + "\n" + Math.Round(cp2time, 2).ToString() + "\n" + Math.Round(cp3time, 2).ToString() + "\n" + Math.Round(cp4time, 2).ToString();
-                replaywritten = true;     //REPLAY HAS BEEN WRITTEN
-                if (finishtimes.Count() < 5 || (Time.time - start) < finishtimes.Max())
-                {
-                    //IF: Your time is quicker than the worst time in finishtimes OR finishtimes has less than 5 itmes
-                    if (finishtimes.Count() == 5)
-                    {
-                        //IF: There are 5 times in the list
-                        string filePath = path;
-                        string targetEnding = finishtimes.Max().ToString(); // Replace with the characters you're looking for
-                                                                            // Read all lines into memory
-                        foreach (string line in File.ReadAllLines(filePath))
-                        {
-                            if (line.Split('|')[1] == targetEnding)
-                            {
-                                Debug.Log("hehe");
-                            }
-                            else
-                            {
-                                Debug.Log("ehehe");
-                            }
-                        }
-                        string[] lines = File.ReadAllLines(filePath);
-                        // Filter out lines that end with the target characters
-                        lines = lines.Where(line => !line.EndsWith(targetEnding)).ToArray();
-                        // Overwrite the file with the modified content
-                        File.WriteAllLines(filePath, lines);
-                    }
-
-                    List<float> stringlistlist = new List<float>();
-                    foreach (List<float> item in replaymanager)
-                    {
-                        foreach (float element in item)
-                        {
-                            stringlistlist.Add(element);
-                        }
-
-                    }
-                    stringlist = string.Join(", ", stringlistlist);
-
-
-                    if (finished)
-                    {
-                        using (StreamWriter sw = new StreamWriter(path, true))
-                        {
-                            if (track == "track 1")
-                            {
-                                sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
-                                            + "|" + (Math.Round(cp1time, 4).ToString())
-                                            + "|" + (Math.Round(cp2time, 4).ToString())
-                                            + "|" + (Math.Round(cp3time, 4).ToString())
-                                            + "|" + (Math.Round(cp4time, 4).ToString())
-                                            + "|" + (Math.Round(Time.time - start, 4).ToString()));
-                            }
-                            else if (track == "track 2")
-                            {
-                                sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
-                                                + "|" + (Math.Round(cp1time, 4).ToString())
-                                                + "|" + (Math.Round(Time.time - start, 4).ToString()));
-                                sw.Close();
-                            }
-                        }
-                    }
-                }
-            }
-                }
+                finished = true;
             }
         }
     }
@@ -715,13 +651,13 @@ public class carscript : MonoBehaviour
             {
                 light.SetActive(headlights);
             }
-            if (directional_light.intensity == 1.0f)
+            if (directional_light.intensity == 0.5f)
             {
                 directional_light.intensity = 2.5f;
             }
             else
             {
-                directional_light.intensity = 1.0f;
+                directional_light.intensity = 0.5f;
             }
         }
     }
@@ -899,81 +835,85 @@ public class carscript : MonoBehaviour
             localVelocityZ = transform.InverseTransformDirection(rb.linearVelocity).z;
             // replaylistlength = 0;
 
-            // string stringlist = "";
-            // //Debug.Log(finishtimes.Count());
-            // if (finished && replaywritten == false)
-            // {     //IF: Your replay hasn't been written yet AND you finished
-            //     cptext.text = Math.Round(cp1time, 2).ToString() + "\n" + Math.Round(cp2time, 2).ToString() + "\n" + Math.Round(cp3time, 2).ToString() + "\n" + Math.Round(cp4time, 2).ToString();
-            //     replaywritten = true;     //REPLAY HAS BEEN WRITTEN
-            //     if (finishtimes.Count() < 5 || (Time.time - start) < finishtimes.Max())
-            //     {
-            //         //IF: Your time is quicker than the worst time in finishtimes OR finishtimes has less than 5 itmes
-            //         if (finishtimes.Count() == 5)
-            //         {
-            //             //IF: There are 5 times in the list
-            //             string filePath = path;
-            //             string targetEnding = finishtimes.Max().ToString(); // Replace with the characters you're looking for
-            //                                                                 // Read all lines into memory
-            //             foreach (string line in File.ReadAllLines(filePath))
-            //             {
-            //                 if (line.Split('|')[1] == targetEnding)
-            //                 {
-            //                     Debug.Log("hehe");
-            //                 }
-            //                 else
-            //                 {
-            //                     Debug.Log("ehehe");
-            //                 }
-            //             }
-            //             string[] lines = File.ReadAllLines(filePath);
-            //             // Filter out lines that end with the target characters
-            //             lines = lines.Where(line => !line.EndsWith(targetEnding)).ToArray();
-            //             // Overwrite the file with the modified content
-            //             File.WriteAllLines(filePath, lines);
-            //         }
+            string stringlist = "";
+            //Debug.Log(finishtimes.Count());
+            if (finished && replaywritten == false)
+            {     //IF: Your replay hasn't been written yet AND you finished
+                start_replay.gameObject.SetActive(true);
+                start_replay.enabled = true;
+                cptext.text = Math.Round(cp1time, 2).ToString() + "\n" + Math.Round(cp2time, 2).ToString() + "\n" + Math.Round(cp3time, 2).ToString() + "\n" + Math.Round(cp4time, 2).ToString();
+                replaywritten = true;     //REPLAY HAS BEEN WRITTEN
+                if (finishtimes.Count() < 5 || (Time.time - start) < finishtimes.Max())
+                {
+                    //IF: Your time is quicker than the worst time in finishtimes OR finishtimes has less than 5 itmes
+                    if (finishtimes.Count() == 5)
+                    {
+                        //IF: There are 5 times in the list
+                        string filePath = path;
+                        string targetEnding = finishtimes.Max().ToString(); // Replace with the characters you're looking for
+                                                                            // Read all lines into memory
+                        foreach (string line in File.ReadAllLines(filePath))
+                        {
+                            if (line.Split('|')[1] == targetEnding)
+                            {
+                                Debug.Log("hehe");
+                            }
+                            else
+                            {
+                                Debug.Log("ehehe");
+                            }
+                        }
+                        string[] lines = File.ReadAllLines(filePath);
+                        // Filter out lines that end with the target characters
+                        lines = lines.Where(line => !line.EndsWith(targetEnding)).ToArray();
+                        // Overwrite the file with the modified content
+                        File.WriteAllLines(filePath, lines);
+                    }
+                }
+            }
 
             //         List<float> stringlistlist = new List<float>();
-            //         foreach (List<float> item in replaymanager)
-            //         {
-            //             foreach (float element in item)
-            //             {
-            //                 stringlistlist.Add(element);
-            //             }
+                //         foreach (List<float> item in replaymanager)
+                //         {
+                //             foreach (float element in item)
+                //             {
+                //                 stringlistlist.Add(element);
+                //             }
 
-            //         }
-            //         stringlist = string.Join(", ", stringlistlist);
+                //         }
+                //         stringlist = string.Join(", ", stringlistlist);
 
 
-            //         if (finished)
-            //         {
-            //             using (StreamWriter sw = new StreamWriter(path, true))
-            //             {
-            //                 if (track == "track 1")
-            //                 {
-            //                     sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
-            //                                 + "|" + (Math.Round(cp1time, 4).ToString())
-            //                                 + "|" + (Math.Round(cp2time, 4).ToString())
-            //                                 + "|" + (Math.Round(cp3time, 4).ToString())
-            //                                 + "|" + (Math.Round(cp4time, 4).ToString())
-            //                                 + "|" + (Math.Round(Time.time - start, 4).ToString()));
-            //                 }
-            //                 else if (track == "track 2")
-            //                 {
-            //                     sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
-            //                                     + "|" + (Math.Round(cp1time, 4).ToString())
-            //                                     + "|" + (Math.Round(Time.time - start, 4).ToString()));
-            //                     sw.Close();
-            //                 }
-            //             }
-            //         }
-            //     }
-            // }
+                //         if (finished)
+                //         {
+                //             using (StreamWriter sw = new StreamWriter(path, true))
+                //             {
+                //                 if (track == "track 1")
+                //                 {
+                //                     sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
+                //                                 + "|" + (Math.Round(cp1time, 4).ToString())
+                //                                 + "|" + (Math.Round(cp2time, 4).ToString())
+                //                                 + "|" + (Math.Round(cp3time, 4).ToString())
+                //                                 + "|" + (Math.Round(cp4time, 4).ToString())
+                //                                 + "|" + (Math.Round(Time.time - start, 4).ToString()));
+                //                 }
+                //                 else if (track == "track 2")
+                //                 {
+                //                     sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
+                //                                     + "|" + (Math.Round(cp1time, 4).ToString())
+                //                                     + "|" + (Math.Round(Time.time - start, 4).ToString()));
+                //                     sw.Close();
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }
 
-            if (createreplay == true)
-            {
-                createreplay = false;
-                ReplayCreation();
-            }
+                if (createreplay == true)
+                {
+                    createreplay = false;
+                    ReplayCreation();
+                }
 
             if (!finished && started)
             {
