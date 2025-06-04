@@ -666,6 +666,12 @@ public class carscript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        // Debug.Log(localVelocityZ);
+        foreach (GameObject headlighg in lights)
+        {
+            Light headlight = headlighg.GetComponent<Light>();
+            headlight.color = Color.HSVToRGB((frametimer / 60f) % 1, 1, 1);
+        }
         accelplay.mute = true;
         brakeplay.mute = true;
 
@@ -826,6 +832,7 @@ public class carscript : MonoBehaviour
 
 
             carSpeed = (2 * 3.14f * flc.radius * flc.rpm * 60) / 1000;
+            // carSpeed = (float)Math.Round((float)localVelocityZ,3);
             localVelocityX = transform.InverseTransformDirection(rb.linearVelocity).x;
             localVelocityZ = transform.InverseTransformDirection(rb.linearVelocity).z;
             // replaylistlength = 0;
