@@ -39,7 +39,7 @@ public class carscript : MonoBehaviour
     public GameObject ghost3;
     public GameObject ghost4;
     public GameObject ghost5;
-
+    public Button start_replay;
     private List<int> replaysdisplayed = new List<int>() { 1, 2, 3, 4, 5 };
 
     List<List<float>> replaymanager = new List<List<float>>();
@@ -182,7 +182,7 @@ public class carscript : MonoBehaviour
 
         rb = gameObject.GetComponent<Rigidbody>();
         rb.centerOfMass = centerofmass;
-
+        
         FLwheelFriction = new WheelFrictionCurve();
         FLwheelFriction.extremumSlip = flc.sidewaysFriction.extremumSlip;
         FLWextremumSlip = flc.sidewaysFriction.extremumSlip;
@@ -406,8 +406,18 @@ public class carscript : MonoBehaviour
             replay4button.GetComponentInChildren<Text>().text = "Replay 4: " + finishtimes[3].ToString();
             replay5button.GetComponentInChildren<Text>().text = "Replay 5: " + finishtimes[4].ToString();
         });
-
-
+        start_replay.enabled = false;
+        start_replay.onClick.AddListener(() =>
+        {
+            if (replaystarted == false && finished == true)
+            {
+                replaystarted = true;
+                replaytime = Time.time;
+                replayframe = frametimer;
+                drivingframe = frametimer;
+            }
+        }
+        );
         track1.onClick.AddListener(() =>
         {
             rb.linearVelocity = new Vector3(0, 0, 0);
@@ -643,13 +653,13 @@ public class carscript : MonoBehaviour
             {
                 light.SetActive(headlights);
             }
-            if (directional_light.intensity == 1.0f)
+            if (directional_light.intensity == 0.5f)
             {
                 directional_light.intensity = 2.5f;
             }
             else
             {
-                directional_light.intensity = 1.0f;
+                directional_light.intensity = 0.5f;
             }
         }
     }
