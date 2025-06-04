@@ -629,7 +629,79 @@ public class carscript : MonoBehaviour
         {
             if (cplist.Count == checkpointtotal)
             {
-                finished = true;
+                if (!finished)
+                {
+                    finished = true;
+                    string stringlist = "";
+            //Debug.Log(finishtimes.Count());
+            if (finished && replaywritten == false)
+            {     //IF: Your replay hasn't been written yet AND you finished
+                cptext.text = Math.Round(cp1time, 2).ToString() + "\n" + Math.Round(cp2time, 2).ToString() + "\n" + Math.Round(cp3time, 2).ToString() + "\n" + Math.Round(cp4time, 2).ToString();
+                replaywritten = true;     //REPLAY HAS BEEN WRITTEN
+                if (finishtimes.Count() < 5 || (Time.time - start) < finishtimes.Max())
+                {
+                    //IF: Your time is quicker than the worst time in finishtimes OR finishtimes has less than 5 itmes
+                    if (finishtimes.Count() == 5)
+                    {
+                        //IF: There are 5 times in the list
+                        string filePath = path;
+                        string targetEnding = finishtimes.Max().ToString(); // Replace with the characters you're looking for
+                                                                            // Read all lines into memory
+                        foreach (string line in File.ReadAllLines(filePath))
+                        {
+                            if (line.Split('|')[1] == targetEnding)
+                            {
+                                Debug.Log("hehe");
+                            }
+                            else
+                            {
+                                Debug.Log("ehehe");
+                            }
+                        }
+                        string[] lines = File.ReadAllLines(filePath);
+                        // Filter out lines that end with the target characters
+                        lines = lines.Where(line => !line.EndsWith(targetEnding)).ToArray();
+                        // Overwrite the file with the modified content
+                        File.WriteAllLines(filePath, lines);
+                    }
+
+                    List<float> stringlistlist = new List<float>();
+                    foreach (List<float> item in replaymanager)
+                    {
+                        foreach (float element in item)
+                        {
+                            stringlistlist.Add(element);
+                        }
+
+                    }
+                    stringlist = string.Join(", ", stringlistlist);
+
+
+                    if (finished)
+                    {
+                        using (StreamWriter sw = new StreamWriter(path, true))
+                        {
+                            if (track == "track 1")
+                            {
+                                sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
+                                            + "|" + (Math.Round(cp1time, 4).ToString())
+                                            + "|" + (Math.Round(cp2time, 4).ToString())
+                                            + "|" + (Math.Round(cp3time, 4).ToString())
+                                            + "|" + (Math.Round(cp4time, 4).ToString())
+                                            + "|" + (Math.Round(Time.time - start, 4).ToString()));
+                            }
+                            else if (track == "track 2")
+                            {
+                                sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
+                                                + "|" + (Math.Round(cp1time, 4).ToString())
+                                                + "|" + (Math.Round(Time.time - start, 4).ToString()));
+                                sw.Close();
+                            }
+                        }
+                    }
+                }
+            }
+                }
             }
         }
     }
@@ -827,75 +899,75 @@ public class carscript : MonoBehaviour
             localVelocityZ = transform.InverseTransformDirection(rb.linearVelocity).z;
             // replaylistlength = 0;
 
-            string stringlist = "";
-            //Debug.Log(finishtimes.Count());
-            if (finished && replaywritten == false)
-            {     //IF: Your replay hasn't been written yet AND you finished
-                cptext.text = Math.Round(cp1time, 2).ToString() + "\n" + Math.Round(cp2time, 2).ToString() + "\n" + Math.Round(cp3time, 2).ToString() + "\n" + Math.Round(cp4time, 2).ToString();
-                replaywritten = true;     //REPLAY HAS BEEN WRITTEN
-                if (finishtimes.Count() < 5 || (Time.time - start) < finishtimes.Max())
-                {
-                    //IF: Your time is quicker than the worst time in finishtimes OR finishtimes has less than 5 itmes
-                    if (finishtimes.Count() == 5)
-                    {
-                        //IF: There are 5 times in the list
-                        string filePath = path;
-                        string targetEnding = finishtimes.Max().ToString(); // Replace with the characters you're looking for
-                                                                            // Read all lines into memory
-                        foreach (string line in File.ReadAllLines(filePath))
-                        {
-                            if (line.Split('|')[1] == targetEnding)
-                            {
-                                Debug.Log("hehe");
-                            }
-                            else
-                            {
-                                Debug.Log("ehehe");
-                            }
-                        }
-                        string[] lines = File.ReadAllLines(filePath);
-                        // Filter out lines that end with the target characters
-                        lines = lines.Where(line => !line.EndsWith(targetEnding)).ToArray();
-                        // Overwrite the file with the modified content
-                        File.WriteAllLines(filePath, lines);
-                    }
+            // string stringlist = "";
+            // //Debug.Log(finishtimes.Count());
+            // if (finished && replaywritten == false)
+            // {     //IF: Your replay hasn't been written yet AND you finished
+            //     cptext.text = Math.Round(cp1time, 2).ToString() + "\n" + Math.Round(cp2time, 2).ToString() + "\n" + Math.Round(cp3time, 2).ToString() + "\n" + Math.Round(cp4time, 2).ToString();
+            //     replaywritten = true;     //REPLAY HAS BEEN WRITTEN
+            //     if (finishtimes.Count() < 5 || (Time.time - start) < finishtimes.Max())
+            //     {
+            //         //IF: Your time is quicker than the worst time in finishtimes OR finishtimes has less than 5 itmes
+            //         if (finishtimes.Count() == 5)
+            //         {
+            //             //IF: There are 5 times in the list
+            //             string filePath = path;
+            //             string targetEnding = finishtimes.Max().ToString(); // Replace with the characters you're looking for
+            //                                                                 // Read all lines into memory
+            //             foreach (string line in File.ReadAllLines(filePath))
+            //             {
+            //                 if (line.Split('|')[1] == targetEnding)
+            //                 {
+            //                     Debug.Log("hehe");
+            //                 }
+            //                 else
+            //                 {
+            //                     Debug.Log("ehehe");
+            //                 }
+            //             }
+            //             string[] lines = File.ReadAllLines(filePath);
+            //             // Filter out lines that end with the target characters
+            //             lines = lines.Where(line => !line.EndsWith(targetEnding)).ToArray();
+            //             // Overwrite the file with the modified content
+            //             File.WriteAllLines(filePath, lines);
+            //         }
 
-                    List<float> stringlistlist = new List<float>();
-                    foreach (List<float> item in replaymanager)
-                    {
-                        foreach (float element in item)
-                        {
-                            stringlistlist.Add(element);
-                        }
+            //         List<float> stringlistlist = new List<float>();
+            //         foreach (List<float> item in replaymanager)
+            //         {
+            //             foreach (float element in item)
+            //             {
+            //                 stringlistlist.Add(element);
+            //             }
 
-                    }
-                    stringlist = string.Join(", ", stringlistlist);
+            //         }
+            //         stringlist = string.Join(", ", stringlistlist);
 
 
-                    if (finished)
-                    {
-                        using (StreamWriter sw = new StreamWriter(path, true))
-                        {
-                            if (track == "track 1")
-                            {
-                                sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
-                                            + "|" + (Math.Round(cp1time, 4).ToString())
-                                            + "|" + (Math.Round(cp2time, 4).ToString())
-                                            + "|" + (Math.Round(cp3time, 4).ToString())
-                                            + "|" + (Math.Round(cp4time, 4).ToString())
-                                            + "|" + (Math.Round(Time.time - start, 4).ToString()));
-                            }
-                            else if (track == "track 2")
-                            {
-                                sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
-                                                + "|" + (Math.Round(cp1time, 4).ToString())
-                                                + "|" + (Math.Round(Time.time - start, 4).ToString()));
-                                sw.Close();
-                            }
-                        }
-                    }
-                }
-            }
+            //         if (finished)
+            //         {
+            //             using (StreamWriter sw = new StreamWriter(path, true))
+            //             {
+            //                 if (track == "track 1")
+            //                 {
+            //                     sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
+            //                                 + "|" + (Math.Round(cp1time, 4).ToString())
+            //                                 + "|" + (Math.Round(cp2time, 4).ToString())
+            //                                 + "|" + (Math.Round(cp3time, 4).ToString())
+            //                                 + "|" + (Math.Round(cp4time, 4).ToString())
+            //                                 + "|" + (Math.Round(Time.time - start, 4).ToString()));
+            //                 }
+            //                 else if (track == "track 2")
+            //                 {
+            //                     sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
+            //                                     + "|" + (Math.Round(cp1time, 4).ToString())
+            //                                     + "|" + (Math.Round(Time.time - start, 4).ToString()));
+            //                     sw.Close();
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
 
             if (createreplay == true)
             {
@@ -989,9 +1061,13 @@ public class carscript : MonoBehaviour
                 rb.linearVelocity = new Vector3(0, 0, 0);
                 maxSpeed = 180;
                 drivingframe = frametimer;
-
+                cptext.text = "";
+                replaystarted = false;
+                replaywritten = false;
+                finished = false;
                 cplist = new ArrayList();
-                start = -234567890; startframe = currentframe;
+                start = -234567890;
+                startframe = 0;
                 lastcheckpoint = spawnpoint;
                 rb.transform.position = lastcheckpoint.transform.position;
                 rb.transform.rotation = Quaternion.Euler(originalrotation);
