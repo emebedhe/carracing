@@ -27,6 +27,9 @@ public class carscript : MonoBehaviour
 
 
     //CAR SETUP
+    private bool inWater = false;
+    private bool waterenterpossible = true;
+
     private static readonly HttpClient client = new HttpClient();
     private string path = "Assets/saves.txt";
 
@@ -80,6 +83,7 @@ public class carscript : MonoBehaviour
     private float checkpointtotal;
 
     public Collider grass;
+    public GameObject leo_water; 
     public string track = "";
 
     private string cptextdisplay = "";
@@ -418,6 +422,7 @@ public class carscript : MonoBehaviour
         );
         track1.onClick.AddListener(() =>
         {
+            leo_water = GameObject.Find("leo_water");
             rb.linearVelocity = new Vector3(0, 0, 0);
             foreach (Button replaybutton in new List<Button>() { replay1button, replay2button, replay3button, replay4button, replay5button })
             {
@@ -554,7 +559,8 @@ public class carscript : MonoBehaviour
             }
         }
     }
-    void OnTriggerEnter(Collider other) {
+    void OnTriggerEnter(Collider other)
+    {
         if (track == "track 1")
         {
             if (other.gameObject.tag == "Checkpoint")
@@ -640,8 +646,34 @@ public class carscript : MonoBehaviour
                 finished = true;
             }
         }
+        // this is fking gross wtf
+        // also need leos permission but its a good idea tbh
+        // it works now but its godawful lmao
+        // fffnfbffbygggg
+        // if (other.gameObject.tag == "Water")
+        // {
+        //     if (waterenterpossible)
+        //     {
+        //         waterenterpossible = false;
+        //         Invoke("EnableWaterEnter", 2f);
+        //         Debug.Log("Water entered");
+        //         inWater = !inWater;
+        //         Debug.Log(inWater);
+        //         if (inWater == true)
+        //         {
+        //             rb.linearDamping = 0.2f;
+        //         }
+        //         else if (inWater == false)
+        //         {
+        //             rb.linearDamping = 0.015f;
+        //         }
+        //     }
+        // }
     }
-
+    void EnableWaterEnter()
+    {
+        waterenterpossible = true;
+    }
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.H))
@@ -869,51 +901,51 @@ public class carscript : MonoBehaviour
                         // Overwrite the file with the modified content
                         File.WriteAllLines(filePath, lines);
                     }
+                
+            
+
+                List<float> stringlistlist = new List<float>();
+                    foreach (List<float> item in replaymanager)
+                    {
+                        foreach (float element in item)
+                        {
+                            stringlistlist.Add(element);
+                        }
+
+                    }
+                    stringlist = string.Join(", ", stringlistlist);
+
+
+                    if (finished)
+                    {
+                        using (StreamWriter sw = new StreamWriter(path, true))
+                        {
+                            if (track == "track 1")
+                            {
+                                sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
+                                            + "|" + (Math.Round(cp1time, 4).ToString())
+                                            + "|" + (Math.Round(cp2time, 4).ToString())
+                                            + "|" + (Math.Round(cp3time, 4).ToString())
+                                            + "|" + (Math.Round(cp4time, 4).ToString())
+                                            + "|" + (Math.Round(Time.time - start, 4).ToString()));
+                            }
+                            else if (track == "track 2")
+                            {
+                                sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
+                                                + "|" + (Math.Round(cp1time, 4).ToString())
+                                                + "|" + (Math.Round(Time.time - start, 4).ToString()));
+                                sw.Close();
+                            }
+                        }
+                    }
                 }
             }
 
-            //         List<float> stringlistlist = new List<float>();
-                //         foreach (List<float> item in replaymanager)
-                //         {
-                //             foreach (float element in item)
-                //             {
-                //                 stringlistlist.Add(element);
-                //             }
-
-                //         }
-                //         stringlist = string.Join(", ", stringlistlist);
-
-
-                //         if (finished)
-                //         {
-                //             using (StreamWriter sw = new StreamWriter(path, true))
-                //             {
-                //                 if (track == "track 1")
-                //                 {
-                //                     sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
-                //                                 + "|" + (Math.Round(cp1time, 4).ToString())
-                //                                 + "|" + (Math.Round(cp2time, 4).ToString())
-                //                                 + "|" + (Math.Round(cp3time, 4).ToString())
-                //                                 + "|" + (Math.Round(cp4time, 4).ToString())
-                //                                 + "|" + (Math.Round(Time.time - start, 4).ToString()));
-                //                 }
-                //                 else if (track == "track 2")
-                //                 {
-                //                     sw.WriteLine(stringlist + "|" + (Math.Round(Time.time - start, 4).ToString())
-                //                                     + "|" + (Math.Round(cp1time, 4).ToString())
-                //                                     + "|" + (Math.Round(Time.time - start, 4).ToString()));
-                //                     sw.Close();
-                //                 }
-                //             }
-                //         }
-                //     }
-                // }
-
-                if (createreplay == true)
-                {
-                    createreplay = false;
-                    ReplayCreation();
-                }
+            if (createreplay == true)
+            {
+                createreplay = false;
+                ReplayCreation();
+            }
 
             if (!finished && started)
             {
@@ -990,9 +1022,13 @@ public class carscript : MonoBehaviour
             {
                 ResetPosition();
                 rb.linearVelocity = new Vector3(0, 0, 0);
+                inWater = false;
             }
             if (Input.GetKey(KeyCode.Backslash))
             {
+                inWater = false;
+                start_replay.gameObject.SetActive(false);
+                start_replay.enabled = false;
                 started = false;
                 cp1time = -2347823;
                 cp2time = -2347823;
@@ -1000,6 +1036,7 @@ public class carscript : MonoBehaviour
                 cp4time = -2347823;
                 rb.linearVelocity = new Vector3(0, 0, 0);
                 maxSpeed = 180;
+                frametimer = 0;
                 drivingframe = frametimer;
                 cptext.text = "";
                 replaystarted = false;
@@ -1029,7 +1066,7 @@ public class carscript : MonoBehaviour
                     maxSpeed = 180;
                     rb.linearDamping = 0.015f * grassPenalty;
                 }
-                else if (track == "track 1")
+                else if (track == "track 1" && inWater == false)
                 {
                     maxSpeed = 180;
                     rb.linearDamping = 0.015f;
