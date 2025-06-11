@@ -56,7 +56,8 @@ public class carscript : MonoBehaviour
     public TrailRenderer righttrail;
 
     public AudioSource accelplay;
-    public AudioSource brakeplay;
+    public AudioSource idleplay;
+    //public AudioSource brakeplay;
     //private float replaylistlength = 0;
     List<float> finishtimes = new List<float>();
     private float replaytime;
@@ -418,6 +419,8 @@ public class carscript : MonoBehaviour
             replaytime = Time.time;
             replayframe = frametimer;
             drivingframe = frametimer;
+            start_replay.enabled = false;
+            start_replay.gameObject.SetActive(false);
         }
         );
         track1.onClick.AddListener(() =>
@@ -702,8 +705,17 @@ public class carscript : MonoBehaviour
             Light headlight = headlighg.GetComponent<Light>();
             headlight.color = Color.HSVToRGB((frametimer / 60f) % 1, 1, 1);
         }
-        accelplay.mute = true;
-        brakeplay.mute = true;
+        if (started == true)
+        {
+            accelplay.mute = false;
+            accelplay.volume = 0.2f;
+            idleplay.mute = true;
+        }
+        else
+        {
+            accelplay.mute = true;
+        }
+        //brakeplay.mute = true;
 
         if (track != "")
         {
@@ -901,10 +913,10 @@ public class carscript : MonoBehaviour
                         // Overwrite the file with the modified content
                         File.WriteAllLines(filePath, lines);
                     }
-                
-            
 
-                List<float> stringlistlist = new List<float>();
+
+
+                    List<float> stringlistlist = new List<float>();
                     foreach (List<float> item in replaymanager)
                     {
                         foreach (float element in item)
@@ -949,16 +961,19 @@ public class carscript : MonoBehaviour
 
             if (!finished && started)
             {
-                replaymanager.Add(new List<float> {(float)Math.Round(transform.position.x,3),
-                    (float)Math.Round(transform.position.y,3),
-                    (float)Math.Round(transform.position.z,3),
-                    (float)Math.Round(transform.eulerAngles.x,3),
-                    (float)Math.Round(transform.eulerAngles.y,3),
-                    (float)Math.Round(transform.eulerAngles.z,3)});
+                replaymanager.Add(new List<float>
+                    {
+                        (float)Math.Round(transform.position.x, 3),
+                        (float)Math.Round(transform.position.y, 3),
+                        (float)Math.Round(transform.position.z, 3),
+                        (float)Math.Round(transform.eulerAngles.x, 3),
+                        (float)Math.Round(transform.eulerAngles.y, 3),
+                        (float)Math.Round(transform.eulerAngles.z, 3)
+                    });
             }
             // Debug.Log(replaylistlength);
-            accelplay.mute = true;
-            brakeplay.mute = true;
+            accelplay.pitch = 1 + (Math.Abs(carSpeed) / (maxSpeed / 3));
+            //brakeplay.mute = true;
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
                 CancelInvoke("DecelerateCar");
@@ -966,7 +981,6 @@ public class carscript : MonoBehaviour
                 GoForward();
                 if (start == -234567890) { start = Time.time; started = true; startframe = currentframe; }
                 if (drivingframe == 0) { drivingframe = frametimer; }
-                accelplay.mute = false;
             }
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
@@ -975,7 +989,6 @@ public class carscript : MonoBehaviour
                 GoReverse();
                 if (start == -234567890) { start = Time.time; started = true; startframe = currentframe; }
                 if (drivingframe == 0) { drivingframe = frametimer; }
-                brakeplay.mute = false;
             }
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
@@ -1073,7 +1086,7 @@ public class carscript : MonoBehaviour
                 }
                 else if (track == "track 2")
                 {
-                    maxSpeed = 50000;
+                    maxSpeed = 300;
                     rb.linearDamping = 0.015f;
                 }
             }
@@ -1212,7 +1225,7 @@ public class carscript : MonoBehaviour
 
 
         }
-        else {transform.position = new Vector3(0, -1000, 0);}
+        else { transform.position = new Vector3(0, -1000, 0); }
     }
 
 public void AnimateWheelMesh() {

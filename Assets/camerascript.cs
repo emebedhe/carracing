@@ -94,7 +94,7 @@ public class camerascript : MonoBehaviour
         }
         try
         {
-          if (player1.GetComponent<carscript>().replaystarted)
+          if (player1.GetComponent<carscript>().replaystarted && !Input.GetKey(KeyCode.Tab))
           {
             transform.position = Vector3.Scale(player.transform.position, new Vector3(1f, 1f, 1f)) + new Vector3(0, 30, 0) + Vector3.Scale(player.transform.forward, new Vector3(lllll, lllll, lllll)) + offset;
             transform.LookAt(player);
