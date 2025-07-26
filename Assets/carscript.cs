@@ -884,8 +884,14 @@ public class carscript : MonoBehaviour
             if (finished && replaywritten == false)
             {     //IF: Your replay hasn't been written yet AND you finished
                 start_replay.gameObject.SetActive(true);
-                start_replay.enabled = true;
-                cptext.text = Math.Round(cp1time, 2).ToString() + "\n" + Math.Round(cp2time, 2).ToString() + "\n" + Math.Round(cp3time, 2).ToString() + "\n" + Math.Round(cp4time, 2).ToString();
+                start_replay.enabled = true; // we must fix brute force :D
+                if (track == "track 1")
+                {
+                    cptext.text = Math.Round(cp1time, 2).ToString() + "\n" + Math.Round(cp2time, 2).ToString() + "\n" + Math.Round(cp3time, 2).ToString() + "\n" + Math.Round(cp4time, 2).ToString();
+                } else if (track == "track 2")
+                {
+                    cptext.text = Math.Round(cp1time, 2).ToString();
+                }
                 replaywritten = true;     //REPLAY HAS BEEN WRITTEN
                 if (finishtimes.Count() < 5 || (Time.time - start) < finishtimes.Max())
                 {
