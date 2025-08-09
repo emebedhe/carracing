@@ -1167,7 +1167,7 @@ public class carscript : MonoBehaviour
                     }
                     else if (track == "track 2")
                     {
-                        maxSpeed = 300;
+                        maxSpeed = 3000;
                         collide.wheelDampingRate = 0.15f;
                     }
                 }
@@ -1246,7 +1246,7 @@ public class carscript : MonoBehaviour
 
         }
         else { transform.position = new Vector3(0, -1000, 0); }
-        Debug.Log(flc.brakeTorque + " " + frc.brakeTorque + " " + rlc.brakeTorque + " " + rrc.brakeTorque);
+        Debug.Log(flc.motorTorque + " " + frc.motorTorque + " " + rlc.motorTorque + " " + rrc.motorTorque);
     }
 
 public void AnimateWheelMesh() {
