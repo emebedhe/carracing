@@ -1497,17 +1497,22 @@ public void AnimateWheelMesh() {
 
     public void trails() {
         if (rrc.isGrounded && rlc.isGrounded) {
-            try {
-                if ((tractoin || Mathf.Abs(localVelocityX) > 5f) && Mathf.Abs(carSpeed) > 12f) {
+            Debug.Log((rrc.isGrounded.ToString()) + (rlc.isGrounded.ToString()));
+            try
+            {
+                if ((tractoin || Mathf.Abs(localVelocityX) > 5f) && Mathf.Abs(carSpeed) > 12f)
+                {
                     lefttrail.emitting = true;
                     righttrail.emitting = true;
                 }
-                else {
+                else
+                {
                     lefttrail.emitting = false;
                     righttrail.emitting = false;
                 }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Debug.LogWarning(ex);
             }
         } else { lefttrail.emitting = false; righttrail.emitting = false; }
