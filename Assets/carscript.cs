@@ -118,7 +118,7 @@ public class carscript : MonoBehaviour
     public float steerlerpthinglol = 0.5f;
     public int brakeForce = 350;
     public int decelerationMultiplier = 2;
-    public float grassPenalty = 7;
+    public float grassPenalty = 15;
     public int handbrakeDriftMultiplier = 5;
     public Vector3 centerofmass;
 
@@ -152,6 +152,8 @@ public class carscript : MonoBehaviour
     float RLWextremumSlip;
     WheelFrictionCurve RRwheelFriction;
     float RRWextremumSlip;
+
+    public List<WheelCollider> wheelColliders;
 
     public GameObject lastcheckpoint;
     public bool finished = false;
@@ -187,7 +189,7 @@ public class carscript : MonoBehaviour
 
         rb = gameObject.GetComponent<Rigidbody>();
         rb.centerOfMass = centerofmass;
-        
+        wheelColliders = new List<WheelCollider> { flc, frc, rlc, rrc };
         FLwheelFriction = new WheelFrictionCurve();
         FLwheelFriction.extremumSlip = flc.sidewaysFriction.extremumSlip;
         FLWextremumSlip = flc.sidewaysFriction.extremumSlip;
@@ -888,7 +890,8 @@ public class carscript : MonoBehaviour
                 if (track == "track 1")
                 {
                     cptext.text = Math.Round(cp1time, 2).ToString() + "\n" + Math.Round(cp2time, 2).ToString() + "\n" + Math.Round(cp3time, 2).ToString() + "\n" + Math.Round(cp4time, 2).ToString();
-                } else if (track == "track 2")
+                }
+                else if (track == "track 2")
                 {
                     cptext.text = Math.Round(cp1time, 2).ToString();
                 }
@@ -980,62 +983,7 @@ public class carscript : MonoBehaviour
             // Debug.Log(replaylistlength);
             accelplay.pitch = 1 + (Math.Abs(carSpeed) / (maxSpeed / 3));
             //brakeplay.mute = true;
-            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-            {
-                CancelInvoke("DecelerateCar");
-                deceleratingCar = false;
-                GoForward();
-                if (start == -234567890) { start = Time.time; started = true; startframe = currentframe; }
-                if (drivingframe == 0) { drivingframe = frametimer; }
-            }
-            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-            {
-                CancelInvoke("DecelerateCar");
-                deceleratingCar = false;
-                GoReverse();
-                if (start == -234567890) { start = Time.time; started = true; startframe = currentframe; }
-                if (drivingframe == 0) { drivingframe = frametimer; }
-            }
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-            {
-                TurnLeft();
-                if (start == -234567890) { start = Time.time; started = true; startframe = currentframe; }
-                if (drivingframe == 0) { drivingframe = frametimer; }
-            }
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-            {
-                TurnRight();
-                if (start == -234567890) { start = Time.time; started = true; startframe = currentframe; }
-                if (drivingframe == 0) { drivingframe = frametimer; }
-            }
-
-            if (Input.GetKey(KeyCode.Space))
-            {
-                CancelInvoke("DecelerateCar");
-                deceleratingCar = false;
-                Handbrake();
-            }
-            else { RecoverTraction(); }
-
-            // if(Input.GetKeyUp(KeyCode.Space)){
-            //     RecoverTraction();
-            // }
-
-            if ((!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow)))
-            {
-                ThrottleOff();
-            }
-
-            if ((!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow)) && !Input.GetKey(KeyCode.Space) && !deceleratingCar)
-            {
-                InvokeRepeating("DecelerateCar", 0f, 0.1f);
-                deceleratingCar = true;
-            }
-
-            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && steeringAxis != 0f && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
-            {
-                ResetSteeringAngle();
-            }
+            
 
             if (Input.GetKey(KeyCode.R))
             {
@@ -1078,24 +1026,7 @@ public class carscript : MonoBehaviour
 
 
             speedtext.text = Mathf.Round(carSpeed).ToString();
-            if (flc.GetGroundHit(out WheelHit hit))
-            {
-                if (hit.collider == grass)
-                {
-                    maxSpeed = 180;
-                    rb.linearDamping = 0.015f * grassPenalty;
-                }
-                else if (track == "track 1" && inWater == false)
-                {
-                    maxSpeed = 180;
-                    rb.linearDamping = 0.015f;
-                }
-                else if (track == "track 2")
-                {
-                    maxSpeed = 300;
-                    rb.linearDamping = 0.015f;
-                }
-            }
+            
 
             // if (replaystarted == true) {
             //     int index = (int)frametimer - (int)replayframe;
@@ -1212,7 +1143,90 @@ public class carscript : MonoBehaviour
             }
 
 
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            {
+                CancelInvoke("DecelerateCar");
+                deceleratingCar = false;
+                GoForward();
+                if (start == -234567890) { start = Time.time; started = true; startframe = currentframe; }
+                if (drivingframe == 0) { drivingframe = frametimer; }
+            }
+            foreach (WheelCollider collide in wheelColliders)
+            {
+                if (collide.GetGroundHit(out WheelHit hit))
+                {
+                    if (hit.collider == grass)
+                    {
+                        maxSpeed = 180;
+                        collide.brakeTorque = 1000;
+                    }
+                    else if (track == "track 1" && inWater == false)
+                    {
+                        maxSpeed = 180;
+                        collide.wheelDampingRate = 0.15f;
+                    }
+                    else if (track == "track 2")
+                    {
+                        maxSpeed = 3000;
+                        collide.wheelDampingRate = 0.15f;
+                    }
+                }
+            }
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            {
+                CancelInvoke("DecelerateCar");
+                deceleratingCar = false;
+                GoReverse();
+                if (start == -234567890) { start = Time.time; started = true; startframe = currentframe; }
+                if (drivingframe == 0) { drivingframe = frametimer; }
+            }
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                TurnLeft();
+                if (start == -234567890) { start = Time.time; started = true; startframe = currentframe; }
+                if (drivingframe == 0) { drivingframe = frametimer; }
+            }
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                TurnRight();
+                if (start == -234567890) { start = Time.time; started = true; startframe = currentframe; }
+                if (drivingframe == 0) { drivingframe = frametimer; }
+            }
+            // if (Input.GetKey(KeyCode.Alpha9))
+            // {
+            //     foreach (GameObject headlight in lights)
+            //     {
+            //         headlight.GetComponent<Light>().intensity += 100;
+            //     }
+            // }
 
+            if (Input.GetKey(KeyCode.Space))
+            {
+                CancelInvoke("DecelerateCar");
+                deceleratingCar = false;
+                Handbrake();
+            }
+            else { RecoverTraction(); }
+
+            // if(Input.GetKeyUp(KeyCode.Space)){
+            //     RecoverTraction();
+            // }
+
+            if ((!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow)))
+            {
+                ThrottleOff();
+            }
+
+            if ((!Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.UpArrow)) && !Input.GetKey(KeyCode.Space) && !deceleratingCar)
+            {
+                InvokeRepeating("DecelerateCar", 0f, 0.1f);
+                deceleratingCar = true;
+            }
+
+            if (!Input.GetKey(KeyCode.A) && !Input.GetKey(KeyCode.D) && steeringAxis != 0f && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.RightArrow))
+            {
+                ResetSteeringAngle();
+            }
 
             AnimateWheelMesh();
             trails();
@@ -1232,6 +1246,7 @@ public class carscript : MonoBehaviour
 
         }
         else { transform.position = new Vector3(0, -1000, 0); }
+        Debug.Log(flc.motorTorque + " " + frc.motorTorque + " " + rlc.motorTorque + " " + rrc.motorTorque);
     }
 
 public void AnimateWheelMesh() {
@@ -1309,7 +1324,7 @@ public void AnimateWheelMesh() {
         } else {
             if (Mathf.RoundToInt(carSpeed) < maxSpeed) {
                 flc.brakeTorque = 0;
-                flc.motorTorque = (accelerationMultiplier * 50f) * throttleAxis;
+                flc.motorTorque = accelerationMultiplier * 50f * throttleAxis;
                 frc.brakeTorque = 0;
                 frc.motorTorque = (accelerationMultiplier * 50f) * throttleAxis;
                 rlc.brakeTorque = 0;
